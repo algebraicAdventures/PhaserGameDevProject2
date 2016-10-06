@@ -5,6 +5,7 @@
 function loadStuff(game){
     game.load.script('draggableObject','js/draggableObject.js');
     game.load.image('testSprite', 'assets/sprites/testSprite.png');
-
-    console.log("Preloaded files.");
+    game.load.script('slideButton', 'js/slideButton.js');
+    game.load.image('testArrow', 'assets/sprites/testArrow.png');
+    console.log("Preloaded files");
 }
