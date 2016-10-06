@@ -2,7 +2,6 @@
  * Created by wrighp on 10/5/2016.
  */
 
-
 draggableObject = function(game, x, y){
 
     Phaser.Sprite.call(this, game, x, y, 'testSprite');
@@ -23,11 +22,13 @@ draggableObject.prototype.constructor = draggableObject;
 draggableObject.prototype.preUpdate = function(){
     //Objects bounding off of walls
     if(!this.dragged){
+        var WALL_BOUNCE = 1;
+
         var onScreen = Math.floor(this.x / this.game.width);
         var cameraScreen = Math.floor(this.game.camera.x/this.game.width);
         var newScreen = Math.floor((this.x + this.body.velocity.x * this.game.time.physicsElapsed)/this.game.width);
         if(newScreen != onScreen){
-            this.body.velocity.x *= -1;
+            this.body.velocity.x *= -1 * WALL_BOUNCE;
         }
     }
 
@@ -37,7 +38,7 @@ draggableObject.prototype.preUpdate = function(){
 
 draggableObject.prototype.update = function(){
     var deltaTime = this.game.time.elapsed / 1000;
-    var floorHeight = 600;
+    var FLOOR_HEIGHT = 600;
     if(this.dragged){
         this.body.velocity.set(0,0);
         var hudElements = this.game.hudLayer.children;
@@ -55,12 +56,12 @@ draggableObject.prototype.update = function(){
         if(this.body.velocity.x + this.x)
 
         this.body.velocity.y += 2000 * deltaTime;
-        if(this.y >= floorHeight){
-            this.y = floorHeight;
+        if(this.y >= FLOOR_HEIGHT){
+            this.y = FLOOR_HEIGHT;
             this.body.velocity.y = 0;
             //this.body.acceleration.y = 0;
         }
-        var drag = this.y < floorHeight ? 1 : .2; //Has less drag when in the air.
+        var drag = this.y < FLOOR_HEIGHT ? 1 : .2; //Has less drag when in the air.
         this.body.velocity.x *= 1.0 - Math.min(deltaTime / drag,1);
     }
 
@@ -76,14 +77,15 @@ draggableObject.onDragUpdate = function(sprite, pointer, dragX, dragY, snapPoint
     dragAmount.y = dragY - lastPosition.y;
     lastPosition.x = dragX;
     lastPosition.y = dragY;
-
-    //Check for overlap with things here
-
 };
 
 draggableObject.onDragStop = function(sprite, pointer){
-    var dragStrength = 100;
-    var maxForce = 1000;
+    //Check for overlap with things here
+
+
+    //Else throw
+    var DRAG_STRENGTH = 100;
+    var MAX_FORCE = 1000;
     sprite.dragged = false;
-    sprite.body.velocity.add(Phaser.Math.clamp(dragAmount.x*dragStrength,-maxForce,maxForce),Phaser.Math.clamp(dragAmount.y*dragStrength,-maxForce,maxForce));
+    sprite.body.velocity.add(Phaser.Math.clamp(dragAmount.x*DRAG_STRENGTH,-MAX_FORCE,MAX_FORCE),Phaser.Math.clamp(dragAmount.y*DRAG_STRENGTH,-MAX_FORCE,MAX_FORCE));
 };

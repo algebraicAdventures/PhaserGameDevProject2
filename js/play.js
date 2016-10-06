@@ -11,16 +11,20 @@ playState = {
     },
     preload: function(){
         loadStuff(this.game);
-
-
-        this.game.input.onTap.add(onTap);
     },
 
     create: function(){
+
+        this.game.camera.x = 1344;
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
+        //Create arrows
         this.game.hudLayer.addChild(new slideButton(this.game,0,this.game.height/2,-1344));
         this.game.hudLayer.addChild(new slideButton(this.game,this.game.width,this.game.height/2,1344));
-        this.game.camera.x = 1344;
+        //Create dropdown
+        this.game.hudLayer.addChild(new dropdown(this.game,this.game.width/2,0))
+
+        this.game.input.onTap.add(onTap);
+
         console.log("Create function.");
     },
 
