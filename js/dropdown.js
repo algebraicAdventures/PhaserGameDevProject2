@@ -11,12 +11,14 @@ dropdown = function(game, x, y){
     this.y = TAB_SIZE;
     this.anchor.set(.5,1);
     this.inputEnabled = true;
+    this.input.useHandCursor = true;
     this.game.physics.arcade.enable(this);
     this.events.onInputDown.add(dropdown.onInputDown);
 
     // Custom properties
     this.extended = false;
-    this.activeOrders = [];
+    this.maxOrders_ = 5;
+    this.activeOrders_ = [];
 };
 
 dropdown.prototype = Object.create(Phaser.Sprite.prototype);
@@ -30,13 +32,25 @@ dropdown.prototype.addOrder = function() {
     // TODO(Ariel): Instead of having the sprite spawn at 10,10, have it spawn in the menu on top of all the other orders.
     // TODO(Ariel): Un-hardcode the amount of time we get for an order - currently at 2 minutes.
     // TODO(Ariel): Don't allow any more orders to be added if we exceed a certain amount due to screen space.
-    var newOrder = new DrinkOrder(this.game, 0, this.activeOrders.length * 20, 120000);
+    var newOrder = new DrinkOrder(this.game, 0, this.activeOrders_.length * 20, 10000);
     newOrder.anchor.set(0.5, 0);
     newOrder.addEvent(function() {
-        console.log(this);
+        this.removeOrder(newOrder);
     }, this);
     this.addChild(newOrder);
-    this.activeOrders.push(newOrder);
+    this.activeOrders_.push(newOrder);
+};
+
+/**
+ * @param order The order to remove.
+ */
+dropdown.prototype.removeOrder = function(order) {
+    var index = this.activeOrders_.indexOf(order)
+    if(index >= this.maxOrders_) {
+        return;
+    }
+    this.activeOrders_.splice(index, 1);
+    console.log(this.activeOrders_.length);
 };
 
 dropdown.onInputDown = function(sprite){

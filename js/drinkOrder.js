@@ -24,7 +24,6 @@ DrinkOrder.prototype.update = function() {
 };
 
 DrinkOrder.prototype.onTimerEnd = function() {
-    console.log("hello?");
     this.signal_.dispatch(this);
     this.kill();
 };
