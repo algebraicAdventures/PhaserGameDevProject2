@@ -4,6 +4,7 @@
 
 var FLOOR_HEIGHT = 750;
 var WALL_BOUNCE = 1;
+var heldObject; //object being dragged, null if no object is being dragged
 
 draggableObject = function(game, x, y, image){
     if(image == null) image = 'testSprite';
@@ -13,7 +14,7 @@ draggableObject = function(game, x, y, image){
 
     this.inputEnabled = true;
     this.input.enableDrag(true); //False means it does NOT snap to center
-    this.game.physics.arcade.enable(this);
+    game.physics.arcade.enable(this);
     this.anchor.set(.5,.5); //Remember we moved the anchor
 
     this.events.onDragStart.add(draggableObject.onDragStart);
@@ -28,9 +29,9 @@ draggableObject.prototype.constructor = draggableObject;
 draggableObject.prototype.preUpdate = function(){
     //Objects bounding off of walls
     if(!this.dragged){
-        var onScreen = Math.floor(this.x / this.game.width);
-        var cameraScreen = Math.floor(this.game.camera.x/this.game.width);
-        var newScreen = Math.floor((this.x + this.body.velocity.x * this.game.time.physicsElapsed)/this.game.width);
+        var onScreen = Math.floor(this.x / game.width);
+        var cameraScreen = Math.floor(game.camera.x/game.width);
+        var newScreen = Math.floor((this.x + this.body.velocity.x * game.time.physicsElapsed)/game.width);
         if(newScreen != onScreen){
             this.body.velocity.x *= -1 * WALL_BOUNCE;
             //Play bounce sound
@@ -43,10 +44,10 @@ draggableObject.prototype.preUpdate = function(){
 };
 
 draggableObject.prototype.update = function(){
-    var deltaTime = this.game.time.elapsed / 1000;
-    if(this.dragged){
+    var deltaTime = game.time.elapsed / 1000;
+    if(this.dragged){ //Called if object is being dragged, here it checks for hovering over an arrow
         this.body.velocity.set(0,0);
-        var hudElements = this.game.hudLayer.children;
+        var hudElements = game.state.hudLayer.children;
         for (var i = 0; i < hudElements.length; i++) {
             if(hudElements[i].name === "slideButton"){
                 if(slideButton.triggerButton(hudElements[i], this)){
@@ -57,8 +58,7 @@ draggableObject.prototype.update = function(){
         }
     }
     else{
-        if(this.body.velocity.x + this.x)
-
+        //"Physics"
         this.body.velocity.y += 2000 * deltaTime;
         var heightStop = FLOOR_HEIGHT - this.height * (1 - this.anchor.y);
         if(this.y >= heightStop){
@@ -66,7 +66,7 @@ draggableObject.prototype.update = function(){
             this.body.velocity.y = 0;
             //this.body.acceleration.y = 0;
         }
-        var drag = this.y < FLOOR_HEIGHT ? 1 : .2; //Has less drag when in the air.
+        var drag = this.y < heightStop ? 1 : .2; //Has less drag when in the air.
         this.body.velocity.x *= 1.0 - Math.min(deltaTime / drag,1);
     }
 
@@ -74,6 +74,7 @@ draggableObject.prototype.update = function(){
 
 draggableObject.onDragStart = function(sprite, pointer, dragX, dragY, snapPoint){
     sprite.dragged = true;
+    heldObject = sprite;
 };
 var lastPosition = {x : 0, y: 0};
 var dragAmount = {x : 0, y: 0};
@@ -88,6 +89,7 @@ draggableObject.onDragUpdate = function(sprite, pointer, dragX, dragY, snapPoint
 draggableObject.prototype.dragStopped = function(sprite,pointer){return false;}
 draggableObject.onDragStop = function(sprite, pointer){
     //Check for overlap with things here
+    heldObject = null;
     if(draggableObject.prototype.dragStopped(sprite, pointer)){
 
     }
