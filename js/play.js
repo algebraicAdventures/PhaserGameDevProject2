@@ -8,9 +8,12 @@ playState = {
         game.world.setBounds(0,0,1344*3,750); //arbitrary 3 window size, it doesn't seem to matter
         game.camera.bounds = game.world.bounds;
 
+        game.state.machineLayer = game.add.group();
+        game.state.objectLayer = game.add.group();
         game.state.hudLayer = game.add.group();
         game.state.hudLayer.fixedToCamera = true;
         game.state.dropDown;
+        game.state.triggers = []; //array of sprites to be used as trigger zones
     },
     preload: function(){
         loadStuff(game);
@@ -21,12 +24,15 @@ playState = {
         game.camera.x = 1344;
         game.physics.startSystem(Phaser.Physics.ARCADE);
         //Create arrows
-        game.state.hudLayer.addChild(new slideButton(game,0,game.height/2,-1344));
-        game.state.hudLayer.addChild(new slideButton(game,game.width,game.height/2,1344));
+        game.state.hudLayer.addChild(new slideButton(game,0,game.height/2,-game.width));
+        game.state.hudLayer.addChild(new slideButton(game,game.width,game.height/2,game.width));
         //Create dropdown
         game.state.dropDown = new dropdown(game,game.width/2,0);
         game.state.hudLayer.addChild(game.state.dropDown);
+        //create grinder
+        //game.state.machineLayer.add(new beanGrinder(game, 1000,game.height -40));
 
+        //Input events
         game.input.onTap.add(onTap);
 
         console.log("Create function.");
@@ -35,7 +41,7 @@ playState = {
     update: function(){
         if(DEBUG_INFO) game.debug.cameraInfo(game.camera, 32, 32);
         if(heldObject != null){
-           // game.physics.arcade.collide(heldObject, hitBoxes, collisionHandler, function(){return false}, this);
+           game.physics.arcade.collide(heldObject, game.state.triggers, triggerHandler, function(){return false}, this);
         }
     },
     shutdown: function(){
@@ -46,11 +52,18 @@ playState = {
     }
 
 };
+function triggerHandler(obj, triggers){
+    for(var i = 0; i < triggers.length; i++){
+        if(obj.name == "beans" && triggers[i] == "grinder"){
+
+        }
+    }
+}
 
 function onTap(){
     var theFeels = new draggableObject(game,game.input.activePointer.worldX,game.input.activePointer.worldY);
-    game.add.existing(theFeels);
     game.state.dropDown.addOrder();
+    game.state.objectLayer.add(theFeels);
     //theFeels.kill();
     //theFeels.revive();
 }
