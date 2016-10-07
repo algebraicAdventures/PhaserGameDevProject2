@@ -9,6 +9,7 @@ function loadStuff(game){
     game.load.image('testArrow', 'assets/sprites/testArrow.png');
     game.load.script('dropdown', 'js/dropdown.js');
     game.load.image('testDropdown', 'assets/sprites/testDropdown.png');
+    game.load.script('DrinkOrder', 'js/drinkOrder.js');
 
     console.log("Preloaded files");
 }
