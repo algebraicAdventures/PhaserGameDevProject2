@@ -1,5 +1,5 @@
 DrinkOrder = function(game, x, y, timeLimit) {
-    Phaser.Sprite.call(this, game, x, y, 'drinkOrder');
+    Phaser.Sprite.call(this, game, x, y, 'DrinkOrder');
 
     this.timeLimit_ = timeLimit; /* Amount of time the player has to complete this order */
     this.timeStarted_ = 0; /* Time that the order became active - set to now */

@@ -8,11 +8,9 @@ playState = {
         game.world.setBounds(0,0,1344*3,750); //arbitrary 3 window size, it doesn't seem to matter
         game.camera.bounds = game.world.bounds;
 
-
         game.state.hudLayer = game.add.group();
         game.state.hudLayer.fixedToCamera = true;
         game.state.dropDown;
-
     },
     preload: function(){
         loadStuff(game);
@@ -52,6 +50,7 @@ playState = {
 function onTap(){
     var theFeels = new draggableObject(game,game.input.activePointer.worldX,game.input.activePointer.worldY);
     game.add.existing(theFeels);
+    game.state.dropDown.addOrder();
     //theFeels.kill();
     //theFeels.revive();
 }
