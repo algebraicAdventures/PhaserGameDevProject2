@@ -34,7 +34,6 @@ playState = {
 
         //Input events
         game.input.onTap.add(onTap);
-
         console.log("Create function.");
     },
 

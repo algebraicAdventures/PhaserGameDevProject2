@@ -23,14 +23,18 @@ dropdown.prototype = Object.create(Phaser.Sprite.prototype);
 dropdown.prototype.constructor = dropdown;
 
 dropdown.prototype.update = function() {
+    Phaser.Sprite.prototype.update.call(this);
 };
 
 dropdown.prototype.addOrder = function() {
     // TODO(Ariel): Instead of having the sprite spawn at 10,10, have it spawn in the menu on top of all the other orders.
     // TODO(Ariel): Un-hardcode the amount of time we get for an order - currently at 2 minutes.
     // TODO(Ariel): Don't allow any more orders to be added if we exceed a certain amount due to screen space.
-    var newOrder = new DrinkOrder(this.game, 0, this.activeOrders.length * 20, 120000);
+    var newOrder = new DrinkOrder(this.game, 0, this.activeOrders.length * 20, 10000);
     newOrder.anchor.set(0.5, 0);
+    newOrder.addEvent(function() {
+        console.log(this);
+    }, this);
     this.addChild(newOrder);
     this.activeOrders.push(newOrder);
 };
