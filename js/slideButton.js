@@ -14,7 +14,7 @@ slideButton = function(game, x, y, direction){
         this.scale.x = -1;
     }
     this.inputEnabled = true;
-    this.game.physics.arcade.enable(this);
+    game.physics.arcade.enable(this);
 
     this.intervalTime = 0;
     this.events.onInputDown.add(slideButton.onInputDown);
@@ -24,10 +24,10 @@ slideButton.prototype = Object.create(Phaser.Sprite.prototype);
 slideButton.prototype.constructor = slideButton;
 
 slideButton.prototype.update = function() {
-    var camera = this.game.camera;
+    var camera = game.camera;
     this.visible = Phaser.Rectangle.containsPoint(camera.bounds,new Phaser.Point(camera.x + this.direction,camera.y));
     if(this.intervalTime > 0){
-        var deltaTime = this.game.time.elapsed /1000;
+        var deltaTime = game.time.elapsed /1000;
         this.intervalTime= Math.max( this.intervalTime - deltaTime,0);
         this.canUse = false;
     }
