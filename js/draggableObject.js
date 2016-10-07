@@ -3,15 +3,14 @@
  */
 
 var FLOOR_HEIGHT = 750;
-var WALL_BOUNCE = 1;
-var heldObject; //object being dragged, null if no object is being dragged
+var WALL_BOUNCE = .5; //velocity transferred after hitting a wall, < 0 reduces velocity
+var heldObject; //object being dragged, null if no object is being dragged. Used for trigger collision in play.
 
 draggableObject = function(game, x, y, image){
     if(image == null) image = 'testSprite';
     Phaser.Sprite.call(this, game, x, y, image);
     //custom variables
     this.dragged = false;
-
     this.inputEnabled = true;
     this.input.enableDrag(true); //False means it does NOT snap to center
     game.physics.arcade.enable(this);
@@ -29,9 +28,10 @@ draggableObject.prototype.constructor = draggableObject;
 draggableObject.prototype.preUpdate = function(){
     //Objects bounding off of walls
     if(!this.dragged){
+        //Check if object will move off screen in this frame, if so reverse it's velocity and multiply it by WALL_BOUNCE;
         var onScreen = Math.floor(this.x / game.width);
         var cameraScreen = Math.floor(game.camera.x/game.width);
-        var newScreen = Math.floor((this.x + this.body.velocity.x * game.time.physicsElapsed)/game.width);
+        var newScreen = Math.floor((this.x + this.body.velocity.x * game.time.physicsElapsed + Math.sign(this.body.velocity.x)*this.width*.5)/game.width);
         if(newScreen != onScreen){
             this.body.velocity.x *= -1 * WALL_BOUNCE;
             //Play bounce sound
@@ -43,9 +43,19 @@ draggableObject.prototype.preUpdate = function(){
     Phaser.Graphics.prototype.preUpdate.call(this);
 };
 
+var lastPosition = {x : 0, y: 0}; //For dragging
+var dragAmount = {x : 0, y: 0};
+
 draggableObject.prototype.update = function(){
     var deltaTime = game.time.elapsed / 1000;
     if(this.dragged){ //Called if object is being dragged, here it checks for hovering over an arrow
+
+        //Used to be called onDragUpdate, but the frequency was based on the poll rate of your device, which was inconsistent
+        dragAmount.x = (this.x - lastPosition.x)*deltaTime;
+        dragAmount.y = (this.y - lastPosition.y)*deltaTime;
+        lastPosition.x = this.x
+        lastPosition.y = this.y;
+
         this.body.velocity.set(0,0);
         var hudElements = game.state.hudLayer.children;
         for (var i = 0; i < hudElements.length; i++) {
@@ -66,7 +76,7 @@ draggableObject.prototype.update = function(){
             this.body.velocity.y = 0;
             //this.body.acceleration.y = 0;
         }
-        var drag = this.y < heightStop ? 1 : .2; //Has less drag when in the air.
+        var drag = this.y < heightStop ? 100 : .2; //Has less drag when in the air.
         this.body.velocity.x *= 1.0 - Math.min(deltaTime / drag,1);
     }
 
@@ -76,13 +86,9 @@ draggableObject.onDragStart = function(sprite, pointer, dragX, dragY, snapPoint)
     sprite.dragged = true;
     heldObject = sprite;
 };
-var lastPosition = {x : 0, y: 0};
-var dragAmount = {x : 0, y: 0};
+
 draggableObject.onDragUpdate = function(sprite, pointer, dragX, dragY, snapPoint){
-    dragAmount.x = dragX - lastPosition.x;
-    dragAmount.y = dragY - lastPosition.y;
-    lastPosition.x = dragX;
-    lastPosition.y = dragY;
+
 };
 
 //Return true if interaction happens, return false if object should be thrown
@@ -96,9 +102,12 @@ draggableObject.onDragStop = function(sprite, pointer){
     else {
         //Else throw
         //Can have different forces for heavier objects (or different drag)
-        var DRAG_STRENGTH = 100;
-        var MAX_FORCE = 1000;
+        var DRAG_STRENGTH = 2000;
+        var MAX_FORCE = 1500;
         sprite.dragged = false;
-        sprite.body.velocity.add(Phaser.Math.clamp(dragAmount.x * DRAG_STRENGTH, -MAX_FORCE, MAX_FORCE), Phaser.Math.clamp(dragAmount.y * DRAG_STRENGTH, -MAX_FORCE, MAX_FORCE));
+        var vector = new Phaser.Point(dragAmount.x , dragAmount.y);
+        var force = Phaser.Math.clamp(vector.getMagnitude()*DRAG_STRENGTH, -MAX_FORCE, MAX_FORCE);
+        vector = vector.normalize().multiply(force,force);
+        sprite.body.velocity.add(vector.x,vector.y);
     }
 };
