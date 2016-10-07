@@ -6,7 +6,7 @@ var SPACING = 84;
 var TWEEN_TIME = 333;
 
 dropdown = function(game, x, y){
-    Phaser.Sprite.call(this, game, x, y, 'testDropdown');
+    Phaser.Sprite.call(this, game, x, y, 'dropdownImage');
     this.name = "dropdown";
     this.y = TAB_SIZE;
     this.anchor.set(.5,1);

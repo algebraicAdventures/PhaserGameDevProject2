@@ -8,7 +8,7 @@ function loadStuff(game){
     game.load.script('slideButton', 'js/slideButton.js');
     game.load.image('testArrow', 'assets/sprites/testArrow.png');
     game.load.script('dropdown', 'js/dropdown.js');
-    game.load.image('testDropdown', 'assets/sprites/testDropdown.png');
+    game.load.image('dropdownImage', 'assets/sprites/dropdown.png');
     game.load.script('beanGrinder', 'js/beanGrinder.js');
     game.load.image('grinder', 'assets/sprites/grinder.png');
     game.load.image('grinderHandle', 'assets/sprites/grinderhandle.png');
