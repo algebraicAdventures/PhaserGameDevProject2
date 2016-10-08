@@ -29,9 +29,11 @@ dropdown.prototype.update = function() {
 };
 
 dropdown.prototype.addOrder = function() {
+    if(this.activeOrders_.length >= 5) {
+        return;
+    }
     // TODO(Ariel): Instead of having the sprite spawn at 10,10, have it spawn in the menu on top of all the other orders.
     // TODO(Ariel): Un-hardcode the amount of time we get for an order - currently at 2 minutes.
-    // TODO(Ariel): Don't allow any more orders to be added if we exceed a certain amount due to screen space.
     var newOrder = new DrinkOrder(this.game, 0, this.activeOrders_.length * 20, 10000);
     newOrder.anchor.set(0.5, 0);
     newOrder.addEvent(function() {
@@ -56,8 +58,10 @@ dropdown.prototype.removeOrder = function(order) {
 dropdown.onInputDown = function(sprite){
     dropdown.slide(sprite);
 };
-dropdown.slide = function(sprite){
-    var openNumber = Math.floor((Math.random()*3)+1); //Temporary for testing
+
+dropdown.slide = function(sprite) {
+    var openNumber = sprite.activeOrders_.length;
+    openNumber = openNumber === 0 ? 1 : openNumber;
     var goal = sprite.extended ? TAB_SIZE : SPACING * openNumber + TAB_SIZE;
     sprite.game.add.tween(sprite).to({y: goal}, TWEEN_TIME, Phaser.Easing.Cubic.InOut, true);
     sprite.extended = !sprite.extended;
