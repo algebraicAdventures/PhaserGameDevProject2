@@ -15,12 +15,11 @@ playState = {
         game.state.dropDown;
         game.state.triggers = []; //array of sprites to be used as trigger zones
     },
-    preload: function(){
+    preload: function() {//Everything is loaded at the main menu now, for faster restarting of states
         loadStuff(game);
     },
 
     create: function(){
-
         game.camera.x = 1344;
         game.physics.startSystem(Phaser.Physics.ARCADE);
         //Create arrows
@@ -30,17 +29,30 @@ playState = {
         game.state.dropDown = new dropdown(game,game.width/2,0);
         game.state.hudLayer.addChild(game.state.dropDown);
         //create grinder
-        //game.state.machineLayer.add(new beanGrinder(game, 1000,game.height -40));
+        game.state.machineLayer.addChild(new beanGrinder(game, 1000,game.height -40));
+        //create coffee machine
+        game.state.machineLayer.addChild(new coffeeMachine(game, 1600,game.height -40));
+
 
         //Input events
         game.input.onTap.add(onTap);
         console.log("Create function.");
         var space = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         space.onDown.add(game.state.dropDown.addOrder, game.state.dropDown);
+
+        if(DEBUG_INFO){
+            var text = new Phaser.Text(game, 20, game.height - 30,"Hit 'B' to toggle debug display",{backgroundColor: 'black',fill: 'white',});
+            game.state.hudLayer.addChild(text);
+            var b = game.input.keyboard.addKey(Phaser.Keyboard.B);
+            b.onDown.add(function(){DEBUG_INFO = !DEBUG_INFO; game.debug.reset(); text.visible = !text.visible});
+        }
     },
 
     update: function(){
-        if(DEBUG_INFO) game.debug.cameraInfo(game.camera, 32, 32);
+
+        if(DEBUG_INFO){
+            game.debug.cameraInfo(game.camera, 32, 32);
+        }
         if(heldObject != null){
            game.physics.arcade.collide(heldObject, game.state.triggers, triggerHandler, function(){return false}, this);
         }
