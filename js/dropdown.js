@@ -13,7 +13,7 @@ dropdown = function(game, x, y){
     this.inputEnabled = true;
     this.input.useHandCursor = true;
     this.game.physics.arcade.enable(this);
-    this.events.onInputDown.add(dropdown.onInputDown);
+    this.events.onInputDown.add(dropdown.onTap);
 
     // Custom properties
     this.extended = false;
@@ -66,14 +66,23 @@ dropdown.prototype.removeOrder = function(order) {
     }
 };
 
-dropdown.onInputDown = function(sprite){
-    dropdown.slide(sprite);
+/**
+ * Slides open the order dropdown.
+ * @param openNumber number of orders to show.
+ * If undefined, the menu will open to however many orders there are.
+ * If there are also no active orders, the menu will only slide to one space.
+ */
+dropdown.prototype.slide = function(openNumber) {
+    openNumber = openNumber === undefined ? this.numOrders() : openNumber;
+    openNumber = openNumber === 0 ? 1 : openNumber;
+    var goal = this.extended ? TAB_SIZE : SPACING * openNumber + TAB_SIZE;
+    this.game.add.tween(this).to({y: goal}, TWEEN_TIME, Phaser.Easing.Cubic.InOut, true);
+    this.extended = !this.extended;
 };
 
-dropdown.slide = function(sprite) {
-    var openNumber = sprite.numOrders();
-    openNumber = openNumber === 0 ? 1 : openNumber;
-    var goal = sprite.extended ? TAB_SIZE : SPACING * openNumber + TAB_SIZE;
-    sprite.game.add.tween(sprite).to({y: goal}, TWEEN_TIME, Phaser.Easing.Cubic.InOut, true);
-    sprite.extended = !sprite.extended;
+/**
+ * Event handler for tapping the dropdown.
+ */
+dropdown.onTap = function(sprite, _) {
+    sprite.slide();
 };
