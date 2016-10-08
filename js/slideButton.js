@@ -1,9 +1,6 @@
 /**
  * Created by Patrick on 10/5/2016.
  */
-
-
-
 slideButton = function(game, x, y, direction){
     Phaser.Sprite.call(this, game, x, y, 'testArrow');
     this.name = "slideButton";
