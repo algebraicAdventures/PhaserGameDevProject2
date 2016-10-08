@@ -35,6 +35,8 @@ playState = {
         //Input events
         game.input.onTap.add(onTap);
         console.log("Create function.");
+        var space = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+        space.onDown.add(game.state.dropDown.addOrder, game.state.dropDown);
     },
 
     update: function(){
@@ -61,7 +63,6 @@ function triggerHandler(obj, triggers){
 
 function onTap(){
     var theFeels = new draggableObject(game,game.input.activePointer.worldX,game.input.activePointer.worldY);
-    game.state.dropDown.addOrder();
     game.state.objectLayer.add(theFeels);
     //theFeels.kill();
     //theFeels.revive();

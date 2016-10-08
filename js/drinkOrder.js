@@ -1,13 +1,15 @@
 DrinkOrder = function(game, x, y, timeLimit) {
     Phaser.Sprite.call(this, game, x, y);
+    this.anchor.set(0.5, 0);
 
     this.timer_ = game.time.create(false);
     this.signal_ = new Phaser.Signal();
 
-    this.timerText_ = this.addChild(new Phaser.Text(game, x, y, util.formatTime(timeLimit), {
+    this.timerText_ = this.addChild(new Phaser.Text(game, 0, 0, util.formatTime(timeLimit), {
         align: 'center',
         fill: 'white',
     }));
+    this.timerText_.anchor.set(0.5, 0);
     this.timer_.add(timeLimit, this.onTimerEnd, this);
     this.timer_.start();
     // Populate with drink order requirements when we figure out how we're representing that.
