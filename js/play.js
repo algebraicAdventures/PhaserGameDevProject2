@@ -32,8 +32,10 @@ playState = {
         //create coffee machine
         game.state.machineLayer.addChild(new coffeeMachine(game, 1600,game.height -40));
         //create cup towers
-        game.state.machineLayer.addChild(new CupTower(game, 450, game.height - 40, CupTower.Type.GLASS));
-        game.state.machineLayer.addChild(new CupTower(game, 200, game.height - 40, CupTower.Type.PAPER));
+        console.log(CoffeeCup);
+        console.log(CoffeeCup.Type);
+        game.state.machineLayer.addChild(new CupTower(game, 450, game.height - 40, CoffeeCup.Type.GLASS));
+        game.state.machineLayer.addChild(new CupTower(game, 200, game.height - 40, CoffeeCup.Type.PAPER));
 
         //Input events
         var space = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);

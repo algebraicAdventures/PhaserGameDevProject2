@@ -2,30 +2,29 @@
  * @param game
  * @param x
  * @param y
- * @param type see CupTower.Type enum
+ * @param type see CoffeeCup.Type enum
  * @constructor
  */
 var CupTower = function(game, x, y, type) {
-    Phaser.Sprite.call(this, game, x, y);
-    this.anchor.set(0.5, 1);
+    var image;
     switch(type) {
-        case CupTower.Type.GLASS:
-            this.loadTexture('GlassCupTower'); break;
-        case CupTower.Type.PAPER:
-            this.loadTexture('PaperCupTower'); break;
+        case CoffeeCup.Type.GLASS:
+            image = 'GlassCupTower'; break;
+        case CoffeeCup.Type.PAPER:
+            image = 'PaperCupTower'; break;
     }
+    Phaser.Sprite.call(this, game, x, y, image);
+    this.anchor.set(0.5, 1);
     this.inputEnabled = true;
     this.input.useHandCursor = true;
     this.events.onInputDown.add(CupTower.onTap);
+
+    // Custom properties
+    this.cupType = type;
 };
 CupTower.prototype = Object.create(Phaser.Sprite.prototype);
 CupTower.prototype.constructor = CupTower;
 
-CupTower.Type = {
-    GLASS: 0,
-    PAPER: 1
-};
-
-CupTower.onTap = function(sprite, pointer) {
-    console.log(pointer);
+CupTower.onTap = function(cupTower, pointer) {
+    game.state.objectLayer.addChild(new CoffeeCup(game, pointer.worldX, pointer.worldY, cupTower.cupType));
 }

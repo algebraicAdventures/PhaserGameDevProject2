@@ -2,8 +2,15 @@
  * Created by wrighp on 10/5/2016.
  */
 
-CoffeeCup = function(game, x, y){
-    draggableObject.call(this, game, x, y, 'testSprite');
+CoffeeCup = function(game, x, y, type){
+    var image;
+    switch(type) {
+        case CoffeeCup.Type.GLASS:
+            image = 'GlassCup'; break;
+        case CoffeeCup.Type.PAPER:
+            image = 'PaperCup'; break;
+    }
+    draggableObject.call(this, game, x, y, image);
     this.maxVolume_ = 3;
     this.components = {
         volume: 0,
@@ -12,14 +19,19 @@ CoffeeCup = function(game, x, y){
     console.log(this.components);
 };
 
+CoffeeCup.prototype = Object.create(draggableObject.prototype);
+CoffeeCup.prototype.constructor = CoffeeCup;
+
 CoffeeCup.Temp = {
     HOT: 0,
     COLD: 1,
     BAD: 2
 };
 
-CoffeeCup.prototype = Object.create(draggableObject.prototype);
-CoffeeCup.prototype.constructor = CoffeeCup;
+CoffeeCup.Type = {
+    GLASS: 0,
+    PAPER: 1
+};
 
 CoffeeCup.prototype.update = function(){
     draggableObject.prototype.update.call(this);

@@ -18,9 +18,11 @@ function loadStuff(game){
     //cup stuff
     game.load.image('GlassCupTower', 'assets/sprites/cupHolder_full.png');
     game.load.image('PaperCupTower', 'assets/sprites/paper_cupHolder_full.png');
+    game.load.image('GlassCup', 'assets/sprites/cup.png');
+    game.load.image('PaperCup', 'assets/sprites/paper_cup.png')
+    game.load.script('CoffeeCup', 'js/coffeeCup.js');
     game.load.script('CupTower', 'js/CupTower.js');
     game.load.script('DrinkOrder', 'js/drinkOrder.js');
-    game.load.script('CoffeeCup', 'js/coffeeCup.js');
     game.load.image('x', 'assets/sprites/x.png');
 
     //coffee machine stuff
