@@ -36,12 +36,19 @@ dropdown.prototype.numOrders = function() {
     return this.activeOrders_.length;
 }
 
-dropdown.prototype.addOrder = function() {
+/**
+ * @param components An object containing the drink requirements
+ * {
+ *      volume: int - the number of units of coffee.
+ *      temp: temperature from the CoffeeCup.Temp enum
+ * }
+ */
+dropdown.prototype.addOrder = function(components) {
     var numOrders = this.numOrders();
     if(numOrders >= this.maxOrders_) {
         return;
     }
-    var newOrder = new DrinkOrder(this.game, 0, -(TAB_SIZE + SPACING * (numOrders + 1)), ORDER_TIME);
+    var newOrder = new DrinkOrder(this.game, 0, -(TAB_SIZE + SPACING * (numOrders + 1)), ORDER_TIME, components);
     newOrder.anchor.set(0.5, 0);
     newOrder.addEvent(function() {
         this.removeOrder(newOrder);
