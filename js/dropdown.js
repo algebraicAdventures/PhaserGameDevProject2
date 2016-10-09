@@ -40,7 +40,7 @@ dropdown.prototype.numOrders = function() {
  * @param components An object containing the drink requirements
  * {
  *      volume: int - the number of units of coffee.
- *      temp: temperature from the DrinkOrder.Temp enum
+ *      temp: temperature from the CoffeeCup.Temp enum
  * }
  */
 dropdown.prototype.addOrder = function(components) {

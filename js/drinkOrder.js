@@ -23,11 +23,6 @@ DrinkOrder = function(game, x, y, timeLimit, components) {
 DrinkOrder.prototype = Object.create(Phaser.Sprite.prototype); /* Do we make this a sprite group? */
 DrinkOrder.prototype.constructor = DrinkOrder;
 
-DrinkOrder.Temp = {
-    HOT: 0,
-    COLD: 1
-};
-
 DrinkOrder.prototype.update = function() {
     var timeLeft = this.timer_.duration;
     if (timeLeft < 5000) {
@@ -48,4 +43,19 @@ DrinkOrder.prototype.onTimerEnd = function() {
  */
 DrinkOrder.prototype.addEvent = function(callback, context) {
     this.signal_.add(callback, context);
+};
+
+/**
+ * Returns true if the drink matches the order requirements.
+ * @param drink coffeeCup sprite to check for accuracy.
+ */
+DrinkOrder.prototype.checkOrder = function(drink) {
+    var d = drink.components;
+    var o = this.components_;
+    if (d.volume !== o.volume) {
+        return false;
+    } else if (d.temp !== o.temp) {
+        return false;
+    }
+    return true;
 };

@@ -42,7 +42,7 @@ playState = {
             game.state.dropDown.addOrder({
                 /* Hard coded for now */
                 volume: 3,
-                temp: DrinkOrder.Temp.HOT
+                temp: CoffeeCup.Temp.HOT
             });
         } , game.state.dropDown);
 
