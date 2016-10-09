@@ -12,7 +12,6 @@ var CoffeeCup = function(game, x, y, type){
     }
     draggableObject.call(this, game, x, y, image);
     this.anchor.set(0.5, 1);
-    console.log(this);
 
     this.maxVolume_ = 3;
     this.components = {

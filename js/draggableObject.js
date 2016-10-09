@@ -78,7 +78,6 @@ draggableObject.prototype.update = function(){
         var drag = this.y < heightStop ? 100 : .2; //Has less drag when in the air.
         this.body.velocity.x *= 1.0 - Math.min(deltaTime / drag,1);
     }
-
 };
 
 draggableObject.onDragStart = function(sprite, pointer, dragX, dragY, snapPoint){
