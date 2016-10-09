@@ -15,6 +15,7 @@ slideButton = function(game, x, y, direction){
 
     this.intervalTime = 0;
     this.events.onInputDown.add(slideButton.onInputDown);
+    this.input.useHandCursor = true;
 };
 
 slideButton.prototype = Object.create(Phaser.Sprite.prototype);

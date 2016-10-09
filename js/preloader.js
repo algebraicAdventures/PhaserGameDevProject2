@@ -9,10 +9,20 @@ function loadStuff(game){
     game.load.image('testArrow', 'assets/sprites/testArrow.png');
     game.load.script('dropdown', 'js/dropdown.js');
     game.load.image('dropdownImage', 'assets/sprites/dropdown.png');
+    //bean grinder stuff
     game.load.script('beanGrinder', 'js/beanGrinder.js');
     game.load.image('grinder', 'assets/sprites/grinder.png');
     game.load.image('grinderHandle', 'assets/sprites/grinderhandle.png');
     game.load.image('paperDish', 'assets/sprites/paperdish.png');
+
     game.load.script('DrinkOrder', 'js/drinkOrder.js');
+
+    //coffee machine stuff
+    game.load.script('coffeeMachine', 'js/coffeeMachine.js');
+    game.load.image('coffeeMachineBase', 'assets/sprites/coffee_machine_base.png');
+    game.load.image('coffeeDial', 'assets/sprites/coffee_machine_dial.png');
+
+    //game.load.image('coffeeBag', 'assets/sprites/coffeebag.png');
+
     console.log("Preloaded files");
 }
