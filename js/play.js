@@ -16,7 +16,6 @@ playState = {
         game.state.triggers = []; //array of sprites to be used as trigger zones
     },
     preload: function() {//Everything is loaded at the main menu now, for faster restarting of states
-        loadStuff(game);
     },
 
     create: function(){
@@ -52,6 +51,8 @@ playState = {
             var b = game.input.keyboard.addKey(Phaser.Keyboard.B);
             b.onDown.add(function(){DEBUG_INFO = !DEBUG_INFO; game.debug.reset(); text.visible = !text.visible});
         }
+
+        console.log("State create function completed.");
     },
 
     update: function(){

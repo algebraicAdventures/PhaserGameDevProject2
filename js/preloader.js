@@ -27,6 +27,6 @@ function loadStuff(game){
     game.load.spritesheet('screen', 'assets/sprites/screen_spritesheet.png', 298, 200);
     game.load.spritesheet('dispenserButton', 'assets/sprites/dispenserbutton_spritesheet.png', 83, 34);
     //game.load.image('coffeeBag', 'assets/sprites/coffeebag.png');
-
+    game.load.image('dashedBox', 'assets/sprites/dashedBox.png');
     console.log("Preloaded files");
 }
