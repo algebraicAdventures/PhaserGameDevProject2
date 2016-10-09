@@ -10,7 +10,19 @@ beanGrinder = function(game, x, y){
     //this.inputEnabled = true;
     //game.physics.arcade.enable(this);
     //this.body.immovable = true;
-    this.addChild(new grinderHandle(game,0,-this.height+328));
+    this.handle = this.addChild(new grinderHandle(game,0,-this.height+328));
+    var mask = this.addChild(new Phaser.Graphics(this.game,0,0)); //Mask to cover up the grounds
+    mask.beginFill('white');
+    mask.drawPolygon([[-91,269-this.height],[-134, 34 - this.height],[134,34 - this.height],[90,269-this.height]]);
+    this.handle.mask = mask;
+
+    this.snapBox = this.addChild(new Phaser.Sprite(this.game,0,-10,"dashedBox"));
+    this.snapBox.tint = 0x888888;
+    this.snapBox.anchor.set(.5,1);
+    this.snapBox.alpha = 55;
+    this.snapBox.name = "grinderBox";
+    game.physics.arcade.enable(this.snapBox);
+    this.game.state.triggers.push(this.snapBox);
 };
 
 beanGrinder.prototype = Object.create(Phaser.Sprite.prototype);
@@ -26,12 +38,10 @@ grinderHandle = function(game, x, y){
     this.name = "grinderHandle";
     this.anchor.set(.5,0.70454545454); // /r/theydidthemath
     this.inputEnabled = true;
-    //this.game.physics.p2.enable(this);
     //this.body.setSize(40,40,0,104);
     this.input.useHandCursor = true;
     this.hitArea = new Phaser.Circle(0, -103, 40);
     this.angle = 45;
-
     this.grabbed = false;
 };
 grinderHandle.prototype = Object.create(Phaser.Sprite.prototype);

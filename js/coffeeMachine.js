@@ -18,7 +18,7 @@ coffeeMachine = function(game, x, y){
     //dispenser buttons
     this.dispensers = [];
     for(var i = 0; i < 3; i++){
-        this.dispensers.push(this.addChild(new coffeeDispenserButton(this.game, 119 + 290 * i, -this.height + 272)));
+        this.dispensers.push(this.addChild(new coffeeDispenserButton(this.game, 119 + 292 * i, -this.height + 272)));
     }
 
 };
