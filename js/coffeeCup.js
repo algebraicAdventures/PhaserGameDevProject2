@@ -14,7 +14,7 @@ var CoffeeCup = function(game, x, y, type){
     this.anchor.set(0.5, 1);
 
     this.maxVolume_ = 3;
-    this.components = {
+    this.components_ = {
         volume: 0,
         temp: null
     };
@@ -45,16 +45,16 @@ CoffeeCup.prototype.dragStopped = function(sprite,pointer){
  * @param temp Temperature of the added coffee.
  */
 CoffeeCup.prototype.addCoffee = function(temp) {
-    if(this.volume_ >= this.maxVolume_) {
+    if(this.components_.volume >= this.maxVolume_) {
         return;
     }
-    this.components.volume += 1;
+    this.components_.volume += 1;
 
     // Coffee cup is empty, so the coffee becomes whatever temperature is passed in.
-    if(this.components.temp === null) {
-        this.components.temp = temp;
-    } else if(this.components.temp !== temp) {
+    if(this.components_.temp === null) {
+        this.components_.temp = temp;
+    } else if(this.components_.temp !== temp) {
         // Mixing temperatures results in bad coffee.
-        this.components.temp = CoffeeCup.Temp.BAD;
+        this.components_.temp = CoffeeCup.Temp.BAD;
     }
 };

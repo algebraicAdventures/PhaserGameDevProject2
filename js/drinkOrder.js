@@ -50,7 +50,7 @@ DrinkOrder.prototype.addEvent = function(callback, context) {
  * @param drink coffeeCup sprite to check for accuracy.
  */
 DrinkOrder.prototype.checkOrder = function(drink) {
-    var d = drink.components;
+    var d = drink.components_;
     var o = this.components_;
     if (d.volume !== o.volume) {
         return false;
