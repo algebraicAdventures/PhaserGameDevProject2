@@ -11,8 +11,8 @@ beanGrinder = function(game, x, y){
     this.body.setSize(this.width,this.height/2,0, 0);
     var mask = this.addChild(new Phaser.Graphics(this.game,0,0)); //Mask to cover up the grounds
     mask.beginFill('white');
-    mask.drawPolygon([[-91,269-this.height],[-138, 34 - this.height],[134,34 - this.height],[90,269-this.height]]);
-    this.beans = this.addChild(new Phaser.Sprite(this.game,-2,-this.height + 50,"beanPile"));
+    mask.drawPolygon([[-92,269-this.height],[-138, 34 - this.height],[134,34 - this.height],[90,269-this.height]]);
+    this.beans = this.addChild(new Phaser.Sprite(this.game,-1,-this.height + 50,"beanPile"));
     this.beans.anchor.set(.5,-1);
     this.beans.mask = mask;
     this.totalBeans = 1;
@@ -38,7 +38,7 @@ beanGrinder.prototype.update = function() {
         this.children[i].update();
         if(DEBUG_INFO) this.game.debug.body(this.children[i]);
     }
-    this.beans.y = this.beans.y + this.game.time.elapsed/500 * -(this.beans.y -( -this.height + 50 - 215 * this.totalBeans));
+    this.beans.y = this.beans.y + this.game.time.elapsed/500 * -(this.beans.y -( -this.height + 50 - 210 * this.totalBeans));
 };
 grinderHandle = function(game, x, y){
     Phaser.Sprite.call(this, game, x, y, 'grinderHandle');
