@@ -50,8 +50,8 @@ draggableObject.prototype.update = function(){
     if(this.dragged){ //Called if object is being dragged, here it checks for hovering over an arrow
 
         //Used to be called onDragUpdate, but the frequency was based on the poll rate of your device, which was inconsistent
-        dragAmount.x = (this.x - lastPosition.x)*deltaTime;
-        dragAmount.y = (this.y - lastPosition.y)*deltaTime;
+        dragAmount.x = (this.x - lastPosition.x)*deltaTime *.5 + dragAmount.x*.5; //New frame drag for this frame is a weighted average of previous frames
+        dragAmount.y = (this.y - lastPosition.y)*deltaTime *.5 + dragAmount.y*.5;
         lastPosition.x = this.x
         lastPosition.y = this.y;
 
