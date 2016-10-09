@@ -25,6 +25,7 @@ function loadStuff(game){
     game.load.script('DrinkOrder', 'js/drinkOrder.js');
     game.load.image('x', 'assets/sprites/x.png');
 
+    game.load.script('testObject', 'js/testObject.js');
     //coffee machine stuff
     game.load.script('coffeeMachine', 'js/coffeeMachine.js');
     game.load.image('coffeeMachineBase', 'assets/sprites/coffee_machine_base.png');

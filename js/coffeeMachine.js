@@ -8,17 +8,17 @@ coffeeMachine = function(game, x, y){
     this.anchor.set(0,1);
     //Add pieces
     this.addChild(new coffeeDial(game,119,-this.height+152));
-    this.indicator = this.addChild(new Phaser.Sprite(this.game,697,-this.height + 20,"coffeeIndicator"));
+    this.indicator = this.addChild(new Phaser.Sprite(game,697,-this.height + 20,"coffeeIndicator"));
     this.indicator.anchor.x = .5;
     //Power button
-    this.coffePowerButton = this.addChild(new coffeePowerButton(this.game,697,-this.height + 180));
+    this.coffePowerButton = this.addChild(new coffeePowerButton(game,697,-this.height + 180));
 
     //Screen
-    this.screen = this.addChild(new Phaser.Sprite(this.game,261,-this.height + 28,"screen"));
+    this.screen = this.addChild(new Phaser.Sprite(game,261,-this.height + 28,"screen"));
     //dispenser buttons
     this.dispensers = [];
     for(var i = 0; i < 3; i++){
-        this.dispensers.push(this.addChild(new coffeeDispenserButton(this.game, 119 + 292 * i, -this.height + 272)));
+        this.dispensers.push(this.addChild(new coffeeDispenserButton(game, 119 + 292 * i, -this.height + 272)));
     }
 
 };
@@ -27,7 +27,7 @@ coffeeMachine.prototype.constructor = coffeeMachine;
 coffeeMachine.prototype.update = function() {
     for(var i = 0; i < this.children.length; i++){
         this.children[i].update();
-        if(DEBUG_INFO) this.game.debug.body(this.children[i]);
+        if(DEBUG_INFO) game.debug.body(this.children[i]);
     }
 };
 
