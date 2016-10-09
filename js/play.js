@@ -31,7 +31,9 @@ playState = {
         game.state.machineLayer.addChild(new beanGrinder(game, 1000,game.height -40));
         //create coffee machine
         game.state.machineLayer.addChild(new coffeeMachine(game, 1600,game.height -40));
-
+        //create cup towers
+        game.state.machineLayer.addChild(new CupTower(game, 450, game.height - 40, CupTower.Type.GLASS));
+        game.state.machineLayer.addChild(new CupTower(game, 200, game.height - 40, CupTower.Type.PAPER));
 
         //Input events
         game.input.onTap.add(onTap);
