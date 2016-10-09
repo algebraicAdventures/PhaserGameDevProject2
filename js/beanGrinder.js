@@ -24,7 +24,7 @@ beanGrinder.prototype.update = function() {
 grinderHandle = function(game, x, y){
     Phaser.Sprite.call(this, game, x, y, 'grinderHandle');
     this.name = "grinderHandle";
-    this.anchor.set(.5,0.69886363636); // /r/theydidthemath
+    this.anchor.set(.5,0.70454545454); // /r/theydidthemath
     this.inputEnabled = true;
     //this.game.physics.p2.enable(this);
     //this.body.setSize(40,40,0,104);
