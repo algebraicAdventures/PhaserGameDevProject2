@@ -7,7 +7,6 @@ var WALL_BOUNCE = .5; //velocity transferred after hitting a wall, < 0 reduces v
 var heldObject; //object being dragged, null if no object is being dragged. Used for trigger collision in play.
 
 draggableObject = function(game, x, y, image){
-    //if(image == null) image = 'testSprite';
     Phaser.Sprite.call(this, game, x, y, image);
     //custom variables
     this.dragged = false;
@@ -69,7 +68,6 @@ draggableObject.prototype.update = function(){
     }
     else{
         //"Physics"
-        console.log('physics?');
         this.body.velocity.y += 2000 * deltaTime;
         var heightStop = FLOOR_HEIGHT - this.height * (1 - this.anchor.y);
         if(this.y >= heightStop){

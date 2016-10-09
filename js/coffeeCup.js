@@ -2,7 +2,7 @@
  * Created by wrighp on 10/5/2016.
  */
 
-CoffeeCup = function(game, x, y, type){
+var CoffeeCup = function(game, x, y, type){
     var image;
     switch(type) {
         case CoffeeCup.Type.GLASS:
@@ -11,12 +11,14 @@ CoffeeCup = function(game, x, y, type){
             image = 'PaperCup'; break;
     }
     draggableObject.call(this, game, x, y, image);
+    this.anchor.set(0.5, 1);
+    console.log(this);
+
     this.maxVolume_ = 3;
     this.components = {
         volume: 0,
         temp: null
     };
-    console.log(this.components);
 };
 
 CoffeeCup.prototype = Object.create(draggableObject.prototype);
@@ -31,11 +33,6 @@ CoffeeCup.Temp = {
 CoffeeCup.Type = {
     GLASS: 0,
     PAPER: 1
-};
-
-CoffeeCup.prototype.update = function(){
-    draggableObject.prototype.update.call(this);
-    var deltaTime = game.time.elapsed / 1000;
 };
 
 //Return true if interaction happens, return false if object should be thrown

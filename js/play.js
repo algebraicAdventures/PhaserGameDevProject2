@@ -32,8 +32,6 @@ playState = {
         //create coffee machine
         game.state.machineLayer.addChild(new coffeeMachine(game, 1600,game.height -40));
         //create cup towers
-        console.log(CoffeeCup);
-        console.log(CoffeeCup.Type);
         game.state.machineLayer.addChild(new CupTower(game, 450, game.height - 40, CoffeeCup.Type.GLASS));
         game.state.machineLayer.addChild(new CupTower(game, 200, game.height - 40, CoffeeCup.Type.PAPER));
 
@@ -53,7 +51,6 @@ playState = {
             var b = game.input.keyboard.addKey(Phaser.Keyboard.B);
             b.onDown.add(function(){DEBUG_INFO = !DEBUG_INFO; game.debug.reset(); text.visible = !text.visible});
         }
-
         console.log("State create function completed.");
     },
 
