@@ -36,9 +36,15 @@ playState = {
 
         //Input events
         game.input.onTap.add(onTap);
-        console.log("Create function.");
+
         var space = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-        space.onDown.add(game.state.dropDown.addOrder, game.state.dropDown);
+        space.onDown.add(function() {
+            game.state.dropDown.addOrder({
+                /* Hard coded for now */
+                volume: 3,
+                temp: DrinkOrder.Temp.HOT
+            });
+        } , game.state.dropDown);
 
         if(DEBUG_INFO){
             var text = new Phaser.Text(game, 20, game.height - 30,"Hit 'B' to toggle debug display",{backgroundColor: 'black',fill: 'white',});

@@ -1,7 +1,6 @@
 /**
  * Created by wrighp on 10/5/2016.
  */
-
 coffeeCup = function(game, x, y){
     draggableObject.call(this, game, x, y, 'testSprite');
 };
