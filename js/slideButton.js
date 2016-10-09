@@ -1,6 +1,8 @@
 /**
  * Created by Patrick on 10/5/2016.
  */
+var CAMERA_TWEEN_TIME = 333;
+
 slideButton = function(game, x, y, direction){
     Phaser.Sprite.call(this, game, x, y, 'testArrow');
     this.name = "slideButton";
@@ -38,7 +40,8 @@ slideButton.onInputDown = function(button){
 };
 slideButton.triggerButton = function(button, sprite){
     if(button.canUse && (sprite == null || checkOverlap(button,sprite))){
-        button.game.camera.x += button.direction;
+        game.state.cameraGoal += button.direction;
+        game.add.tween(button.game.camera).to({x: game.state.cameraGoal}, CAMERA_TWEEN_TIME, Phaser.Easing.Cubic.InOut, true);
         return true;
     }
     else{

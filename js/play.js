@@ -20,6 +20,8 @@ playState = {
 
     create: function(){
         game.camera.x = 1344;
+        game.state.cameraGoal = game.camera.x; //This is what the camera will interpolate to
+
         game.physics.startSystem(Phaser.Physics.ARCADE);
         //Create arrows
         game.state.hudLayer.addChild(new slideButton(game,0,game.height/2,-game.width));
@@ -45,7 +47,7 @@ playState = {
             });
         } , game.state.dropDown);
         // game.input.onTap.add(onTap);
-        
+
         if(DEBUG_INFO){
             var text = new Phaser.Text(game, 20, game.height - 30,"Hit 'B' to toggle debug display",{backgroundColor: 'black',fill: 'white',});
             game.state.hudLayer.addChild(text);

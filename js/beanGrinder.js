@@ -38,6 +38,7 @@ beanGrinder.prototype.update = function() {
         this.children[i].update();
         if(DEBUG_INFO) game.debug.body(this.children[i]);
     }
+    //Manual interpolation of bean position
     this.beans.y = this.beans.y + game.time.elapsed/500 * -(this.beans.y -( -this.height + 50 - 210 * this.totalBeans));
 };
 grinderHandle = function(game, x, y){

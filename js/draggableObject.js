@@ -29,7 +29,7 @@ draggableObject.prototype.preUpdate = function(){
     if(!this.dragged){
         //Check if object will move off screen in this frame, if so reverse it's velocity and multiply it by WALL_BOUNCE;
         var onScreen = Math.floor(this.x / game.width);
-        var cameraScreen = Math.floor(game.camera.x/game.width);
+        var cameraScreen = Math.floor(game.state.cameraGoal/game.width); //cameraGoal jumps immediately before the tween
         var newScreen = Math.floor((this.x + this.body.velocity.x * game.time.physicsElapsed + Math.sign(this.body.velocity.x)*this.width*.5)/game.width);
         if(newScreen != onScreen){
             this.body.velocity.x *= -1 * WALL_BOUNCE;
@@ -49,11 +49,17 @@ draggableObject.prototype.update = function(){
     var deltaTime = game.time.elapsed / 1000;
     if(this.dragged){ //Called if object is being dragged, here it checks for hovering over an arrow
 
+
         //Used to be called onDragUpdate, but the frequency was based on the poll rate of your device, which was inconsistent
         dragAmount.x = (this.x - lastPosition.x)*deltaTime *.5 + dragAmount.x*.5; //New frame drag for this frame is a weighted average of previous frames
         dragAmount.y = (this.y - lastPosition.y)*deltaTime *.5 + dragAmount.y*.5;
         lastPosition.x = this.x
         lastPosition.y = this.y;
+        //Patch to get dragging to be more smooth with camera movement
+        if(game.state.cameraGoal != game.camera.x){
+            this.x = this.dragPointer.worldX;
+            this.y = this.dragPointer.worldY;
+        }
 
         this.body.velocity.set(0,0);
         var hudElements = game.state.hudLayer.children;
@@ -61,7 +67,7 @@ draggableObject.prototype.update = function(){
             if(hudElements[i].name === "slideButton"){
                 if(slideButton.triggerButton(hudElements[i], this)){
                     hudElements[i].intervalTime = .5;
-                    this.x += hudElements[i].direction;
+                    //this.x += hudElements[i].direction; //Disabled as the camera interpolates now
                 }
             }
         }
@@ -83,6 +89,7 @@ draggableObject.prototype.update = function(){
 draggableObject.onDragStart = function(sprite, pointer, dragX, dragY, snapPoint){
     sprite.dragged = true;
     heldObject = sprite;
+    sprite.dragPointer = pointer;
 };
 
 draggableObject.onDragUpdate = function(sprite, pointer, dragX, dragY, snapPoint){
