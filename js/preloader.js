@@ -14,6 +14,7 @@ function loadStuff(game){
     game.load.image('grinder', 'assets/sprites/grinder.png');
     game.load.image('grinderHandle', 'assets/sprites/grinderhandle.png');
     game.load.image('paperDish', 'assets/sprites/paperdish.png');
+    game.load.image('beanPile', 'assets/sprites/grinder_beans.png');
 
     game.load.script('DrinkOrder', 'js/drinkOrder.js');
     game.load.script('CoffeeCup', 'js/coffeeCup.js');
@@ -28,5 +29,6 @@ function loadStuff(game){
     game.load.spritesheet('dispenserButton', 'assets/sprites/dispenserbutton_spritesheet.png', 83, 34);
     //game.load.image('coffeeBag', 'assets/sprites/coffeebag.png');
     game.load.image('dashedBox', 'assets/sprites/dashedBox.png');
+
     console.log("Preloaded files");
 }
