@@ -31,11 +31,11 @@ playState = {
         game.state.machineLayer.addChild(new beanGrinder(game, 1000,game.height -40));
         //create coffee machine
         game.state.machineLayer.addChild(new coffeeMachine(game, 1600,game.height -40));
-
+        //create cup towers
+        game.state.machineLayer.addChild(new CupTower(game, 450, game.height - 40, CoffeeCup.Type.GLASS));
+        game.state.machineLayer.addChild(new CupTower(game, 200, game.height - 40, CoffeeCup.Type.PAPER));
 
         //Input events
-        game.input.onTap.add(onTap);
-
         var space = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         space.onDown.add(function() {
             game.state.dropDown.addOrder({
@@ -51,7 +51,6 @@ playState = {
             var b = game.input.keyboard.addKey(Phaser.Keyboard.B);
             b.onDown.add(function(){DEBUG_INFO = !DEBUG_INFO; game.debug.reset(); text.visible = !text.visible});
         }
-
         console.log("State create function completed.");
     },
 
@@ -80,12 +79,6 @@ function triggerHandler(obj, triggers){
     }
 }
 
-function onTap(){
-    var theFeels = new draggableObject(game,game.input.activePointer.worldX,game.input.activePointer.worldY);
-    game.state.objectLayer.add(theFeels);
-    //theFeels.kill();
-    //theFeels.revive();
-}
 //Taken from phaser example at: http://phaser.io/examples/v2/sprites/overlap-tween-without-physics
 function checkOverlap(spriteA, spriteB) {
     var boundsA = spriteA.getBounds();

@@ -15,9 +15,16 @@ function loadStuff(game){
     game.load.image('grinderHandle', 'assets/sprites/grinderhandle.png');
     game.load.image('paperDish', 'assets/sprites/paperdish.png');
     game.load.image('beanPile', 'assets/sprites/grinder_beans.png');
-
-    game.load.script('DrinkOrder', 'js/drinkOrder.js');
+    //cup stuff
+    game.load.image('GlassCupTower', 'assets/sprites/cupHolder_full.png');
+    game.load.image('PaperCupTower', 'assets/sprites/paper_cupHolder_full.png');
+    game.load.image('GlassCup', 'assets/sprites/cup.png');
+    game.load.image('PaperCup', 'assets/sprites/paper_cup.png')
     game.load.script('CoffeeCup', 'js/coffeeCup.js');
+    game.load.script('CupTower', 'js/CupTower.js');
+    game.load.script('DrinkOrder', 'js/drinkOrder.js');
+    game.load.image('x', 'assets/sprites/x.png');
+
     game.load.script('testObject', 'js/testObject.js');
     //coffee machine stuff
     game.load.script('coffeeMachine', 'js/coffeeMachine.js');

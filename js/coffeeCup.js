@@ -2,15 +2,26 @@
  * Created by wrighp on 10/5/2016.
  */
 
-CoffeeCup = function(game, x, y){
-    draggableObject.call(this, game, x, y, 'testSprite');
+var CoffeeCup = function(game, x, y, type){
+    var image;
+    switch(type) {
+        case CoffeeCup.Type.GLASS:
+            image = 'GlassCup'; break;
+        case CoffeeCup.Type.PAPER:
+            image = 'PaperCup'; break;
+    }
+    draggableObject.call(this, game, x, y, image);
+    this.anchor.set(0.5, 1);
+
     this.maxVolume_ = 3;
-    this.components = {
+    this.components_ = {
         volume: 0,
         temp: null
     };
-    console.log(this.components);
 };
+
+CoffeeCup.prototype = Object.create(draggableObject.prototype);
+CoffeeCup.prototype.constructor = CoffeeCup;
 
 CoffeeCup.Temp = {
     HOT: 0,
@@ -18,12 +29,9 @@ CoffeeCup.Temp = {
     BAD: 2
 };
 
-CoffeeCup.prototype = Object.create(draggableObject.prototype);
-CoffeeCup.prototype.constructor = CoffeeCup;
-
-CoffeeCup.prototype.update = function(){
-    draggableObject.prototype.update.call(this);
-    var deltaTime = game.time.elapsed / 1000;
+CoffeeCup.Type = {
+    GLASS: 0,
+    PAPER: 1
 };
 
 //Return true if interaction happens, return false if object should be thrown
@@ -37,16 +45,16 @@ CoffeeCup.prototype.dragStopped = function(sprite,pointer){
  * @param temp Temperature of the added coffee.
  */
 CoffeeCup.prototype.addCoffee = function(temp) {
-    if(this.volume_ >= this.maxVolume_) {
+    if(this.components_.volume >= this.maxVolume_) {
         return;
     }
-    this.components.volume += 1;
+    this.components_.volume += 1;
 
     // Coffee cup is empty, so the coffee becomes whatever temperature is passed in.
-    if(this.components.temp === null) {
-        this.components.temp = temp;
-    } else if(this.components.temp !== temp) {
+    if(this.components_.temp === null) {
+        this.components_.temp = temp;
+    } else if(this.components_.temp !== temp) {
         // Mixing temperatures results in bad coffee.
-        this.components.temp = CoffeeCup.Temp.BAD;
+        this.components_.temp = CoffeeCup.Temp.BAD;
     }
 };
