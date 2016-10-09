@@ -44,7 +44,8 @@ playState = {
                 temp: CoffeeCup.Temp.HOT
             });
         } , game.state.dropDown);
-
+        // game.input.onTap.add(onTap);
+        
         if(DEBUG_INFO){
             var text = new Phaser.Text(game, 20, game.height - 30,"Hit 'B' to toggle debug display",{backgroundColor: 'black',fill: 'white',});
             game.state.hudLayer.addChild(text);
@@ -79,6 +80,12 @@ function triggerHandler(obj, triggers){
     }
 }
 
+function onTap(){
+    var theFeels = new draggableObject(game,game.input.activePointer.worldX,game.input.activePointer.worldY);
+    game.state.objectLayer.add(theFeels);
+    //theFeels.kill();
+    //theFeels.revive();
+}
 //Taken from phaser example at: http://phaser.io/examples/v2/sprites/overlap-tween-without-physics
 function checkOverlap(spriteA, spriteB) {
     var boundsA = spriteA.getBounds();
