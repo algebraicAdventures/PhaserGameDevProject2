@@ -20,8 +20,11 @@ function loadStuff(game){
     //coffee machine stuff
     game.load.script('coffeeMachine', 'js/coffeeMachine.js');
     game.load.image('coffeeMachineBase', 'assets/sprites/coffee_machine_base.png');
-    game.load.image('coffeeDial', 'assets/sprites/coffee_machine_dial.png');
-
+    game.load.image('coffeeDial', 'assets/sprites/dial_centered.png');
+    game.load.spritesheet('coffeeIndicator', 'assets/sprites/coffeeindicator_spritesheet.png', 107, 94);
+    game.load.spritesheet('powerButton', 'assets/sprites/powerbutton_spritesheet.png', 96, 96);
+    game.load.spritesheet('screen', 'assets/sprites/screen_spritesheet.png', 298, 200);
+    game.load.spritesheet('dispenserButton', 'assets/sprites/dispenserbutton_spritesheet.png', 83, 34);
     //game.load.image('coffeeBag', 'assets/sprites/coffeebag.png');
 
     console.log("Preloaded files");
