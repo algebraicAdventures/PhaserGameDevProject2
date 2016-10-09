@@ -57,7 +57,8 @@ grinderHandle.prototype.update = function() {
    // if(this.input.pointerOver()) {
     var pointerPos = game.input.activePointer.position;
     //If handle is being pulled or was pulled last frame, and mouse is down
-    if((this.grabbed || this.input.checkPointerOver(game.input.activePointer)) && game.input.activePointer.isDown){
+    //AND no object is being held
+    if(heldObject == null && (this.grabbed || this.input.checkPointerOver(game.input.activePointer)) && game.input.activePointer.isDown){
         var angle = Phaser.Point.angle(this.worldPosition, pointerPos) / Math.PI * 180 - 90;
         var change = Math.abs(angle - this.angle);
         change = Math.min(change, 60) * game.time.elapsed/180000 / 2;
