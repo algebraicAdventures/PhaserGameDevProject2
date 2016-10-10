@@ -111,6 +111,7 @@ dropdown.prototype.submitOrder = function(drink) {
         }
     }
     game.sound.play('orderFail');
+    game.state.score.removeLife();
     drink.kill();
 };
 
