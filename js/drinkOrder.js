@@ -1,8 +1,8 @@
 var TEXT_OFFSET_VERTICAL = 11;
 var TEXT_OFFSET_HORIZONTAL = -192;
-var ORDER_OFFSET_HORIZONTAL = -55;
+var ORDER_OFFSET_HORIZONTAL = -75;
 var ORDER_OFFSET_VERTICAL = 45;
-var ICON_SPACING = 10;
+var ICON_SPACING = 55;
 
 DrinkOrder = function(game, x, y, timeLimit, components) {
     Phaser.Sprite.call(this, game, x, y, 'order');
@@ -26,7 +26,6 @@ DrinkOrder = function(game, x, y, timeLimit, components) {
     };
 
     // Add icons to order components
-    var offset = 0;
     var image;
     switch(this.components_.cup) {
         case(CoffeeCup.Type.GLASS):
@@ -34,11 +33,10 @@ DrinkOrder = function(game, x, y, timeLimit, components) {
         case(CoffeeCup.Type.PAPER):
             image = 'PaperCup'; break;
     }
-    var sprite = game.make.sprite(ORDER_OFFSET_HORIZONTAL, ORDER_OFFSET_VERTICAL, image);
-    sprite.anchor.set(0, 1);
+    var sprite = game.make.sprite(ORDER_OFFSET_HORIZONTAL + ICON_SPACING, ORDER_OFFSET_VERTICAL, image);
+    sprite.anchor.set(0.5, 1);
     sprite.scale.setTo(0.25, 0.25);
     this.addChild(sprite);
-    offset += sprite.width + ICON_SPACING
 
     switch(this.components_.temp) {
         case(CoffeeCup.Temp.COLD):
@@ -46,8 +44,8 @@ DrinkOrder = function(game, x, y, timeLimit, components) {
         case(CoffeeCup.Temp.HOT):
             image = 'hot'; break;
     }
-    sprite = game.make.sprite(ORDER_OFFSET_HORIZONTAL + offset, ORDER_OFFSET_VERTICAL, image);
-    sprite.anchor.set(0, 1);
+    sprite = game.make.sprite(ORDER_OFFSET_HORIZONTAL + ICON_SPACING*2, ORDER_OFFSET_VERTICAL, image);
+    sprite.anchor.set(0.5, 1);
     this.addChild(sprite);
 };
 DrinkOrder.prototype = Object.create(Phaser.Sprite.prototype); /* Do we make this a sprite group? */

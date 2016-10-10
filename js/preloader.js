@@ -3,6 +3,7 @@
  */
 
 function loadStuff(game){
+
     game.load.script('draggableObject','js/draggableObject.js');
     game.load.image('testSprite', 'assets/sprites/testSprite.png');
     game.load.script('slideButton', 'js/slideButton.js');
@@ -41,6 +42,7 @@ function loadStuff(game){
     game.load.spritesheet('dispenserButton', 'assets/sprites/dispenserbutton_spritesheet.png', 83, 34);
     //game.load.image('coffeeBag', 'assets/sprites/coffeebag.png');
     game.load.image('dashedBox', 'assets/sprites/dashedBox.png');
+    game.load.script('dropArea','js/dropArea.js');
 
     console.log("Preloaded files");
 }
