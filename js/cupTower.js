@@ -26,7 +26,7 @@ CupTower.prototype = Object.create(Phaser.Sprite.prototype);
 CupTower.prototype.constructor = CupTower;
 
 CupTower.onTap = function(cupTower, pointer) {
-    var cup = game.state.objectLayer.add(new CoffeeCup(game, 0,0, cupTower.cupType));
+    var cup = game.state.objectLayer.add(new CoffeeCup(game, pointer.worldX - pointer.x,pointer.worldY - pointer.y, cupTower.cupType));
     cup.input.startDrag(pointer);
     cup.input.updateDrag(pointer);
 };

@@ -39,12 +39,12 @@ playState = {
         //create grinder
         game.state.machineLayer.addChild(new beanGrinder(game, 1000,game.height -40));
         //create coffee machine
-        game.state.machineLayer.addChild(new coffeeMachine(game, 1600,game.height -40));
+        game.state.machineLayer.addChild(new coffeeMachine(game, 2950,game.height -40));
         //create cup towers
-        game.state.machineLayer.addChild(new CupTower(game, 450, game.height - 40, CoffeeCup.Type.GLASS));
-        game.state.machineLayer.addChild(new CupTower(game, 200, game.height - 40, CoffeeCup.Type.PAPER));
+        game.state.machineLayer.addChild(new CupTower(game, 1850, game.height - 40, CoffeeCup.Type.GLASS));
+        game.state.machineLayer.addChild(new CupTower(game, 1600, game.height - 40, CoffeeCup.Type.PAPER));
         //beans
-        game.state.objectLayer.addChild(new BeanBag(game, game.width *2 + 300, game.height - 40));
+        game.state.objectLayer.addChild(new BeanBag(game, 300, game.height - 40));
 
         //Input events
         var space = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
