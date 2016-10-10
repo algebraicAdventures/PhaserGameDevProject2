@@ -14,8 +14,11 @@ slideButton = function(game, x, y, direction){
     }
     this.inputEnabled = true;
     game.physics.arcade.enable(this);
-
+    game.state.triggers.push(this);
     this.intervalTime = 0;
+    var scale = .25;
+    //The bounding box looks off, but that's because the scale X scal is negative
+    this.body.setSize(this.width * scale,this.height * scale , this.width*(1 -scale) *this.scale.x, this.height*(.5 -scale*.5));
     this.events.onInputDown.add(slideButton.onInputDown);
     this.input.useHandCursor = true;
 };
@@ -24,6 +27,7 @@ slideButton.prototype = Object.create(Phaser.Sprite.prototype);
 slideButton.prototype.constructor = slideButton;
 
 slideButton.prototype.update = function() {
+    if(DEBUG_INFO) game.debug.body(this);
     var camera = game.camera;
     this.visible = Phaser.Rectangle.containsPoint(camera.bounds,new Phaser.Point(camera.x + this.direction,camera.y));
     if(this.intervalTime > 0){
