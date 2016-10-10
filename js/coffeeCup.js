@@ -20,7 +20,7 @@ var CoffeeCup = function(game, x, y, type){
     };
 
     this.meter_ = new CoffeeMeter(game, -this.width/2, this.height/2 - 20);
-    //this.meter_.visible = false;
+    this.meter_.visible = false;
     this.addChild(this.meter_);
 
     // TEMPORARY FOR TESTING
@@ -72,14 +72,14 @@ CoffeeCup.prototype.addCoffee = function(temp) {
         this.components_.temp = temp;
         switch(this.components_.temp) {
             case CoffeeCup.Temp.HOT:
-                this.meter_.changeIcon('hot', 30, -3); break;
+                this.meter_.changeIcon('hot', -3, 30); break;
             case CoffeeCup.Temp.COLD:
-                this.meter_.changeIcon('cold', 30, -3); break;
+                this.meter_.changeIcon('cold', -3, 30); break;
         }
     } else if(this.components_.temp !== temp) {
         // Mixing temperatures results in bad coffee.
         this.components_.temp = CoffeeCup.Temp.BAD;
-        this.meter_.changeIcon('garbage', 41, 1);
+        this.meter_.changeIcon('garbage', 1, 42);
     }
 
     this.currentVolume_ += 1;
@@ -95,10 +95,12 @@ var CoffeeMeter = function(game, x, y) {
 CoffeeMeter.prototype = Object.create(Phaser.Sprite.prototype);
 CoffeeMeter.prototype.constructor = CoffeeMeter;
 
-CoffeeMeter.prototype.changeIcon = function(image, height, offsetY) {
+CoffeeMeter.prototype.changeIcon = function(image, offsetY, height) {
     this.icon_.loadTexture(image);
-    var scale = height / this.icon_.height;
-    console.log(scale);
-    this.icon_.scale.setTo(scale, scale);
+    if(height !== undefined) {
+        this.icon_.scale.setTo(1, 1);
+        var scale = height / this.icon_.height;
+        this.icon_.scale.setTo(scale, scale);
+    }
     this.icon_.y = offsetY === undefined ? this.y : offsetY;
 };
