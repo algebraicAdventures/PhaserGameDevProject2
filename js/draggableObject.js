@@ -104,7 +104,7 @@ draggableObject.prototype.dragStopped = function(sprite,pointer){
                 obj.destroy();
                 endStop = true;
             }
-            else if(obj.name == "coffee" && obj2.name == "grinder"){
+            else if(obj.name == "coffeeCup" && obj2.name == "machineSnap"){
                 endStop = true;
             }
             return false;
@@ -133,7 +133,6 @@ draggableObject.onDragStop = function(sprite, pointer){
 
 function objectHoverHandler(obj, obj2){
         if(obj.name == "beans" && obj2.name == "grinder"){
-            var BEAN_LOAD_TIME = 10;
             obj2.totalBeans = Math.min(obj2.totalBeans + deltaTime/BEAN_LOAD_TIME, 1);
         }
 }
