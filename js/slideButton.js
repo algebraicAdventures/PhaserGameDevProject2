@@ -27,7 +27,6 @@ slideButton.prototype.update = function() {
     var camera = game.camera;
     this.visible = Phaser.Rectangle.containsPoint(camera.bounds,new Phaser.Point(camera.x + this.direction,camera.y));
     if(this.intervalTime > 0){
-        var deltaTime = game.time.elapsed /1000;
         this.intervalTime= Math.max( this.intervalTime - deltaTime,0);
         this.canUse = false;
     }
