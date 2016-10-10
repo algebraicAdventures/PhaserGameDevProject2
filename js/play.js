@@ -29,6 +29,8 @@ playState = {
         //Create dropdown
         game.state.dropDown = new dropdown(game,game.width/2,0);
         game.state.hudLayer.addChild(game.state.dropDown);
+        // create garbage
+        game.state.hudLayer.addChild(new Garbage(game));
         //create grinder
         game.state.machineLayer.addChild(new beanGrinder(game, 1000,game.height -40));
         //create coffee machine
