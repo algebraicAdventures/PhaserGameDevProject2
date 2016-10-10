@@ -20,7 +20,7 @@ var CoffeeCup = function(game, x, y, type){
         temp: null
     };
 
-    this.meter_ = new CoffeeMeter(game);
+    this.meter_ = new CoffeeMeter(game, -this.width/2, this.height/2 - 20);
     this.addChild(this.meter_);
 };
 
@@ -67,8 +67,9 @@ CoffeeCup.prototype.addCoffee = function(temp) {
     }
 };
 
-var CoffeeMeter = function(game) {
-    Phaser.Sprite.call(this, game, 0, 0, 'CoffeeMeter');
+var CoffeeMeter = function(game, x, y) {
+    Phaser.Sprite.call(this, game, x, y, 'CoffeeMeter');
+    this.anchor.set(1, 1);
 };
 CoffeeMeter.prototype = Object.create(Phaser.Sprite.prototype);
 CoffeeMeter.prototype.constructor = CoffeeMeter;
