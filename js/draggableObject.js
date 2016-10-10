@@ -6,7 +6,7 @@ var FLOOR_HEIGHT = 735;
 var WALL_BOUNCE = .5; //velocity transferred after hitting a wall, < 0 reduces velocity
 var heldObject; //object being dragged, null if no object is being dragged. Used for trigger collision in play.
 
-draggableObject = function(game, x, y, image){
+var draggableObject = function(game, x, y, image){
     if(image == null) image = "testSprite";
     Phaser.Sprite.call(this, game, x, y, image);
     //custom variables
@@ -109,6 +109,11 @@ draggableObject.prototype.dragStopped = function(sprite,pointer){
             }
             else if(obj.name == "paperDish" && obj2.name == "grinderBox"){
                 draggableObject.snapOn(obj,obj2);
+            }
+            else if(obj.name == "coffeeCup" && obj2.name == "orderDropoff"){
+                draggableObject.snapOn(obj,obj2);
+                game.state.dropDown.submitOrder(obj);
+                obj2.attachedSprite = null;
             }
             return false;
     }, this);

@@ -1,11 +1,11 @@
 /**
- * Created by wrighp on 10/6/2016.
+ * Order manager logic.
  */
 var TAB_SIZE = 42;
 var SPACING = 81;
 var OFFSET = 9;
 var TWEEN_TIME = 333;
-var ORDER_TIME = 10000; /* For testing purposes */
+var ORDER_TIME = 120000; /* For testing purposes */
 var TEXT_VISIBLE_TIME = 3; //Should be a multiple of TEXT_FLICKER_RATE
 var TEXT_FLICKER_RATE = 500;
 dropdown = function(game, x, y){
@@ -86,7 +86,7 @@ dropdown.prototype.removeOrder = function(order) {
         return;
     }
     this.activeOrders_.splice(index, 1);
-
+    order.kill();
     // Shift all the other orders' positions to fill the gap.
     for(var i = index; i < this.numOrders(); i++) {
         this.activeOrders_[i].y = -(TAB_SIZE + SPACING * (i+1));
@@ -98,11 +98,26 @@ dropdown.prototype.removeOrder = function(order) {
     }
 };
 
+dropdown.prototype.submitOrder = function(drink) {
+    for(var i = 0; i < this.activeOrders_.length; i++) {
+        var order = this.activeOrders_[i];
+        if(order.checkOrder(drink)) {
+            this.removeOrder(order);
+            game.sound.play('orderSuccess');
+            this.game.state.score.addScore(order.price);
+            drink.kill();
+            return;
+        }
+    }
+    game.sound.play('orderFail');
+    drink.kill();
+};
+
 dropdown.prototype.toggle = function() {
     this.open_ ? this.close() : this.open();
     //Turn off alert when opening
     if(this.open_) this.textAlertTime = 0;
-}
+};
 
 /**
  * @param openNumber number of orders to show.
