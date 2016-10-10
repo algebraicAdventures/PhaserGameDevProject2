@@ -19,6 +19,7 @@ function loadStuff(game){
     game.load.image('grinder', 'assets/sprites/grinder.png');
     game.load.image('grinderHandle', 'assets/sprites/grinderhandle.png');
     game.load.image('paperDish', 'assets/sprites/paperdish.png');
+    game.load.image('paperDishFilled', 'assets/sprites/paperdish_filled.png');
     game.load.image('beanPile', 'assets/sprites/grinder_beans.png');
     game.load.image('beanBag', 'assets/sprites/bean_bag.png');
 

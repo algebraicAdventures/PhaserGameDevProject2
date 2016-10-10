@@ -144,7 +144,10 @@ function objectHoverHandler(obj, obj2){
             obj2.totalBeans = Math.min(obj2.totalBeans + mag/BEAN_LOAD_TIME, 1);
             if(obj2.totalBeans != 1 && mag > .0005)obj.grabNoise.play('',0,1,false,false);
         }
-        if(obj2.name == "garbage"){
+        else if(obj2.constructor == dropArea){
+            obj2.tint = dropArea.HOVER_TINT;
+        }
+        else if(obj2.name == "garbage"){
             obj2.hovered = true;
         }
 }
