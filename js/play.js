@@ -48,7 +48,8 @@ playState = {
         game.state.objectLayer.addChild(new PaperDish(game, 600, game.height - 40));
         //Spawn beans last so they go over things
         game.state.objectLayer.addChild(new BeanBag(game, 300, game.height - 40));
-
+        // create order drop off
+        game.state.machineLayer.addChild(new dropArea(game, game.width + 830, 330, 'orderDropoff'));
 
         //Input events
         var space = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);

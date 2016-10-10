@@ -22,8 +22,9 @@ DrinkOrder = function(game, x, y, timeLimit, components) {
     // Order components
     this.components_ = {
         cup: components.cup,
-        temp: components.temp
+        temp: components.temp,
     };
+    this.price = 10;
 
     // Add icons to order components
     var image;
@@ -63,7 +64,6 @@ DrinkOrder.prototype.onTimerEnd = function() {
     this.signal_.dispatch(this);
     this.game.state.score.removeLife();
     this.game.sound.play('orderFail', 0.9);
-    this.kill();
 };
 
 /**
