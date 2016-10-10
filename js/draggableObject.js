@@ -12,6 +12,7 @@ var draggableObject = function(game, x, y, image){
     //custom variables
     this.snappedArea = null; //For when object is snappedArea in place
     this.dragged = false;
+    this.invincible = false; //Is object destroyed when dropped over X?
     this.inputEnabled = true;
     this.input.enableDrag(true); //False means it does NOT snap to center
     this.input.useHandCursor = true;
@@ -100,7 +101,7 @@ var endStop; //false if object should be thrown
 draggableObject.prototype.dragStopped = function(sprite,pointer){
     endStop = false;
     game.physics.arcade.collide(sprite, game.state.triggers,null, function (obj, obj2){
-            if(obj2.name == "garbage" && obj.name != "beans"){
+            if(obj2.name == "garbage" && !obj.invincible){
                 obj.destroy();
                 game.sound.play("trashNoise");
                 endStop = true;

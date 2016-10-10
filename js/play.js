@@ -9,9 +9,9 @@ playState = {
         game.camera.bounds = game.world.bounds;
 
         game.state.machineLayer = game.add.group();
-        game.state.objectLayer = game.add.group();
         game.state.hudLayer = game.add.group();
         game.state.hudLayer.fixedToCamera = true;
+        game.state.objectLayer = game.add.group();
         game.state.dropDown;
         game.state.triggers = []; //array of sprites to be used as trigger zones
     },

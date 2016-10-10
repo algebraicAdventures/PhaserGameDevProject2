@@ -8,6 +8,7 @@ BeanBag = function(game, x, y){
     this.name = 'beans';
     this.weight = .2;
     this.grabNoise = new Phaser.Sound(this.game,"beanGrab",1,false); //Noise for when bag is loading beans
+    this.invincible = true;
 };
 
 BeanBag.prototype = Object.create(draggableObject.prototype);
@@ -16,6 +17,7 @@ BeanBag.prototype.constructor = BeanBag;
 PaperDish = function(game, x, y){
     draggableObject.call(this, game, x, y, "paperDish"); //paperDishFilled is the other one
     this.name = 'paperDish';
+    this.invincible = true;
 };
 
 PaperDish.prototype = Object.create(draggableObject.prototype);
