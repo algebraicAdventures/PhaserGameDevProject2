@@ -64,3 +64,4 @@ grinderHandle.prototype.update = function() {
         this.grabbed = false;
     }
 };
+
