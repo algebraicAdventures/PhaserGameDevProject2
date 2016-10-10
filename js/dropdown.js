@@ -54,15 +54,15 @@ dropdown.prototype.numOrders = function() {
  * }
  */
 dropdown.prototype.addOrder = function(components) {
+    var numOrders = this.numOrders();
+    if(numOrders >= this.maxOrders_) {
+        return;
+    }
     game.sound.play("bell",.75);
     if (!this.open_) {
         this.textAlertTime = TEXT_VISIBLE_TIME;
         this.textAlert.alpha = 0; //Reset text alert
         game.add.tween(this.textAlert).to({alpha: 1}, TEXT_FLICKER_RATE, Phaser.Easing.Sinusoidal.InOut,true,0,3,true);
-    }
-    var numOrders = this.numOrders();
-    if(numOrders >= this.maxOrders_) {
-        return;
     }
     var newOrder = new DrinkOrder(this.game, 0, -(TAB_SIZE + SPACING * (numOrders + 1)) + OFFSET, ORDER_TIME, components);
     newOrder.anchor.set(0.5, 0);
