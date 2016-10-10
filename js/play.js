@@ -61,7 +61,7 @@ playState = {
         if(heldObject != null){
             //This is called to check if object is hovering over a collider but isn't dropped i.e. bag of beans
             //objectHoverHandler is in draggableObject
-           game.physics.arcade.collide(heldObject, game.state.triggers, objectHoverHandler, function(){return false}, this);
+           game.physics.arcade.collide(heldObject, game.state.triggers, null, objectHoverHandler, this);
         }
     },
     shutdown: function(){

@@ -17,16 +17,9 @@ beanGrinder = function(game, x, y){
     this.beans.mask = mask;
     this.totalBeans = 1;
 
-    this.snapBox = this.addChild(new Phaser.Sprite(game,0,-100,"dashedBox"));
-    this.snapBox.tint = 0x888888;
-    this.snapBox.anchor.set(.5,0);
-    this.snapBox.alpha = 55;
-    this.snapBox.name = "grinderBox";
-    game.physics.arcade.enable(this.snapBox);
-    game.state.triggers.push(this.snapBox);
-
+    this.snapBox = this.addChild(new dropArea(game,0,-100,"grinderBox"));
     this.handle = this.addChild(new grinderHandle(game,0,-this.height+328));
-
+    game.state.triggers.push(this); //Add this so beans can be added to it
 
 };
 

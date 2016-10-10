@@ -7,8 +7,10 @@ var WALL_BOUNCE = .5; //velocity transferred after hitting a wall, < 0 reduces v
 var heldObject; //object being dragged, null if no object is being dragged. Used for trigger collision in play.
 
 draggableObject = function(game, x, y, image){
+    if(image == null) image = "testSprite";
     Phaser.Sprite.call(this, game, x, y, image);
     //custom variables
+    this.name = "beans";
     this.dragged = false;
     this.inputEnabled = true;
     this.input.enableDrag(true); //False means it does NOT snap to center
@@ -46,7 +48,6 @@ var lastPosition = {x : 0, y: 0}; //For dragging
 var dragAmount = {x : 0, y: 0};
 
 draggableObject.prototype.update = function(){
-
     if(this.dragged){ //Called if object is being dragged, here it checks for hovering over an arrow
         //Used to be called onDragUpdate, but the frequency was based on the poll rate of your device, which was inconsistent
         dragAmount.x = (this.x - lastPosition.x)*deltaTime *.5 + dragAmount.x*.5; //New frame drag for this frame is a weighted average of previous frames
@@ -94,18 +95,23 @@ draggableObject.onDragUpdate = function(sprite, pointer, dragX, dragY, snapPoint
 
 };
 
-//Return true if interaction happens, return false if object should be thrown
+var endStop; //false if object should be thrown
+//Set endStop true if object shouldn't be thrown
 draggableObject.prototype.dragStopped = function(sprite,pointer){
-    game.physics.arcade.collide(heldObject, game.state.triggers, function (obj, triggers){
-        for(var i = 0; i < triggers.length; i++){
-            if(obj.name == "beans" && triggers[i] == "grinder"){
-
+    endStop = false;
+    game.physics.arcade.collide(sprite, game.state.triggers,null, function (obj, obj2){
+            if(obj2.name == "garbage"){
+                obj.destroy();
+                endStop = true;
             }
-        }
-    } , function(){return false}, this);
+            else if(obj.name == "coffee" && obj2.name == "grinder"){
+                endStop = true;
+            }
+            return false;
+    }, this);
 
-    return false;
-}
+    return endStop;
+};
 draggableObject.onDragStop = function(sprite, pointer){
     //Check for overlap with things here
     heldObject = null;
@@ -125,10 +131,9 @@ draggableObject.onDragStop = function(sprite, pointer){
     }
 };
 
-function objectHoverHandler(obj, triggers){
-    for(var i = 0; i < triggers.length; i++){
-        if(obj.name == "beans" && triggers[i] == "grinder"){
-
+function objectHoverHandler(obj, obj2){
+        if(obj.name == "beans" && obj2.name == "grinder"){
+            var BEAN_LOAD_TIME = 10;
+            obj2.totalBeans = Math.min(obj2.totalBeans + deltaTime/BEAN_LOAD_TIME, 1);
         }
-    }
 }
