@@ -1,11 +1,11 @@
 DrinkOrder = function(game, x, y, timeLimit, components) {
-    Phaser.Sprite.call(this, game, x, y);
+    Phaser.Sprite.call(this, game, x, y, 'order');
     this.anchor.set(0.5, 0);
 
     this.timer_ = game.time.create(false);
     this.signal_ = new Phaser.Signal();
 
-    this.timerText_ = this.addChild(new Phaser.Text(game, 0, 0, util.formatTime(timeLimit), {
+    this.timerText_ = this.addChild(new Phaser.Text(game, -192, 11, util.formatTime(timeLimit), {
         align: 'center',
         fill: 'white',
     }));
@@ -18,7 +18,6 @@ DrinkOrder = function(game, x, y, timeLimit, components) {
         volume: components.volume,
         temp: components.temp
     };
-    console.log(this.components_);
 };
 DrinkOrder.prototype = Object.create(Phaser.Sprite.prototype); /* Do we make this a sprite group? */
 DrinkOrder.prototype.constructor = DrinkOrder;
