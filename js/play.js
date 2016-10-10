@@ -36,6 +36,8 @@ playState = {
         //create cup towers
         game.state.machineLayer.addChild(new CupTower(game, 450, game.height - 40, CoffeeCup.Type.GLASS));
         game.state.machineLayer.addChild(new CupTower(game, 200, game.height - 40, CoffeeCup.Type.PAPER));
+        //beans
+        game.state.objectLayer.addChild(new BeanBag(game, game.width *2 + 300, game.height - 40));
 
         //Input events
         var space = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);

@@ -5,6 +5,7 @@
 function loadStuff(game){
 
     game.load.script('draggableObject','js/draggableObject.js');
+    game.load.script('draggables','js/draggables.js');
     game.load.image('testSprite', 'assets/sprites/testSprite.png');
     game.load.script('slideButton', 'js/slideButton.js');
     game.load.image('testArrow', 'assets/sprites/testArrow.png');
@@ -16,6 +17,8 @@ function loadStuff(game){
     game.load.image('grinderHandle', 'assets/sprites/grinderhandle.png');
     game.load.image('paperDish', 'assets/sprites/paperdish.png');
     game.load.image('beanPile', 'assets/sprites/grinder_beans.png');
+    game.load.image('beanBag', 'assets/sprites/bean_bag.png');
+
     //cup stuff
     game.load.image('GlassCupTower', 'assets/sprites/cupHolder_full.png');
     game.load.image('PaperCupTower', 'assets/sprites/paper_cupHolder_full.png');
