@@ -17,8 +17,10 @@ coffeeMachine = function(game, x, y){
     this.screen = this.addChild(new Phaser.Sprite(game,261,-this.height + 28,"screen"));
     //dispenser buttons
     this.dispensers = [];
+    this.boxes = [];
     for(var i = 0; i < 3; i++){
         this.dispensers.push(this.addChild(new coffeeDispenserButton(game, 119 + 292 * i, -this.height + 272)));
+        this.boxes.push(this.addChild(new dropArea(game,119 + 292 * i, -this.height + 430,"machineBox")));
     }
 
 };

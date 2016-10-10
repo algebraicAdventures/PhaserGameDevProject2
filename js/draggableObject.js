@@ -10,14 +10,14 @@ draggableObject = function(game, x, y, image){
     if(image == null) image = "testSprite";
     Phaser.Sprite.call(this, game, x, y, image);
     //custom variables
-    this.name = "beans";
+    this.snapped = false; //For when object is snapped in place
     this.dragged = false;
     this.inputEnabled = true;
     this.input.enableDrag(true); //False means it does NOT snap to center
     this.input.useHandCursor = true;
     game.physics.arcade.enable(this);
     this.anchor.set(.5,.5); //Remember we moved the anchor
-
+    this.weight = 1; //Higher is lighter
     this.events.onDragStart.add(draggableObject.onDragStart);
     this.events.onDragUpdate.add(draggableObject.onDragUpdate);
     this.events.onDragStop.add(draggableObject.onDragStop);
@@ -71,7 +71,7 @@ draggableObject.prototype.update = function(){
             }
         }
     }
-    else{
+    else if(!this.snapped){
         //"Physics"
         this.body.velocity.y += 2000 * deltaTime;
         var heightStop = FLOOR_HEIGHT - this.height * (1 - this.anchor.y);
@@ -89,6 +89,7 @@ draggableObject.onDragStart = function(sprite, pointer, dragX, dragY, snapPoint)
     sprite.dragged = true;
     heldObject = sprite;
     sprite.dragPointer = pointer;
+    this.snapped = false;
 };
 
 draggableObject.onDragUpdate = function(sprite, pointer, dragX, dragY, snapPoint){
@@ -100,11 +101,15 @@ var endStop; //false if object should be thrown
 draggableObject.prototype.dragStopped = function(sprite,pointer){
     endStop = false;
     game.physics.arcade.collide(sprite, game.state.triggers,null, function (obj, obj2){
-            if(obj2.name == "garbage"){
+            if(obj2.name == "garbage" && obj.name != "beans"){
                 obj.destroy();
                 endStop = true;
             }
-            else if(obj.name == "coffeeCup" && obj2.name == "machineSnap"){
+            else if(obj.name == "coffeeCup" && obj2.name == "machineBox"){
+                obj.x = obj2.x + obj2.parent.x;
+                obj.y = obj2.y + obj2.parent.y - obj.height/2 + obj2.height/2 +30;
+                obj.snapped = true;
+                game.sound.play("cupPlace",.5);
                 endStop = true;
             }
             return false;
@@ -115,6 +120,7 @@ draggableObject.prototype.dragStopped = function(sprite,pointer){
 draggableObject.onDragStop = function(sprite, pointer){
     //Check for overlap with things here
     heldObject = null;
+    sprite.dragged = false;
     if(draggableObject.prototype.dragStopped(sprite, pointer)){
 
     }
@@ -123,9 +129,8 @@ draggableObject.onDragStop = function(sprite, pointer){
         //Can have different forces for heavier objects (or different drag)
         var DRAG_STRENGTH = 2000;
         var MAX_FORCE = 1500;
-        sprite.dragged = false;
         var vector = new Phaser.Point(dragAmount.x , dragAmount.y);
-        var force = Phaser.Math.clamp(vector.getMagnitude()*DRAG_STRENGTH, -MAX_FORCE, MAX_FORCE);
+        var force = Phaser.Math.clamp(vector.getMagnitude()*DRAG_STRENGTH * sprite.weight, -MAX_FORCE, MAX_FORCE);
         vector = vector.normalize().multiply(force,force);
         sprite.body.velocity.add(vector.x,vector.y);
     }
@@ -133,8 +138,9 @@ draggableObject.onDragStop = function(sprite, pointer){
 
 function objectHoverHandler(obj, obj2){
         if(obj.name == "beans" && obj2.name == "grinder"){
-            var mag = new Phaser.Point(dragAmount.x , dragAmount.y).getMagnitude();
-            obj2.totalBeans = Math.min(obj2.totalBeans + mag*deltaTime/BEAN_LOAD_TIME, 1);
+            var mag = new Phaser.Point(dragAmount.x , dragAmount.y).getMagnitude() *deltaTime;
+            obj2.totalBeans = Math.min(obj2.totalBeans + mag/BEAN_LOAD_TIME, 1);
+            if(obj2.totalBeans != 1 && mag > .0005)obj.grabNoise.play('',0,1,false,false);
         }
         if(obj2.name == "garbage"){
 

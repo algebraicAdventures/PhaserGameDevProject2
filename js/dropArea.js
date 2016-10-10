@@ -5,13 +5,24 @@ dropArea = function(game, x, y, name){
     Phaser.Sprite.call(this, game, x, y, 'dashedBox');
     this.name = name;
     this.tint = 0x888888;
-    this.anchor.set(.5,0);
+    this.anchor.set(.5,.5);
     this.alpha = 55;
     game.physics.arcade.enable(this);
     game.state.triggers.push(this);
+    this.body.immovable = true;
+    game.add.tween(this.scale).to({x: .9,y:.9}, 333, Phaser.Easing.Cubic.InOut, true,0,-1,true);
 };
 dropArea.prototype = Object.create(Phaser.Sprite.prototype);
 dropArea.prototype.constructor = dropArea;
 dropArea.prototype.update = function() {
-
+    var setVisible;
+    if(this.name == "machineBox"){
+        setVisible = (heldObject != null && heldObject.name == "coffeeCup");
+    }
+    else if(this.name == "grinderBox"){
+        setVisible = (heldObject != null && heldObject.name == "paperDish");
+    }
+    if(this.visible != setVisible){
+        this.visible = setVisible;
+    }
 };

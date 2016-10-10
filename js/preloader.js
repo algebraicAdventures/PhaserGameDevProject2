@@ -3,7 +3,6 @@
  */
 
 function loadStuff(game){
-
     game.load.script('draggableObject','js/draggableObject.js');
     game.load.script('draggables','js/draggables.js');
     game.load.image('testSprite', 'assets/sprites/testSprite.png');
@@ -46,6 +45,12 @@ function loadStuff(game){
     //game.load.image('coffeeBag', 'assets/sprites/coffeebag.png');
     game.load.image('dashedBox', 'assets/sprites/dashedBox.png');
     game.load.script('dropArea','js/dropArea.js');
+
+    //Sounds
+    game.load.audio('ambience', 'SFX/Coffee_Ambience.mp3');
+    game.load.audio('beanGrab', 'SFX/Coffee_Bean_Grab.mp3');
+    game.load.audio('grinderSound', 'SFX/Coffee_Grinder_Turn.mp3');
+    game.load.audio('cupPlace', 'SFX/Cup_Place.mp3');
 
     console.log("Preloaded files");
 }

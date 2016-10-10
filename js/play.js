@@ -19,6 +19,8 @@ playState = {
     },
 
     create: function(){
+        game.sound.play("ambience",1,true);
+
         game.camera.x = 1344;
         game.state.cameraGoal = game.camera.x; //This is what the camera will interpolate to
 

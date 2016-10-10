@@ -9,6 +9,7 @@ beanGrinder = function(game, x, y){
     this.anchor.set(.5,1);
     game.physics.arcade.enable(this);
     this.body.setSize(this.width,this.height/2,0, 0);
+    this.body.immovable = true;
     var mask = this.addChild(new Phaser.Graphics(game,0,0)); //Mask to cover up the grounds
     mask.beginFill('white');
     mask.drawPolygon([[-92,269-this.height],[-138, 34 - this.height],[134,34 - this.height],[90,269-this.height]]);
@@ -17,10 +18,9 @@ beanGrinder = function(game, x, y){
     this.beans.mask = mask;
     this.totalBeans = 1;
 
-    this.snapBox = this.addChild(new dropArea(game,0,-100,"grinderBox"));
+    this.snapBox = this.addChild(new dropArea(game,0,-90,"grinderBox"));
     this.handle = this.addChild(new grinderHandle(game,0,-this.height+328));
     game.state.triggers.push(this); //Add this so beans can be added to it
-
 };
 
 beanGrinder.prototype = Object.create(Phaser.Sprite.prototype);
@@ -44,24 +44,31 @@ grinderHandle = function(game, x, y){
     this.hitArea = new Phaser.Circle(0, -103, 40);
     this.angle = 45;
     this.grabbed = false;
+    this.grinderSound = game.add.audio("grinderSound");
+    this.grinderSound.play('',0,true);
 };
 grinderHandle.prototype = Object.create(Phaser.Sprite.prototype);
 grinderHandle.prototype.constructor = grinderHandle;
 grinderHandle.prototype.update = function() {
+
    // if(this.input.pointerOver()) {
     var pointerPos = game.input.activePointer.position;
     //If handle is being pulled or was pulled last frame, and mouse is down
     //AND no object is being held
     if(heldObject == null && (this.grabbed || this.input.checkPointerOver(game.input.activePointer)) && game.input.activePointer.isDown){
         var angle = Phaser.Point.angle(this.worldPosition, pointerPos) / Math.PI * 180 - 90;
+        angle = angle < -180 ? angle + 360 : angle;
         var change = Math.abs(angle - this.angle);
-        change = Math.min(change, 60) * deltaTime/180 / 2;
+        change = Math.min(change, 90) * deltaTime/180 / 2;
+        if(change > 0) this.grinderSound.resume();
+        else    this.grinderSound.pause();
         this.parent.totalBeans = Math.max(0, this.parent.totalBeans - change);
         this.angle = angle;
         this.grabbed = true;
     }
     else{
         this.grabbed = false;
+        this.grinderSound.pause();
     }
 };
 
