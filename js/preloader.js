@@ -22,7 +22,8 @@ function loadStuff(game){
     game.load.image('PaperCup', 'assets/sprites/paper_cup.png')
     game.load.script('CoffeeCup', 'js/coffeeCup.js');
     game.load.script('CupTower', 'js/CupTower.js');
-    game.load.image('x', 'assets/sprites/x.png');
+    game.load.image('garbage', 'assets/sprites/x.png');
+    game.load.script('Garbage', 'js/garbage.js');
     // Order stuff
     game.load.image('order', 'assets/sprites/order.png');
     game.load.image('hot', 'assets/sprites/hot.png');
