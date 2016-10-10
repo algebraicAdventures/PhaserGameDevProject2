@@ -62,7 +62,7 @@ grinderHandle.prototype.update = function() {
     if(heldObject == null && (this.grabbed || this.input.checkPointerOver(game.input.activePointer)) && game.input.activePointer.isDown){
         var angle = Phaser.Point.angle(this.worldPosition, pointerPos) / Math.PI * 180 - 90;
         var change = Math.abs(angle - this.angle);
-        change = Math.min(change, 60) * game.time.elapsed/180000 / 2;
+        change = Math.min(change, 60) * deltaTime/180 / 2;
         this.parent.totalBeans = Math.max(0, this.parent.totalBeans - change);
         this.angle = angle;
         this.grabbed = true;

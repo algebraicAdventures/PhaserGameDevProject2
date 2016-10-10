@@ -46,10 +46,8 @@ var lastPosition = {x : 0, y: 0}; //For dragging
 var dragAmount = {x : 0, y: 0};
 
 draggableObject.prototype.update = function(){
-    var deltaTime = game.time.elapsed / 1000;
+
     if(this.dragged){ //Called if object is being dragged, here it checks for hovering over an arrow
-
-
         //Used to be called onDragUpdate, but the frequency was based on the poll rate of your device, which was inconsistent
         dragAmount.x = (this.x - lastPosition.x)*deltaTime *.5 + dragAmount.x*.5; //New frame drag for this frame is a weighted average of previous frames
         dragAmount.y = (this.y - lastPosition.y)*deltaTime *.5 + dragAmount.y*.5;
@@ -97,7 +95,17 @@ draggableObject.onDragUpdate = function(sprite, pointer, dragX, dragY, snapPoint
 };
 
 //Return true if interaction happens, return false if object should be thrown
-draggableObject.prototype.dragStopped = function(sprite,pointer){return false;}
+draggableObject.prototype.dragStopped = function(sprite,pointer){
+    game.physics.arcade.collide(heldObject, game.state.triggers, function (obj, triggers){
+        for(var i = 0; i < triggers.length; i++){
+            if(obj.name == "beans" && triggers[i] == "grinder"){
+
+            }
+        }
+    } , function(){return false}, this);
+
+    return false;
+}
 draggableObject.onDragStop = function(sprite, pointer){
     //Check for overlap with things here
     heldObject = null;
@@ -116,3 +124,11 @@ draggableObject.onDragStop = function(sprite, pointer){
         sprite.body.velocity.add(vector.x,vector.y);
     }
 };
+
+function objectHoverHandler(obj, triggers){
+    for(var i = 0; i < triggers.length; i++){
+        if(obj.name == "beans" && triggers[i] == "grinder"){
+
+        }
+    }
+}

@@ -2,7 +2,7 @@
  * Created by wrighp on 10/4/2016.
  */
 var DEBUG_INFO = true; //set true to see various debug info
-
+var deltaTime = 1;
 playState = {
     init: function(){
         game.world.setBounds(0,0,1344*3,750); //arbitrary 3 window size, it doesn't seem to matter
@@ -54,29 +54,26 @@ playState = {
     },
 
     update: function(){
-
+        deltaTime = game.time.elapsed / 1000;
         if(DEBUG_INFO){
             game.debug.cameraInfo(game.camera, 32, 32);
         }
         if(heldObject != null){
-           game.physics.arcade.collide(heldObject, game.state.triggers, triggerHandler, function(){return false}, this);
+            //This is called to check if object is hovering over a collider but isn't dropped i.e. bag of beans
+            //objectHoverHandler is in draggableObject
+           game.physics.arcade.collide(heldObject, game.state.triggers, objectHoverHandler, function(){return false}, this);
         }
     },
     shutdown: function(){
-
+        //Reset your global variables here!!
+        heldObject = null;
     },
     onDragStart: function(){
 
     }
 
 };
-function triggerHandler(obj, triggers){
-    for(var i = 0; i < triggers.length; i++){
-        if(obj.name == "beans" && triggers[i] == "grinder"){
 
-        }
-    }
-}
 
 function onTap(){
     var theFeels = new draggableObject(game,game.input.activePointer.worldX,game.input.activePointer.worldY);
