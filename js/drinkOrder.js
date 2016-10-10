@@ -64,6 +64,7 @@ DrinkOrder.prototype.onTimerEnd = function() {
     this.signal_.dispatch(this);
     this.game.state.score.removeLife();
     this.game.sound.play('orderFail', 0.9);
+    this.kill();
 };
 
 /**
