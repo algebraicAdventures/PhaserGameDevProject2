@@ -51,6 +51,7 @@ function loadStuff(game){
     game.load.audio('beanGrab', 'SFX/Coffee_Bean_Grab.mp3');
     game.load.audio('grinderSound', 'SFX/Coffee_Grinder_Turn.mp3');
     game.load.audio('cupPlace', 'SFX/Cup_Place.mp3');
+    game.load.audio('cupRemove', 'SFX/Cup_Remove.mp3');
 
     console.log("Preloaded files");
 }

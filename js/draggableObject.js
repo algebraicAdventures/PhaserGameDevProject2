@@ -36,6 +36,7 @@ draggableObject.prototype.preUpdate = function(){
         if(newScreen != onScreen){
             this.body.velocity.x *= -1 * WALL_BOUNCE;
             //Play bounce sound
+            game.sound.play("cupRemove",Math.abs(this.body.velocity.x)/3000);
         }
     }
 
@@ -73,6 +74,8 @@ draggableObject.prototype.update = function(){
         var heightStop = FLOOR_HEIGHT - this.height * (1 - this.anchor.y);
         if(this.y >= heightStop){
             this.y = heightStop;
+            if(this.body.velocity.y > 2000 * deltaTime) //Play sound if it hit the ground
+                game.sound.play("cupRemove",Math.abs(this.body.velocity.y)/8000);
             this.body.velocity.y = 0;
             //this.body.acceleration.y = 0;
         }
