@@ -19,6 +19,8 @@ var CoffeeCup = function(game, x, y, type){
         cup: type,
         temp: null
     };
+
+    this.meter_ = new CoffeeMeter(game);
 };
 
 CoffeeCup.prototype = Object.create(draggableObject.prototype);
@@ -62,4 +64,8 @@ CoffeeCup.prototype.addCoffee = function(temp) {
         // Mixing temperatures results in bad coffee.
         this.components_.temp = CoffeeCup.Temp.BAD;
     }
+};
+
+var CoffeeMeter = function(game) {
+    Phaser.Sprite.call(this, 0, 0, 'CoffeeMeter');
 };
