@@ -17,12 +17,11 @@ var Score = function (game) {
     var offset = this.liveSprites_[0].height + SCORE_SPACING;
     this.scoreText_ = this.addChild(new Phaser.Text(game, 0, offset, 'Score: ' + this.score_.toString(), {
         align: 'left',
-        fill: 'white',
+        fill: 'white'
     }));
 
     /* TEMPORARY FOR TESTING */
     this.inputEnabled = true;
-    this.events.onInputDown.add(Score.prototype.removeLife, this);
     this.events.onInputDown.add(function() {
         this.addScore(game.rnd.integerInRange(1,50));
     }, this);
