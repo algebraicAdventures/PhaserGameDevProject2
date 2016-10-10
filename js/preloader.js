@@ -23,6 +23,7 @@ function loadStuff(game){
     game.load.image('PaperCupTower', 'assets/sprites/paper_cupHolder_full.png');
     game.load.image('GlassCup', 'assets/sprites/cup.png');
     game.load.image('PaperCup', 'assets/sprites/paper_cup.png')
+    game.load.spritesheet('CoffeeMeter', 'assets/sprites/coffeemeter_spritesheet.png', 40, 123);
     game.load.script('CoffeeCup', 'js/coffeeCup.js');
     game.load.script('CupTower', 'js/CupTower.js');
     game.load.image('garbage', 'assets/sprites/x.png');
