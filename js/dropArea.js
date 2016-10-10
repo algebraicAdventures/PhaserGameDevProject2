@@ -11,8 +11,8 @@ dropArea = function(game, x, y, name){
     game.physics.arcade.enable(this);
     game.state.triggers.push(this);
     this.body.immovable = true;
-    var scale = .1;
-    this.body.setSize(this.width * scale,this.height * scale , this.width/(2+scale*2), this.height/(2+scale*2));
+    var scale = 1;
+    this.body.setSize(this.width * scale,this.height * scale , this.width*(.5 -scale*.5), this.height*(.5 -scale*.5));
     game.add.tween(this.scale).to({x: .9,y:.9}, 333, Phaser.Easing.Cubic.InOut, true,0,-1,true);
 };
 dropArea.HOVER_TINT = 0x444444;

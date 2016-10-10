@@ -60,7 +60,10 @@ grinderHandle.prototype.update = function() {
         angle = angle < -180 ? angle + 360 : angle;
         var change = Math.abs(angle - this.angle);
         change = Math.min(change, 90) * deltaTime/180 / 2;
-        if(change > 0) this.grinderSound.resume();
+        if(change > 0){
+            this.grinderSound.resume();
+            this.grinderSound.loop = true;
+        }
         else    this.grinderSound.pause();
         this.parent.totalBeans = Math.max(0, this.parent.totalBeans - change);
         this.angle = angle;

@@ -16,6 +16,8 @@ draggableObject = function(game, x, y, image){
     this.input.enableDrag(true); //False means it does NOT snap to center
     this.input.useHandCursor = true;
     game.physics.arcade.enable(this);
+    var scale = .75;
+    this.body.setSize(this.width * scale,this.height * scale , this.width*(.5 -scale*.5), this.height*(.5 -scale*.5));
     this.anchor.set(.5,.5); //Remember we moved the anchor
     this.weight = 1; //Higher is lighter
     this.events.onDragStart.add(draggableObject.onDragStart);
@@ -48,6 +50,7 @@ var lastPosition = {x : 0, y: 0}; //For dragging
 var dragAmount = {x : 0, y: 0};
 
 draggableObject.prototype.update = function(){
+    if(DEBUG_INFO) this.game.debug.body(this);
     if(this.dragged){ //Called if object is being dragged, here it checks for hovering over an arrow
         //Used to be called onDragUpdate, but the frequency was based on the poll rate of your device, which was inconsistent
         dragAmount.x = (this.x - lastPosition.x)*deltaTime *.5 + dragAmount.x*.5; //New frame drag for this frame is a weighted average of previous frames
@@ -61,12 +64,6 @@ draggableObject.prototype.update = function(){
         }
 
         this.body.velocity.set(0,0);
-        var hudElements = game.state.hudLayer.children;
-        for (var i = 0; i < hudElements.length; i++) {
-            if(hudElements[i].name === "slideButton"){
-                slideButton.triggerButton(hudElements[i], this);
-            }
-        }
     }
     else if(!this.snapped){
         //"Physics"
@@ -139,7 +136,10 @@ draggableObject.onDragStop = function(sprite, pointer){
 };
 
 function objectHoverHandler(obj, obj2){
-        if(obj.name == "beans" && obj2.name == "grinder"){
+        if(obj2.name == "slideButton"){
+            slideButton.triggerButton(obj2, obj);
+        }
+        else if(obj.name == "beans" && obj2.name == "grinder"){
             var mag = new Phaser.Point(dragAmount.x , dragAmount.y).getMagnitude() *deltaTime;
             obj2.totalBeans = Math.min(obj2.totalBeans + mag/BEAN_LOAD_TIME, 1);
             if(obj2.totalBeans != 1 && mag > .0005)obj.grabNoise.play('',0,1,false,false);
