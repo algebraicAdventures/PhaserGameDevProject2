@@ -133,6 +133,10 @@ draggableObject.onDragStop = function(sprite, pointer){
 
 function objectHoverHandler(obj, obj2){
         if(obj.name == "beans" && obj2.name == "grinder"){
-            obj2.totalBeans = Math.min(obj2.totalBeans + deltaTime/BEAN_LOAD_TIME, 1);
+            var mag = new Phaser.Point(dragAmount.x , dragAmount.y).getMagnitude();
+            obj2.totalBeans = Math.min(obj2.totalBeans + mag*deltaTime/BEAN_LOAD_TIME, 1);
+        }
+        if(obj2.name == "garbage"){
+
         }
 }
