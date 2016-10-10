@@ -3,6 +3,7 @@
  */
 
 var CoffeeCup = function(game, x, y, type){
+    this.name = 'coffeeCup';
     var image;
     switch(type) {
         case CoffeeCup.Type.GLASS:
@@ -12,9 +13,10 @@ var CoffeeCup = function(game, x, y, type){
     }
     draggableObject.call(this, game, x, y, image);
 
+    this.currentVolume_ = 0;
     this.maxVolume_ = 3;
     this.components_ = {
-        volume: 0,
+        cup: type,
         temp: null
     };
 };
@@ -33,6 +35,10 @@ CoffeeCup.Type = {
     PAPER: 1
 };
 
+CoffeeCup.prototype.isFull = function() {
+    return this.currentVolume_ >= this.maxVolume_;
+};
+
 //Return true if interaction happens, return false if object should be thrown
 CoffeeCup.prototype.dragStopped = function(sprite,pointer){
     return false;
@@ -44,10 +50,10 @@ CoffeeCup.prototype.dragStopped = function(sprite,pointer){
  * @param temp Temperature of the added coffee.
  */
 CoffeeCup.prototype.addCoffee = function(temp) {
-    if(this.components_.volume >= this.maxVolume_) {
+    if(this.isFull()) {
         return;
     }
-    this.components_.volume += 1;
+    this.currentVolume_ += 1;
 
     // Coffee cup is empty, so the coffee becomes whatever temperature is passed in.
     if(this.components_.temp === null) {

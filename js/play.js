@@ -40,13 +40,9 @@ playState = {
         //Input events
         var space = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         space.onDown.add(function() {
-            game.state.dropDown.addOrder({
-                /* Hard coded for now */
-                volume: 3,
-                temp: CoffeeCup.Temp.HOT
-            });
-        } , game.state.dropDown);
-        //game.input.onTap.add(onTap);
+            game.state.dropDown.addOrder(DrinkOrder.randomOrderReq());
+        }, game.state.dropDown);
+        // game.input.onTap.add(onTap);
 
         if(DEBUG_INFO){
             var text = new Phaser.Text(game, 20, game.height - 30,"Hit 'B' to toggle debug display",{backgroundColor: 'black',fill: 'white',});
