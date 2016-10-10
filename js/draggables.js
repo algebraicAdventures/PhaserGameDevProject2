@@ -14,7 +14,7 @@ BeanBag.prototype = Object.create(draggableObject.prototype);
 BeanBag.prototype.constructor = BeanBag;
 
 PaperDish = function(game, x, y){
-    draggableObject.call(this, game, x, y, "beanBag");
+    draggableObject.call(this, game, x, y, "paperDish"); //paperDishFilled is the other one
     this.name = 'paperDish';
 };
 

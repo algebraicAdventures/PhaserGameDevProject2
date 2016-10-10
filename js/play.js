@@ -44,7 +44,11 @@ playState = {
         game.state.machineLayer.addChild(new CupTower(game, 1850, game.height - 40, CoffeeCup.Type.GLASS));
         game.state.machineLayer.addChild(new CupTower(game, 1600, game.height - 40, CoffeeCup.Type.PAPER));
         //beans
+        game.state.objectLayer.addChild(new PaperDish(game, 700, game.height - 40));
+        game.state.objectLayer.addChild(new PaperDish(game, 600, game.height - 40));
+        //Spawn beans last so they go over things
         game.state.objectLayer.addChild(new BeanBag(game, 300, game.height - 40));
+
 
         //Input events
         var space = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);

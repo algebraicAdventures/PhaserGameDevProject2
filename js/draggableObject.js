@@ -2,7 +2,7 @@
  * Created by wrighp on 10/5/2016.
  */
 
-var FLOOR_HEIGHT = 750;
+var FLOOR_HEIGHT = 735;
 var WALL_BOUNCE = .5; //velocity transferred after hitting a wall, < 0 reduces velocity
 var heldObject; //object being dragged, null if no object is being dragged. Used for trigger collision in play.
 
@@ -10,7 +10,7 @@ draggableObject = function(game, x, y, image){
     if(image == null) image = "testSprite";
     Phaser.Sprite.call(this, game, x, y, image);
     //custom variables
-    this.snapped = false; //For when object is snapped in place
+    this.snappedArea = null; //For when object is snappedArea in place
     this.dragged = false;
     this.inputEnabled = true;
     this.input.enableDrag(true); //False means it does NOT snap to center
@@ -65,7 +65,7 @@ draggableObject.prototype.update = function(){
 
         this.body.velocity.set(0,0);
     }
-    else if(!this.snapped){
+    else if(this.snappedArea == null){
         //"Physics"
         this.body.velocity.y += 2000 * deltaTime;
         var heightStop = FLOOR_HEIGHT - this.height * (1 - this.anchor.y);
@@ -85,7 +85,10 @@ draggableObject.onDragStart = function(sprite, pointer, dragX, dragY, snapPoint)
     sprite.dragged = true;
     heldObject = sprite;
     sprite.dragPointer = pointer;
-    sprite.snapped = false;
+    if(sprite.snappedArea != null){
+        sprite.snappedArea.attachedSprite = null;
+        sprite.snappedArea = null;
+    }
 };
 
 draggableObject.onDragUpdate = function(sprite, pointer, dragX, dragY, snapPoint){
@@ -104,17 +107,23 @@ draggableObject.prototype.dragStopped = function(sprite,pointer){
             else if(obj.name == "coffeeCup" && obj2.name == "machineBox"){
                 draggableObject.snapOn(obj,obj2);
             }
+            else if(obj.name == "paperDish" && obj2.name == "grinderBox"){
+                draggableObject.snapOn(obj,obj2);
+            }
             return false;
     }, this);
 
     return endStop;
 };
 draggableObject.snapOn = function(obj,obj2){
-    obj.x = obj2.x + obj2.parent.x;
-    obj.y = obj2.y + obj2.parent.y - obj.height/2 + obj2.height/2 +30;
-    obj.snapped = true;
-    game.sound.play("cupPlace",.5);
-    endStop = true;
+    if(obj2.attachedSprite == null) {
+        obj.x = obj2.x + obj2.parent.x;
+        obj.y = obj2.y + obj2.parent.y - obj.height / 2 + obj2.height / 2 + 30;
+        obj.snappedArea = obj2;
+        obj2.attachedSprite = obj;
+        game.sound.play("cupPlace", .5);
+        endStop = true;
+    }
 };
 draggableObject.onDragStop = function(sprite, pointer){
     //Check for overlap with things here
