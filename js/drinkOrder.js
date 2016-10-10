@@ -1,11 +1,17 @@
+var TEXT_OFFSET_VERTICAL = 11;
+var TEXT_OFFSET_HORIZONTAL = -192;
+var ORDER_OFFSET_HORIZONTAL = -55;
+var ORDER_OFFSET_VERTICAL = 45;
+var ICON_SPACING = 10;
+
 DrinkOrder = function(game, x, y, timeLimit, components) {
-    Phaser.Sprite.call(this, game, x, y);
+    Phaser.Sprite.call(this, game, x, y, 'order');
     this.anchor.set(0.5, 0);
 
     this.timer_ = game.time.create(false);
     this.signal_ = new Phaser.Signal();
 
-    this.timerText_ = this.addChild(new Phaser.Text(game, 0, 0, util.formatTime(timeLimit), {
+    this.timerText_ = this.addChild(new Phaser.Text(game, TEXT_OFFSET_HORIZONTAL, TEXT_OFFSET_VERTICAL, util.formatTime(timeLimit), {
         align: 'center',
         fill: 'white',
     }));
@@ -15,10 +21,34 @@ DrinkOrder = function(game, x, y, timeLimit, components) {
 
     // Order components
     this.components_ = {
-        volume: components.volume,
+        cup: components.cup,
         temp: components.temp
     };
-    console.log(this.components_);
+
+    // Add icons to order components
+    var offset = 0;
+    var image;
+    switch(this.components_.cup) {
+        case(CoffeeCup.Type.GLASS):
+            image = 'GlassCup'; break;
+        case(CoffeeCup.Type.PAPER):
+            image = 'PaperCup'; break;
+    }
+    var sprite = game.make.sprite(ORDER_OFFSET_HORIZONTAL, ORDER_OFFSET_VERTICAL, image);
+    sprite.anchor.set(0, 1);
+    sprite.scale.setTo(0.25, 0.25);
+    this.addChild(sprite);
+    offset += sprite.width + ICON_SPACING
+
+    switch(this.components_.temp) {
+        case(CoffeeCup.Temp.COLD):
+            image = 'cold'; break;
+        case(CoffeeCup.Temp.HOT):
+            image = 'hot'; break;
+    }
+    sprite = game.make.sprite(ORDER_OFFSET_HORIZONTAL + offset, ORDER_OFFSET_VERTICAL, image);
+    sprite.anchor.set(0, 1);
+    this.addChild(sprite);
 };
 DrinkOrder.prototype = Object.create(Phaser.Sprite.prototype); /* Do we make this a sprite group? */
 DrinkOrder.prototype.constructor = DrinkOrder;
@@ -52,10 +82,22 @@ DrinkOrder.prototype.addEvent = function(callback, context) {
 DrinkOrder.prototype.checkOrder = function(drink) {
     var d = drink.components_;
     var o = this.components_;
-    if (d.volume !== o.volume) {
+    if (d.cup !== o.cup) {
         return false;
     } else if (d.temp !== o.temp) {
         return false;
+    } else if (!drink.isFull()) {
+        return false;
     }
     return true;
+};
+
+/**
+ * returns the components for a randomly generated order
+ */
+DrinkOrder.randomOrderReq = function() {
+    return {
+        cup: game.rnd.integerInRange(0, 1),
+        temp: game.rnd.integerInRange(0, 1)
+    };
 };
