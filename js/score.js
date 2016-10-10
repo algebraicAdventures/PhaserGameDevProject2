@@ -33,7 +33,6 @@ Score.prototype.constructor = Score;
 Score.prototype.update = function() {
     Phaser.Sprite.prototype.update.call(this);
     this.scoreText_.text = 'Score: ' + this.score_.toString();
-    console.log(this.scoreText_.text);
 };
 
 Score.prototype.removeLife = function() {
@@ -49,7 +48,6 @@ Score.prototype.removeLife = function() {
  * @param amount The number of points to increase the score by
  */
 Score.prototype.addScore = function(amount) {
-    console.log(this.score_);
     this.score_ += amount;
     // STRETCH GOAL: fade in/out a little green '+[score]' text next to the current score
 };
