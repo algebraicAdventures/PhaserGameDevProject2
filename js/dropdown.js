@@ -5,7 +5,7 @@ var TAB_SIZE = 42;
 var SPACING = 81;
 var OFFSET = 9;
 var TWEEN_TIME = 333;
-var ORDER_TIME = 20000; /* For testing purposes */
+var ORDER_TIME = 10000; /* For testing purposes */
 
 dropdown = function(game, x, y){
     Phaser.Sprite.call(this, game, x, y, 'dropdownImage');

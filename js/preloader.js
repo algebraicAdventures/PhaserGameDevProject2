@@ -25,6 +25,8 @@ function loadStuff(game){
     game.load.image('x', 'assets/sprites/x.png');
     // Order stuff
     game.load.image('order', 'assets/sprites/order.png');
+    game.load.image('hot', 'assets/sprites/hot.png');
+    game.load.image('cold', 'assets/sprites/cold.png');
     game.load.script('DrinkOrder', 'js/drinkOrder.js');
 
     game.load.script('testObject', 'js/testObject.js');
