@@ -27,7 +27,6 @@ dropdown = function(game, x, y){
     //Manually centered
     this.textAlert =this.addChild(new Phaser.Text(this.game,-68,20,"New Order.",{fill: 'white', align: 'center'}));
     this.textAlert.alpha = 1;
-    this.textTween =game.add.tween(this.textAlert).to({alpha: 0}, TEXT_FLICKER_RATE, Phaser.Easing.Sinusoidal.InOut, true,0,-1,true);
     this.textAlertTime = 0;
 };
 
@@ -55,9 +54,11 @@ dropdown.prototype.numOrders = function() {
  * }
  */
 dropdown.prototype.addOrder = function(components) {
+    game.sound.play("bell",.75);
     if (!this.open_) {
         this.textAlertTime = TEXT_VISIBLE_TIME;
         this.textAlert.alpha = 0; //Reset text alert
+        game.add.tween(this.textAlert).to({alpha: 1}, TEXT_FLICKER_RATE, Phaser.Easing.Sinusoidal.InOut,true,0,3,true);
     }
     var numOrders = this.numOrders();
     if(numOrders >= this.maxOrders_) {

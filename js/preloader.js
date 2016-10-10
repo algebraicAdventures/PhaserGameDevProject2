@@ -59,6 +59,8 @@ function loadStuff(game){
     game.load.audio('cupPlace', 'SFX/Cup_Place.mp3');
     game.load.audio('cupRemove', 'SFX/Cup_Remove.mp3');
     game.load.audio('orderFail', 'SFX/Order_Fail.mp3');
+    game.load.audio('bell', 'SFX/Bell_Ring.mp3');
+    game.load.audio('trashNoise', 'SFX/Trash.mp3');
     game.load.audio('orderSuccess', 'SFX/Order_Success.mp3');
 
     console.log("Preloaded files");
