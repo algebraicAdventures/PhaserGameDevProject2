@@ -51,9 +51,11 @@ playState = {
         // game.input.onTap.add(onTap);
 
         if(DEBUG_INFO){
+            DEBUG_INFO = false;
             var text = new Phaser.Text(game, 20, game.height - 30,"Hit 'B' to toggle debug display",{backgroundColor: 'black',fill: 'white',});
             game.state.hudLayer.addChild(text);
             var b = game.input.keyboard.addKey(Phaser.Keyboard.B);
+            text.visible = false;
             b.onDown.add(function(){DEBUG_INFO = !DEBUG_INFO; game.debug.reset(); text.visible = !text.visible});
         }
         console.log("State create function completed.");

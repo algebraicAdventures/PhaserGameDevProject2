@@ -2,7 +2,7 @@
  * Created by Patrick on 10/5/2016.
  */
 var CAMERA_TWEEN_TIME = 333;
-
+var DELAY_TIME = .5;
 slideButton = function(game, x, y, direction){
     Phaser.Sprite.call(this, game, x, y, 'testArrow');
     this.name = "slideButton";
@@ -37,10 +37,14 @@ slideButton.prototype.update = function() {
 slideButton.onInputDown = function(button){
     slideButton.triggerButton(button);
 };
+//Returns true if button was interacted with or not
 slideButton.triggerButton = function(button, sprite){
     if(button.canUse && (sprite == null || checkOverlap(button,sprite))){
         game.state.cameraGoal += button.direction;
         game.add.tween(button.game.camera).to({x: game.state.cameraGoal}, CAMERA_TWEEN_TIME, Phaser.Easing.Cubic.InOut, true);
+        if(sprite != null && checkOverlap(button,sprite)){
+            button.intervalTime = DELAY_TIME; //A delay in between button tweens
+        }
         return true;
     }
     else{

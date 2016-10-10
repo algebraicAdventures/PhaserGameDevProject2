@@ -36,7 +36,6 @@ draggableObject.prototype.preUpdate = function(){
         if(newScreen != onScreen){
             this.body.velocity.x *= -1 * WALL_BOUNCE;
             //Play bounce sound
-            //this.bouncesound
         }
     }
 
@@ -64,10 +63,7 @@ draggableObject.prototype.update = function(){
         var hudElements = game.state.hudLayer.children;
         for (var i = 0; i < hudElements.length; i++) {
             if(hudElements[i].name === "slideButton"){
-                if(slideButton.triggerButton(hudElements[i], this)){
-                    hudElements[i].intervalTime = .5;
-                    //this.x += hudElements[i].direction; //Disabled as the camera interpolates now
-                }
+                slideButton.triggerButton(hudElements[i], this);
             }
         }
     }
@@ -89,7 +85,7 @@ draggableObject.onDragStart = function(sprite, pointer, dragX, dragY, snapPoint)
     sprite.dragged = true;
     heldObject = sprite;
     sprite.dragPointer = pointer;
-    this.snapped = false;
+    sprite.snapped = false;
 };
 
 draggableObject.onDragUpdate = function(sprite, pointer, dragX, dragY, snapPoint){
@@ -106,16 +102,19 @@ draggableObject.prototype.dragStopped = function(sprite,pointer){
                 endStop = true;
             }
             else if(obj.name == "coffeeCup" && obj2.name == "machineBox"){
-                obj.x = obj2.x + obj2.parent.x;
-                obj.y = obj2.y + obj2.parent.y - obj.height/2 + obj2.height/2 +30;
-                obj.snapped = true;
-                game.sound.play("cupPlace",.5);
-                endStop = true;
+                draggableObject.snapOn(obj,obj2);
             }
             return false;
     }, this);
 
     return endStop;
+};
+draggableObject.snapOn = function(obj,obj2){
+    obj.x = obj2.x + obj2.parent.x;
+    obj.y = obj2.y + obj2.parent.y - obj.height/2 + obj2.height/2 +30;
+    obj.snapped = true;
+    game.sound.play("cupPlace",.5);
+    endStop = true;
 };
 draggableObject.onDragStop = function(sprite, pointer){
     //Check for overlap with things here
@@ -143,6 +142,6 @@ function objectHoverHandler(obj, obj2){
             if(obj2.totalBeans != 1 && mag > .0005)obj.grabNoise.play('',0,1,false,false);
         }
         if(obj2.name == "garbage"){
-
+            obj2.hovered = true;
         }
 }
