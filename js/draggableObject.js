@@ -2,7 +2,7 @@
  * Created by wrighp on 10/5/2016.
  */
 
-var FLOOR_HEIGHT = 750;
+var FLOOR_HEIGHT = 735;
 var WALL_BOUNCE = .5; //velocity transferred after hitting a wall, < 0 reduces velocity
 var heldObject; //object being dragged, null if no object is being dragged. Used for trigger collision in play.
 

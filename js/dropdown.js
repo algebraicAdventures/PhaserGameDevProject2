@@ -6,8 +6,10 @@ var SPACING = 81;
 var OFFSET = 9;
 var TWEEN_TIME = 333;
 var ORDER_TIME = 10000; /* For testing purposes */
-
+var TEXT_VISIBLE_TIME = 3; //Should be a multiple of TEXT_FLICKER_RATE
+var TEXT_FLICKER_RATE = 500;
 dropdown = function(game, x, y){
+
     Phaser.Sprite.call(this, game, x, y, 'dropdownImage');
     this.name = "dropdown";
     this.y = TAB_SIZE;
@@ -21,6 +23,12 @@ dropdown = function(game, x, y){
     this.open_ = false;
     this.maxOrders_ = 5;
     this.activeOrders_ = [];
+
+    //Manually centered
+    this.textAlert =this.addChild(new Phaser.Text(this.game,-68,20,"New Order.",{fill: 'white', align: 'center'}));
+    this.textAlert.alpha = 1;
+    this.textTween =game.add.tween(this.textAlert).to({alpha: 0}, TEXT_FLICKER_RATE, Phaser.Easing.Sinusoidal.InOut, true,0,-1,true);
+    this.textAlertTime = 0;
 };
 
 dropdown.prototype = Object.create(Phaser.Sprite.prototype);
@@ -28,6 +36,8 @@ dropdown.prototype.constructor = dropdown;
 
 dropdown.prototype.update = function() {
     Phaser.Group.prototype.update.call(this);
+    this.textAlertTime = Math.max(this.textAlertTime - deltaTime, 0);
+    this.textAlert.visible = this.textAlertTime > 0;
 };
 
 /**
@@ -45,6 +55,10 @@ dropdown.prototype.numOrders = function() {
  * }
  */
 dropdown.prototype.addOrder = function(components) {
+    if (!this.open_) {
+        this.textAlertTime = TEXT_VISIBLE_TIME;
+        this.textAlert.alpha = 0; //Reset text alert
+    }
     var numOrders = this.numOrders();
     if(numOrders >= this.maxOrders_) {
         return;
@@ -86,6 +100,8 @@ dropdown.prototype.removeOrder = function(order) {
 
 dropdown.prototype.toggle = function() {
     this.open_ ? this.close() : this.open();
+    //Turn off alert when opening
+    if(this.open_) this.textAlertTime = 0;
 }
 
 /**
