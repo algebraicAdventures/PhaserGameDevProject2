@@ -27,9 +27,10 @@ dropArea.prototype.update = function() {
     var setVisible;
     if(this.name == "machineBox"){
         setVisible = (heldObject != null && heldObject.name == "coffeeCup");
-    }
-    else if(this.name == "grinderBox"){
+    } else if(this.name == "grinderBox"){
         setVisible = (heldObject != null && heldObject.name == "paperDish");
+    } else if(this.name == 'orderDropoff') {
+        setVisible = (heldObject != null && heldObject.name =='coffeeCup');
     }
     if(this.visible != setVisible){
         this.visible = setVisible;
