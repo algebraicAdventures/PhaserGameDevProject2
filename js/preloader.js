@@ -11,7 +11,7 @@ function loadStuff(game){
     game.load.image('testArrow', 'assets/sprites/testArrow.png');
     game.load.script('dropdown', 'js/dropdown.js');
     game.load.image('dropdownImage', 'assets/sprites/dropdown.png');
-    game.load.image('life', 'assets/sprites/tmp_life.png');
+    game.load.spritesheet('life', 'assets/sprites/life_spritesheet.png', 41, 37);
     game.load.script('score', 'js/score.js');
 
     //bean grinder stuff
