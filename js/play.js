@@ -34,7 +34,8 @@ playState = {
         // create garbage
         game.state.hudLayer.addChild(new Garbage(game));
         // create score and lives
-        game.state.hudLayer.addChild(new Score(game));
+        game.state.score = new Score(game);
+        game.state.hudLayer.addChild(game.state.score);
         //create grinder
         game.state.machineLayer.addChild(new beanGrinder(game, 1000,game.height -40));
         //create coffee machine
