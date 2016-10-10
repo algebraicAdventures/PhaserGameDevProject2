@@ -3,6 +3,7 @@
  */
 
 function loadStuff(game){
+    // hud stuff
     game.load.script('draggableObject','js/draggableObject.js');
     game.load.script('draggables','js/draggables.js');
     game.load.image('testSprite', 'assets/sprites/testSprite.png');
@@ -10,6 +11,9 @@ function loadStuff(game){
     game.load.image('testArrow', 'assets/sprites/testArrow.png');
     game.load.script('dropdown', 'js/dropdown.js');
     game.load.image('dropdownImage', 'assets/sprites/dropdown.png');
+    game.load.spritesheet('life', 'assets/sprites/life_spritesheet.png', 41, 37);
+    game.load.script('score', 'js/score.js');
+
     //bean grinder stuff
     game.load.script('beanGrinder', 'js/beanGrinder.js');
     game.load.image('grinder', 'assets/sprites/grinder.png');
