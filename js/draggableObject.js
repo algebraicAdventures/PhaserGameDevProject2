@@ -102,6 +102,7 @@ draggableObject.prototype.dragStopped = function(sprite,pointer){
     game.physics.arcade.collide(sprite, game.state.triggers,null, function (obj, obj2){
             if(obj2.name == "garbage" && obj.name != "beans"){
                 obj.destroy();
+                game.sound.play("trashNoise");
                 endStop = true;
             }
             else if(obj.name == "coffeeCup" && obj2.name == "machineBox"){

@@ -54,6 +54,7 @@ dropdown.prototype.numOrders = function() {
  * }
  */
 dropdown.prototype.addOrder = function(components) {
+    game.sound.play("bell",.75);
     if (!this.open_) {
         this.textAlertTime = TEXT_VISIBLE_TIME;
         this.textAlert.alpha = 0; //Reset text alert
