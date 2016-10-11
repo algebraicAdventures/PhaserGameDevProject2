@@ -9,7 +9,7 @@ function loadStuff(game){
     game.load.image('testSprite', 'assets/sprites/testSprite.png');
     game.load.script('slideButton', 'js/slideButton.js');
     game.load.image('testArrow', 'assets/sprites/testArrow.png');
-    game.load.script('dropdown', 'js/dropdown.js');
+    game.load.script('dropdown', 'js/ordermanager.js');
     game.load.image('dropdownImage', 'assets/sprites/dropdown.png');
     game.load.spritesheet('life', 'assets/sprites/life_spritesheet.png', 41, 37);
     game.load.script('score', 'js/score.js');
