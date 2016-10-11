@@ -3,6 +3,7 @@
  */
 var game = new Phaser.Game(1344,750,Phaser.AUTO,'gameDiv');
 
+game.state.add('preload',preloadState);
 game.state.add('menu',menuState);
 game.state.add('play', playState);
-game.state.start('menu');
+game.state.start('preload');
