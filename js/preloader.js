@@ -1,7 +1,7 @@
 /**
  * Created by wrighp on 10/5/2016.
  */
-var totalDecodedSounds = 10; //Set to the number of mp3's/ ogg's you have, needs to be equal to that number
+var totalDecodedSounds = 17; //Set to the number of mp3's/ ogg's you have, needs to be equal to that number
 function loadStuff(game){
     // hud stuff
     game.load.script('draggableObject','js/draggableObject.js');
@@ -64,6 +64,12 @@ function loadStuff(game){
     game.load.audio('trashNoise', 'SFX/Trash.mp3');
     game.load.audio('orderSuccess', 'SFX/Order_Success.mp3');
     game.load.audio('pourLong', 'SFX/Machine_Coffee_Pour.mp3');
+    game.load.audio('buttonPress', 'SFX/Machine_Button_Press_V2.mp3');
+    game.load.audio('buttonRelease', 'SFX/Machine_Button_Release_V2.mp3');
+    for(var i = 1; i <= 5; i++){
+        game.load.audio('voiceButton'+i.toString(), 'SFX/Voice/Machine_Voice_Button_'+i.toString()+'.mp3');
+
+    }
 
     console.log("Preloaded files");
 }
