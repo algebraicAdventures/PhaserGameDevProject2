@@ -1,6 +1,7 @@
 var NUM_STEMS = 7;
 var REALLY_QUIET = 0.0000001;
 var CROSSFADE_TIME = 2000;
+
 var MusicManager = function(game) {
     this.stems_ = [];
     for(var i = 0; i < NUM_STEMS; i++) {
@@ -20,22 +21,32 @@ MusicManager.prototype.start = function() {
     }
 };
 
-MusicManager.prototype.increaseStem = function() {
+MusicManager.prototype.increaseStem = function(scale) {
+    scale = scale === undefined ? 1 : scale;
+    var currentStem = Math.floor(this.currentStem_);
+    this.currentStem_ += scale;
     if(this.currentStem_ >= NUM_STEMS - 1) {
-        return;
+        this.currentStem_ = NUM_STEMS - 1;
     }
-    this.stems_[this.currentStem_].fadeTo(CROSSFADE_TIME, REALLY_QUIET);
-    this.currentStem_ += 1;
-    this.stems_[this.currentStem_].fadeTo(CROSSFADE_TIME, 1);
+    var nextStem = Math.floor(this.currentStem_);
+    if(currentStem !== nextStem) {
+        this.stems_[currentStem].fadeTo(CROSSFADE_TIME, REALLY_QUIET);
+        this.stems_[nextStem].fadeTo(CROSSFADE_TIME, 1);
+    }
 };
 
-MusicManager.prototype.decreaseStem = function() {
+MusicManager.prototype.decreaseStem = function(scale) {
+    scale = scale === undefined ? 1 : scale;
+    var currentStem = Math.ceil(this.currentStem_);
+    this.currentStem_ -= scale;
     if(this.currentStem_ <= 1) {
-        return;
+        this.currentStem_ = 1;
     }
-    this.stems_[this.currentStem_].fadeTo(CROSSFADE_TIME, REALLY_QUIET);
-    this.currentStem_ -= 1;
-    this.stems_[this.currentStem_].fadeTo(CROSSFADE_TIME, 1);
+    var nextStem = Math.ceil(this.currentStem_);
+    if(currentStem !== nextStem) {
+        this.stems_[currentStem].fadeTo(CROSSFADE_TIME, REALLY_QUIET);
+        this.stems_[nextStem].fadeTo(CROSSFADE_TIME, 1);
+    }
 };
 
 MusicManager.prototype.toggleEmergency = function() {
