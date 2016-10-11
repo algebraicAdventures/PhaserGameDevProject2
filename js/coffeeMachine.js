@@ -125,9 +125,9 @@ coffeeDispenserButton.prototype.update = function() {
         if(cup != null){
             cup.inputEnabled = true;
             cup.input.useHandCursor = true;
-            var filled = cup.maxVolume_ != cup.currentVolume_;
+            var filled = !cup.isFull();
             cup.addCoffee(this.parent.dial.toggled ? 0 : 1);
-            if(filled && cup.maxVolume_ == cup.currentVolume_){
+            if(filled && cup.isFull()){
                 //Now it's filled
                 game.sound.play("voiceButton"+game.rnd.integerInRange(1,5),.5);
             }
