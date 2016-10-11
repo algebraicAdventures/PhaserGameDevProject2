@@ -5,9 +5,11 @@ var TAB_SIZE = 42;
 var SPACING = 81;
 var OFFSET = 9;
 var TWEEN_TIME = 333;
-var ORDER_TIME = 120000; /* For testing purposes */
+var ORDER_TIME = 20000; /* For testing purposes */
 var TEXT_VISIBLE_TIME = 3; //Should be a multiple of TEXT_FLICKER_RATE
 var TEXT_FLICKER_RATE = 500;
+var PEEK_TIME = 4000; // How long does the menu stay open when warning about the time
+
 dropdown = function(game, x, y){
 
     Phaser.Sprite.call(this, game, x, y, 'dropdownImage');
@@ -67,7 +69,16 @@ dropdown.prototype.addOrder = function(components) {
     }
     var newOrder = new DrinkOrder(this.game, 0, -(TAB_SIZE + SPACING * (numOrders + 1)) + OFFSET, ORDER_TIME, components);
     newOrder.anchor.set(0.5, 0);
-    newOrder.addEvent(function() {
+    newOrder.addCrunchEvent(function() {
+        if(!this.open_) {
+            this.open(this.activeOrders_.indexOf(newOrder));
+            var that = this;
+            window.setTimeout(function() {
+                that.close();
+            }, PEEK_TIME);
+        }
+    }, this)
+    newOrder.addEndEvent(function() {
         this.removeOrder(newOrder);
     }, this);
     this.addChild(newOrder);

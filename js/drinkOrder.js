@@ -3,19 +3,23 @@ var TEXT_OFFSET_HORIZONTAL = -192;
 var ORDER_OFFSET_HORIZONTAL = -75;
 var ORDER_OFFSET_VERTICAL = 45;
 var ICON_SPACING = 55;
+var CRUNCH_TIME = 10000; // 10 seconds left triggers emergency music
 
 DrinkOrder = function(game, x, y, timeLimit, components) {
     Phaser.Sprite.call(this, game, x, y, 'order');
     this.anchor.set(0.5, 0);
 
+    this.timeLimit_ = timeLimit;
     this.timer_ = game.time.create(false);
-    this.signal_ = new Phaser.Signal();
+    this.doneSignal_ = new Phaser.Signal();
+    this.crunchSignal_ = new Phaser.Signal();
 
     this.timerText_ = this.addChild(new Phaser.Text(game, TEXT_OFFSET_HORIZONTAL, TEXT_OFFSET_VERTICAL, util.formatTime(timeLimit), {
         align: 'center',
         fill: 'white',
     }));
     this.timerText_.anchor.set(0.5, 0);
+    this.timer_.add(timeLimit - CRUNCH_TIME, this.onCrunchTime, this);
     this.timer_.add(timeLimit, this.onTimerEnd, this);
     this.timer_.start();
 
@@ -53,18 +57,23 @@ DrinkOrder.prototype = Object.create(Phaser.Sprite.prototype); /* Do we make thi
 DrinkOrder.prototype.constructor = DrinkOrder;
 
 DrinkOrder.prototype.update = function() {
-    var timeLeft = this.timer_.duration;
-    if (timeLeft < 5000) {
-        this.timerText_.text.fillColor = 'red';
-    }
-    this.timerText_.text = util.formatTime(this.timer_.duration);
+    Phaser.Sprite.prototype.update.call(this);
+    this.timerText_.text = util.formatTime(this.timeLimit_ - this.timer_.ms);
 };
 
 DrinkOrder.prototype.onTimerEnd = function() {
-    this.signal_.dispatch(this);
+    this.doneSignal_.dispatch(this);
     this.game.state.score.removeLife();
     this.game.sound.play('orderFail', 0.9);
     this.kill();
+};
+
+DrinkOrder.prototype.onCrunchTime = function() {
+    this.timerText_.setStyle({
+        fill: '#222222'
+    });
+    game.add.tween(this.timerText_).to({alpha: 0}, TEXT_FLICKER_RATE, Phaser.Easing.Sinusoidal.InOut,true,0,3,true);
+    this.crunchSignal_.dispatch(this);
 };
 
 /**
@@ -72,9 +81,19 @@ DrinkOrder.prototype.onTimerEnd = function() {
  * @param callback Function to call when the timer expires
  * @param context The context in which the callback is called
  */
-DrinkOrder.prototype.addEvent = function(callback, context) {
-    this.signal_.add(callback, context);
+DrinkOrder.prototype.addEndEvent = function(callback, context) {
+    this.doneSignal_.add(callback, context);
 };
+
+/**
+ * Adds an event for when crunch time starts.
+ * @param callback Function to call when the timer eis at crunch time
+ * @param context The context in which the callback is called
+ */
+DrinkOrder.prototype.addCrunchEvent = function(callback, context) {
+    this.crunchSignal_.add(callback, context);
+};
+
 
 /**
  * Returns true if the drink matches the order requirements.
