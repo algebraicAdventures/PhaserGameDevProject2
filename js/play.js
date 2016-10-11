@@ -18,7 +18,7 @@ playState = {
         game.state.objectLayer = game.add.group();
         game.state.hudLayer = game.add.group(); //Hud layer in front of objects
         game.state.hudLayer.fixedToCamera = true;
-        game.state.dropDown;
+        game.state.orderManager;
         game.state.triggers = []; //array of sprites to be used as trigger zones
     },
     preload: function() {//Everything is loaded at the main menu now, for faster restarting of states
@@ -36,8 +36,8 @@ playState = {
         game.state.hudLayerBack.addChild(new slideButton(game,0,game.height/2,-game.width));
         game.state.hudLayerBack.addChild(new slideButton(game,game.width,game.height/2,game.width));
         //Create dropdown
-        game.state.dropDown = new dropdown(game,game.width/2,0);
-        game.state.hudLayerBack.addChild(game.state.dropDown);
+        game.state.orderManager = new OrderManager(game,game.width/2,0);
+        game.state.hudLayerBack.addChild(game.state.orderManager);
         // create garbage
         game.state.hudLayer.addChild(new Garbage(game));
         // create score and lives
@@ -61,8 +61,8 @@ playState = {
         //Input events
         var space = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         space.onDown.add(function() {
-            game.state.dropDown.addOrder(DrinkOrder.randomOrderReq());
-        }, game.state.dropDown);
+            game.state.orderManager.addOrder(DrinkOrder.randomOrderReq());
+        }, game.state.orderManager);
         var restart = game.input.keyboard.addKey(Phaser.Keyboard.R);
         restart.onDown.add(function() {
             this.game.state.start('play');

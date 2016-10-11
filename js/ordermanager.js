@@ -10,7 +10,7 @@ var TEXT_VISIBLE_TIME = 3; //Should be a multiple of TEXT_FLICKER_RATE
 var TEXT_FLICKER_RATE = 500;
 var PEEK_TIME = 4000; // How long does the menu stay open when warning about the time
 
-dropdown = function(game, x, y){
+var OrderManager = function(game, x, y){
 
     Phaser.Sprite.call(this, game, x, y, 'dropdownImage');
     this.name = "dropdown";
@@ -19,7 +19,7 @@ dropdown = function(game, x, y){
     this.inputEnabled = true;
     this.input.useHandCursor = true;
     this.game.physics.arcade.enable(this);
-    this.events.onInputDown.add(dropdown.onTap);
+    this.events.onInputDown.add(OrderManager.onTap);
 
     // Custom properties
     this.open_ = false;
@@ -33,10 +33,10 @@ dropdown = function(game, x, y){
     this.textAlertTime = 0;
 };
 
-dropdown.prototype = Object.create(Phaser.Sprite.prototype);
-dropdown.prototype.constructor = dropdown;
+OrderManager.prototype = Object.create(Phaser.Sprite.prototype);
+OrderManager.prototype.constructor = OrderManager;
 
-dropdown.prototype.update = function() {
+OrderManager.prototype.update = function() {
     Phaser.Group.prototype.update.call(this);
     this.textAlertTime = Math.max(this.textAlertTime - deltaTime, 0);
     this.textAlert.visible = this.textAlertTime > 0;
@@ -45,7 +45,7 @@ dropdown.prototype.update = function() {
 /**
  * @return int Number of active orders.
  */
-dropdown.prototype.numOrders = function() {
+OrderManager.prototype.numOrders = function() {
     return this.activeOrders_.length;
 }
 
@@ -56,7 +56,7 @@ dropdown.prototype.numOrders = function() {
  *      temp: temperature from the CoffeeCup.Temp enum
  * }
  */
-dropdown.prototype.addOrder = function(components) {
+OrderManager.prototype.addOrder = function(components) {
     var numOrders = this.numOrders();
     if(numOrders >= this.maxOrders_) {
         return;
@@ -98,7 +98,7 @@ dropdown.prototype.addOrder = function(components) {
 /**
  * @param order The order to remove.
  */
-dropdown.prototype.removeOrder = function(order) {
+OrderManager.prototype.removeOrder = function(order) {
     var index = this.activeOrders_.indexOf(order)
     if(index >= this.maxOrders_ || index === null) {
         return;
@@ -125,7 +125,7 @@ dropdown.prototype.removeOrder = function(order) {
     }
 };
 
-dropdown.prototype.submitOrder = function(drink) {
+OrderManager.prototype.submitOrder = function(drink) {
     for(var i = 0; i < this.numOrders(); i++) {
         var order = this.activeOrders_[i];
         if(order.checkOrder(drink)) {
@@ -143,7 +143,7 @@ dropdown.prototype.submitOrder = function(drink) {
     drink.kill();
 };
 
-dropdown.prototype.toggle = function() {
+OrderManager.prototype.toggle = function() {
     this.open_ ? this.close() : this.open();
     //Turn off alert when opening
     if(this.open_) this.textAlertTime = 0;
@@ -154,7 +154,7 @@ dropdown.prototype.toggle = function() {
  * If undefined, the menu will open to however many orders there are.
  * If there are also no active orders, the menu will only slide to one space.
  */
-dropdown.prototype.open = function(openNumber) {
+OrderManager.prototype.open = function(openNumber) {
     openNumber = openNumber === undefined ? this.numOrders() : openNumber;
     openNumber = openNumber === 0 ? 1 : openNumber;
     var goal = SPACING * openNumber + TAB_SIZE;
@@ -162,7 +162,7 @@ dropdown.prototype.open = function(openNumber) {
     this.open_ = true;
 };
 
-dropdown.prototype.close = function() {
+OrderManager.prototype.close = function() {
     this.game.add.tween(this).to({y: TAB_SIZE}, TWEEN_TIME, Phaser.Easing.Cubic.InOut, true);
     this.open_ = false;
 };
@@ -170,6 +170,6 @@ dropdown.prototype.close = function() {
 /**
  * Event handler for tapping the dropdown.
  */
-dropdown.onTap = function(sprite, _) {
+OrderManager.onTap = function(sprite, _) {
     sprite.toggle();
 };
