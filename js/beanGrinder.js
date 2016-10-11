@@ -80,6 +80,7 @@ grinderHandle.prototype.update = function() {
                 dish.loadTexture('paperDishFilled');
                 dish.full = true;
                 this.processedBeans = 0;
+                game.sound.play("beanGrab");
             }
         }
         this.angle = angle;

@@ -67,6 +67,7 @@ function loadStuff(game){
     game.load.audio('pourLong', 'SFX/Machine_Coffee_Pour.mp3');
     game.load.audio('buttonPress', 'SFX/Machine_Button_Press_V2.mp3');
     game.load.audio('buttonRelease', 'SFX/Machine_Button_Release_V2.mp3');
+    game.load.audio('dialTurn', 'SFX/Machine_Button_Press.mp3');
     for(var i = 1; i <= 5; i++){
         game.load.audio('voiceButton'+i.toString(), 'SFX/Voice/Machine_Voice_Button_'+i.toString()+'.mp3');
     }

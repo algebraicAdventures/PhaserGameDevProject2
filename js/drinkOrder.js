@@ -72,7 +72,7 @@ DrinkOrder.prototype.onCrunchTime = function() {
     this.timerText_.setStyle({
         fill: '#222222'
     });
-    game.add.tween(this.timerText_).to({alpha: 0}, TEXT_FLICKER_RATE, Phaser.Easing.Sinusoidal.InOut,true,0,3,true);
+    game.add.tween(this.timerText_).to({alpha: 0.5}, TEXT_FLICKER_RATE, Phaser.Easing.Sinusoidal.InOut,true,0,3,true);
     this.crunchSignal_.dispatch(this);
 };
 
