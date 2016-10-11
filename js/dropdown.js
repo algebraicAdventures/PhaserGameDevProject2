@@ -59,6 +59,7 @@ dropdown.prototype.addOrder = function(components) {
         return;
     }
     game.sound.play("bell",.75);
+    game.musicManager.increaseStem();
     if (!this.open_) {
         this.textAlertTime = TEXT_VISIBLE_TIME;
         this.textAlert.alpha = 0; //Reset text alert
@@ -106,6 +107,7 @@ dropdown.prototype.submitOrder = function(drink) {
     for(var i = 0; i < this.numOrders(); i++) {
         var order = this.activeOrders_[i];
         if(order.checkOrder(drink)) {
+            this.game.musicManager.decreaseStem();
             order.timer_.stop();
             this.removeOrder(order);
             game.sound.play('orderSuccess');

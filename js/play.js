@@ -5,6 +5,7 @@ var DEBUG_INFO = true; //set true to see various debug info
 var deltaTime = 1;
 playState = {
     init: function(){
+        game.musicManager = new MusicManager(game); // move this to the title state??
         game.world.setBounds(0,0,1344*3,750); //arbitrary 3 window size, it doesn't seem to matter
         game.camera.bounds = game.world.bounds;
 
@@ -19,6 +20,7 @@ playState = {
     },
 
     create: function(){
+        game.musicManager.start(); // move to title screen??
         game.sound.play("ambience",1,true);
 
         game.camera.x = 1344;
