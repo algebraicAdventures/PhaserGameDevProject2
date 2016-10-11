@@ -1,7 +1,7 @@
 /**
  * Created by wrighp on 10/5/2016.
  */
-var totalDecodedSounds = 10; //Set to the number of mp3's/ ogg's you have, needs to be equal to that number
+var totalDecodedSounds = 17; //Set to the number of mp3's/ ogg's you have, needs to be equal to that number
 function loadStuff(game){
     // hud stuff
     game.load.script('draggableObject','js/draggableObject.js');
@@ -52,6 +52,7 @@ function loadStuff(game){
     //game.load.image('coffeeBag', 'assets/sprites/coffeebag.png');
     game.load.image('dashedBox', 'assets/sprites/dashedBox.png');
     game.load.script('dropArea','js/dropArea.js');
+    game.load.script('musicManager', 'js/musicmanager.js');
 
     //Sounds
     game.load.audio('ambience', 'SFX/Coffee_Ambience.mp3');
@@ -73,6 +74,5 @@ function loadStuff(game){
     game.load.audio('stem4', 'Music/Stem_Speed_4.mp3');
     game.load.audio('stem5', 'Music/Stem_Speed_5.mp3');
     game.load.audio('stem6', 'Music/Stem_Speed_6.mp3');
-    game.load.script('musicManager', 'js/musicmanager.js');
     console.log("Preloaded files");
 }
