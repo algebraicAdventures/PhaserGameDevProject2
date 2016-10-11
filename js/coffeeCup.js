@@ -22,11 +22,6 @@ var CoffeeCup = function(game, x, y, type){
     this.meter_ = new CoffeeMeter(game, -this.width/2, this.height/2 - 20);
     this.meter_.visible = false;
     this.addChild(this.meter_);
-
-    // TEMPORARY FOR TESTING
-    this.events.onInputDown.add(function(cup) {
-        cup.addCoffee(game.rnd.integerInRange(0,1));
-    });
 };
 
 CoffeeCup.prototype = Object.create(draggableObject.prototype);
@@ -62,12 +57,9 @@ CoffeeCup.prototype.dragStopped = function(sprite,pointer){
  * @param temp Temperature of the added coffee.
  */
 CoffeeCup.prototype.addCoffee = function(temp) {
-    if(this.isFull()) {
-        return;
-    }
-
-    // Coffee cup is empty, so the coffee becomes whatever temperature is passed in.
+    // Determining resulting temperature of coffee
     if(this.isEmpty()) {
+        // Coffee cup is empty, so the coffee becomes whatever temperature is passed in.
         this.meter_.visible = true;
         this.components_.temp = temp;
         switch(this.components_.temp) {
@@ -82,6 +74,10 @@ CoffeeCup.prototype.addCoffee = function(temp) {
         this.meter_.changeIcon('garbage', 1, 42);
     }
 
+    // Determining resulting volume of coffee
+    if(this.isFull()) {
+        return;
+    }
     this.currentVolume_ += 1;
     this.meter_.frame = this.currentVolume_ - 1;
 };
