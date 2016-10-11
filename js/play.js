@@ -3,6 +3,7 @@
  */
 var DEBUG_INFO = true; //set true to see various debug info
 var deltaTime = 1;
+var timePlayed = 0;
 var MACHINE_HEIGHT = 40;
 playState = {
     init: function(){
@@ -80,6 +81,7 @@ playState = {
     },
 
     update: function(){
+        timePlayed += game.time.elapsedMS;
         deltaTime = game.time.elapsed / 1000;
         if(DEBUG_INFO){
             game.debug.cameraInfo(game.camera, 32, 32);
@@ -93,6 +95,7 @@ playState = {
     shutdown: function(){
         //Reset your global variables here!!
         heldObject = null;
+        timePlayed = 0;
     },
     onDragStart: function(){
 

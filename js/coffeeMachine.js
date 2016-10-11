@@ -1,11 +1,11 @@
 /**
  * Created by Patrick on 10/8/2016.
  */
-var COFFEE_FILL = 2; //How much coffee is added when grounds are added
-var COFFEE_CAPACITY = 3;
-var COFFEE_DRAIN = .5; //How much coffee is used up per "shot"
+var COFFEE_FILL = 9; //How much coffee is added when grounds are added
+var COFFEE_CAPACITY = 9;
+var COFFEE_DRAIN = 1; //How much coffee is used up per "shot"
 var DISPENSE_TIME = 3.5;
-var STARTING_COFFEE = 1;
+var STARTING_COFFEE = 6;
 coffeeMachine = function(game, x, y){
     Phaser.Sprite.call(this, game, x, y, 'coffeeMachineBase');
     this.name = "coffeeMachine";
@@ -44,6 +44,9 @@ coffeeMachine.prototype.update = function() {
         if(DEBUG_INFO) game.debug.body(this.children[i]);
     }
     this.indicator.frame = Math.ceil((this.totalCoffee / COFFEE_CAPACITY) * 3);
+    //If on
+    this.screen.frame = timePlayed % 6000 <= 100 ? 2 : 1;
+
 };
 
 coffeeDial = function(game, x, y){
