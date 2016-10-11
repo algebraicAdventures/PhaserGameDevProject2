@@ -125,7 +125,7 @@ draggableObject.prototype.dragStopped = function(sprite,pointer){
             }
             else if(obj.name == "coffeeCup" && obj2.name == "orderDropoff"){
                 draggableObject.snapOn(obj,obj2);
-                game.state.orderManager.submitOrder(obj);
+                game.state.dropDown.submitOrder(obj);
                 obj2.attachedSprite = null;
             }
             return false;
