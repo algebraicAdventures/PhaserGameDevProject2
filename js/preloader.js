@@ -34,6 +34,7 @@ function loadStuff(game){
     game.load.image('garbage', 'assets/sprites/x.png');
     game.load.script('Garbage', 'js/garbage.js');
     // Order stuff
+    game.load.script('orderSpawner', 'js/orderspawner.js');
     game.load.image('order', 'assets/sprites/order.png');
     game.load.image('hot', 'assets/sprites/hot.png');
     game.load.image('cold', 'assets/sprites/cold.png');

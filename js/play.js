@@ -7,7 +7,6 @@ var timePlayed = 0;
 var MACHINE_HEIGHT = 40;
 playState = {
     init: function(){
-        console.log(game.load.hasLoaded);
         game.musicManager = new MusicManager(game); // move this to the title state??
         game.world.setBounds(0,0,1344*3,750); //arbitrary 3 window size, it doesn't seem to matter
         game.camera.bounds = game.world.bounds;
@@ -18,6 +17,7 @@ playState = {
         game.state.objectLayer = game.add.group();
         game.state.hudLayer = game.add.group(); //Hud layer in front of objects
         game.state.hudLayer.fixedToCamera = true;
+        game.state.orderSpawner = new OrderSpawner(game);
         game.state.orderManager;
         game.state.triggers = []; //array of sprites to be used as trigger zones
     },
@@ -35,9 +35,6 @@ playState = {
         //Create arrows
         game.state.hudLayerBack.addChild(new slideButton(game,0,game.height/2,-game.width));
         game.state.hudLayerBack.addChild(new slideButton(game,game.width,game.height/2,game.width));
-        //Create dropdown
-        game.state.orderManager = new OrderManager(game,game.width/2,0);
-        game.state.hudLayerBack.addChild(game.state.orderManager);
         // create garbage
         game.state.hudLayer.addChild(new Garbage(game));
         // create score and lives
@@ -57,6 +54,11 @@ playState = {
         game.state.objectLayer.addChild(new BeanBag(game, 300, game.height - 40));
         // create order drop off
         game.state.machineLayer.addChild(new dropArea(game, game.width + 830, 330, 'orderDropoff'));
+
+        //Create order manager
+        game.state.orderManager = new OrderManager(game,game.width/2,0);
+        game.state.hudLayerBack.addChild(game.state.orderManager);
+        game.state.orderSpawner.start();
 
         //Input events
         var space = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
