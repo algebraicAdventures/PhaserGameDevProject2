@@ -41,6 +41,13 @@ draggableObject.prototype.preUpdate = function(){
             //Play bounce sound
             game.sound.play("cupRemove",Math.abs(this.body.velocity.x)/3000);
         }
+        //Fixes drag events that go outside of the game window
+        if(this.x < game.world.bounds.left){
+            this.x = game.world.bounds.left;
+        }
+        else if(this.x > game.world.bounds.right){
+            this.x = game.world.bounds.right;
+        }
     }
 
     //Perform physics after
