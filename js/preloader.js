@@ -9,14 +9,10 @@ function loadStuff(game){
     game.load.image('testSprite', 'assets/sprites/testSprite.png');
     game.load.script('slideButton', 'js/slideButton.js');
     game.load.image('testArrow', 'assets/sprites/testArrow.png');
-    game.load.script('dropdown', 'js/dropdown.js');
+    game.load.script('dropdown', 'js/ordermanager.js');
     game.load.image('dropdownImage', 'assets/sprites/dropdown.png');
     game.load.spritesheet('life', 'assets/sprites/life_spritesheet.png', 41, 37);
     game.load.script('score', 'js/score.js');
-
-    // manager stuff
-    game.load.script('musicManager', 'js/musicmanager.js');
-    game.load.script('orderManager', 'js/ordermanager.js');
 
     //bean grinder stuff
     game.load.script('beanGrinder', 'js/beanGrinder.js');
@@ -32,7 +28,8 @@ function loadStuff(game){
     game.load.image('PaperCupTower', 'assets/sprites/paper_cupHolder_full.png');
     game.load.image('GlassCup', 'assets/sprites/cup.png');
     game.load.image('PaperCup', 'assets/sprites/paper_cup.png')
-    game.load.spritesheet('CoffeeMeter', 'assets/sprites/coffeemeter_spritesheet.png', 40, 123);
+    //game.load.spritesheet('CoffeeMeter', 'assets/sprites/coffeemeter_spritesheet.png', 40, 123);
+    game.load.spritesheet('CoffeeMeter', 'assets/sprites/coffeemeter_extended.png', 40, 180);
     game.load.script('CoffeeCup', 'js/coffeeCup.js');
     game.load.script('CupTower', 'js/CupTower.js');
     game.load.image('garbage', 'assets/sprites/x.png');
@@ -56,6 +53,7 @@ function loadStuff(game){
     //game.load.image('coffeeBag', 'assets/sprites/coffeebag.png');
     game.load.image('dashedBox', 'assets/sprites/dashedBox.png');
     game.load.script('dropArea','js/dropArea.js');
+    game.load.script('musicManager', 'js/musicmanager.js');
 
     //Sounds
     game.load.audio('ambience', 'SFX/Coffee_Ambience.mp3');

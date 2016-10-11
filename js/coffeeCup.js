@@ -6,14 +6,16 @@ var CoffeeCup = function(game, x, y, type){
     var image;
     switch(type) {
         case CoffeeCup.Type.GLASS:
-            image = 'GlassCup'; break;
+            image = 'GlassCup';
+            this.maxVolume_ = 2;
+            break;
         case CoffeeCup.Type.PAPER:
+            this.maxVolume_ = 3;
             image = 'PaperCup'; break;
     }
     draggableObject.call(this, game, x, y, image);
 
     this.currentVolume_ = 0;
-    this.maxVolume_ = 2;
     this.components_ = {
         cup: type,
         temp: null
@@ -79,7 +81,7 @@ CoffeeCup.prototype.addCoffee = function(temp) {
         return;
     }
     this.currentVolume_ += 1;
-    this.meter_.frame = this.currentVolume_ - 1;
+    this.meter_.frame = this.currentVolume_ - 1 + 2 * (this.maxVolume_-2);
 };
 
 var CoffeeMeter = function(game, x, y) {

@@ -39,7 +39,7 @@ Score.prototype.removeLife = function() {
         console.error('No more lives to remove');
         return;
     }
-    this.game.musicManager.increaseStem(0.5);
+    this.game.musicManager.increaseStem();
     this.lives_ -= 1;
     this.liveSprites_[this.lives_].frame = 1;
 };

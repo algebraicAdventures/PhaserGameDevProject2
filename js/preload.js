@@ -13,7 +13,7 @@ var preloadState = {
 
     },
     update: function(){
-        if(decodedSounds == totalDecodedSounds && game.load.hasLoaded) {
+        if(decodedSounds >= totalDecodedSounds && game.load.hasLoaded) {
             console.log("Decoded "+decodedSounds+" sounds");
             this.game.state.start('menu');
         }

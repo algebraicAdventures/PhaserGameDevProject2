@@ -7,10 +7,8 @@ var timePlayed = 0;
 var MACHINE_HEIGHT = 40;
 playState = {
     init: function(){
-        // Managers
-        game.musicManager = new MusicManager(game); // TODO(Ariel): move this to the title state??
-        game.state.orderManager = new OrderManager(game);
-
+        console.log(game.load.hasLoaded);
+        game.musicManager = new MusicManager(game); // move this to the title state??
         game.world.setBounds(0,0,1344*3,750); //arbitrary 3 window size, it doesn't seem to matter
         game.camera.bounds = game.world.bounds;
 
@@ -20,7 +18,7 @@ playState = {
         game.state.objectLayer = game.add.group();
         game.state.hudLayer = game.add.group(); //Hud layer in front of objects
         game.state.hudLayer.fixedToCamera = true;
-        game.state.dropDown; // TODO(Ariel): Take this away and make ordermanager accessible instead
+        game.state.orderManager;
         game.state.triggers = []; //array of sprites to be used as trigger zones
     },
     preload: function() {//Everything is loaded at the main menu now, for faster restarting of states
@@ -28,7 +26,6 @@ playState = {
 
     create: function(){
         game.musicManager.start(); // move to title screen??
-        game.state.orderManager.start();
         game.sound.play("ambience",1,true);
 
         game.camera.x = 1344;
@@ -39,8 +36,8 @@ playState = {
         game.state.hudLayerBack.addChild(new slideButton(game,0,game.height/2,-game.width));
         game.state.hudLayerBack.addChild(new slideButton(game,game.width,game.height/2,game.width));
         //Create dropdown
-        game.state.dropDown = new dropdown(game,game.width/2,0);
-        game.state.hudLayerBack.addChild(game.state.dropDown);
+        game.state.orderManager = new OrderManager(game,game.width/2,0);
+        game.state.hudLayerBack.addChild(game.state.orderManager);
         // create garbage
         game.state.hudLayer.addChild(new Garbage(game));
         // create score and lives
@@ -64,7 +61,7 @@ playState = {
         //Input events
         var space = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         space.onDown.add(function() {
-            this.addOrder(DrinkOrder.randomOrderReq());
+            game.state.orderManager.addOrder(DrinkOrder.randomOrderReq());
         }, game.state.orderManager);
         var restart = game.input.keyboard.addKey(Phaser.Keyboard.R);
         restart.onDown.add(function() {
