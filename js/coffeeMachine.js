@@ -49,9 +49,13 @@ coffeeMachine.prototype.update = function() {
         this.children[i].update();
         if(DEBUG_INFO) game.debug.body(this.children[i]);
     }
-    this.indicator.frame = Math.ceil((this.totalCoffee / COFFEE_CAPACITY) * 3);
+
     if(this.powerOn) {
         this.screen.frame = timePlayed % 6000 <= 100 ? 2 : 1;
+        this.indicator.frame = Math.ceil((this.totalCoffee / COFFEE_CAPACITY) * 3);
+    }
+    else{
+        this.indicator.frame = 0;
     }
 };
 
