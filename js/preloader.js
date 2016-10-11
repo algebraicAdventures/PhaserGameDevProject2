@@ -80,5 +80,6 @@ function loadStuff(game){
     game.load.audio('stem4', 'Music/Stem_Speed_4.mp3');
     game.load.audio('stem5', 'Music/Stem_Speed_5.mp3');
     game.load.audio('stem6', 'Music/Stem_Speed_6.mp3');
+    game.load.audio('emergency', 'Music/Coffee_Countdown.mp3');
     console.log("Preloaded files");
 }
