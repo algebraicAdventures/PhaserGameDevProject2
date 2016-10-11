@@ -48,6 +48,7 @@ function loadStuff(game){
     game.load.spritesheet('powerButton', 'assets/sprites/powerbutton_spritesheet.png', 96, 96);
     game.load.spritesheet('screen', 'assets/sprites/screen_spritesheet.png', 298, 200);
     game.load.spritesheet('dispenserButton', 'assets/sprites/dispenserbutton_spritesheet.png', 83, 34);
+    game.load.image('coffeeChute','assets/sprites/chute.png');
     //game.load.image('coffeeBag', 'assets/sprites/coffeebag.png');
     game.load.image('dashedBox', 'assets/sprites/dashedBox.png');
     game.load.script('dropArea','js/dropArea.js');
@@ -62,6 +63,7 @@ function loadStuff(game){
     game.load.audio('bell', 'SFX/Bell_Ring.mp3');
     game.load.audio('trashNoise', 'SFX/Trash.mp3');
     game.load.audio('orderSuccess', 'SFX/Order_Success.mp3');
+    game.load.audio('pourLong', 'SFX/Machine_Coffee_Pour.mp3');
 
     // Music
     game.load.audio('stem0', 'Music/Title_Screen_Stem.mp3'); // Title screen music

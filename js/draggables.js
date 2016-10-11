@@ -18,6 +18,7 @@ PaperDish = function(game, x, y){
     draggableObject.call(this, game, x, y, "paperDish"); //paperDishFilled is the other one
     this.name = 'paperDish';
     this.invincible = true;
+    this.full = false;
 };
 
 PaperDish.prototype = Object.create(draggableObject.prototype);

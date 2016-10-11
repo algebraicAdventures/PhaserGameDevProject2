@@ -77,6 +77,10 @@ draggableObject.prototype.update = function(){
             this.body.velocity.y = 0;
             //this.body.acceleration.y = 0;
         }
+        else if(this.y + this.body.velocity.y *game.time.physicsElapsed * 2 >= heightStop){
+            this.body.velocity.y *= .5;
+            //This prevents objects from clipping below the ground and popping up, it's usually only called once or twice per object
+        }
         var drag = this.y < heightStop ? 100 : .2; //Has less drag when in the air.
         this.body.velocity.x *= 1.0 - Math.min(deltaTime / drag,1);
     }
@@ -159,6 +163,14 @@ function objectHoverHandler(obj, obj2){
             var mag = new Phaser.Point(dragAmount.x , dragAmount.y).getMagnitude() *deltaTime;
             obj2.totalBeans = Math.min(obj2.totalBeans + mag/BEAN_LOAD_TIME, 1);
             if(obj2.totalBeans != 1 && mag > .0005)obj.grabNoise.play('',0,1,false,false);
+        }
+        else if(obj.name == "paperDish" && obj2.name == "coffeeChute"){
+            if(obj.full && obj2.parent.totalCoffee < COFFEE_CAPACITY){
+                obj.full = false;
+                obj.loadTexture('paperDish');
+                obj2.parent.totalCoffee = Math.min(obj2.parent.totalCoffee + COFFEE_FILL, COFFEE_CAPACITY);
+                game.sound.play("beanGrab");
+            }
         }
         else if(obj2.constructor == dropArea){
             obj2.tint = dropArea.HOVER_TINT;

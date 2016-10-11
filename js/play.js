@@ -3,6 +3,7 @@
  */
 var DEBUG_INFO = true; //set true to see various debug info
 var deltaTime = 1;
+var MACHINE_HEIGHT = 40;
 playState = {
     init: function(){
         game.musicManager = new MusicManager(game); // move this to the title state??
@@ -10,9 +11,11 @@ playState = {
         game.camera.bounds = game.world.bounds;
 
         game.state.machineLayer = game.add.group();
-        game.state.hudLayer = game.add.group();
-        game.state.hudLayer.fixedToCamera = true;
+        game.state.hudLayerBack = game.add.group(); //Hud layer behind objects
+        game.state.hudLayerBack.fixedToCamera = true;
         game.state.objectLayer = game.add.group();
+        game.state.hudLayer = game.add.group(); //Hud layer in front of objects
+        game.state.hudLayer.fixedToCamera = true;
         game.state.dropDown;
         game.state.triggers = []; //array of sprites to be used as trigger zones
     },
@@ -28,23 +31,23 @@ playState = {
 
         game.physics.startSystem(Phaser.Physics.ARCADE);
         //Create arrows
-        game.state.hudLayer.addChild(new slideButton(game,0,game.height/2,-game.width));
-        game.state.hudLayer.addChild(new slideButton(game,game.width,game.height/2,game.width));
+        game.state.hudLayerBack.addChild(new slideButton(game,0,game.height/2,-game.width));
+        game.state.hudLayerBack.addChild(new slideButton(game,game.width,game.height/2,game.width));
         //Create dropdown
         game.state.dropDown = new dropdown(game,game.width/2,0);
-        game.state.hudLayer.addChild(game.state.dropDown);
+        game.state.hudLayerBack.addChild(game.state.dropDown);
         // create garbage
         game.state.hudLayer.addChild(new Garbage(game));
         // create score and lives
         game.state.score = new Score(game);
         game.state.hudLayer.addChild(game.state.score);
         //create grinder
-        game.state.machineLayer.addChild(new beanGrinder(game, 1000,game.height -40));
+        game.state.machineLayer.addChild(new beanGrinder(game, 1000,game.height -MACHINE_HEIGHT));
         //create coffee machine
-        game.state.machineLayer.addChild(new coffeeMachine(game, 2950,game.height -40));
+        game.state.machineLayer.addChild(new coffeeMachine(game, 2950,game.height -MACHINE_HEIGHT));
         //create cup towers
-        game.state.machineLayer.addChild(new CupTower(game, 1850, game.height - 40, CoffeeCup.Type.GLASS));
-        game.state.machineLayer.addChild(new CupTower(game, 1600, game.height - 40, CoffeeCup.Type.PAPER));
+        game.state.machineLayer.addChild(new CupTower(game, 1850, game.height - MACHINE_HEIGHT, CoffeeCup.Type.GLASS));
+        game.state.machineLayer.addChild(new CupTower(game, 1600, game.height - MACHINE_HEIGHT, CoffeeCup.Type.PAPER));
         //beans
         game.state.objectLayer.addChild(new PaperDish(game, 700, game.height - 40));
         game.state.objectLayer.addChild(new PaperDish(game, 600, game.height - 40));
@@ -58,6 +61,10 @@ playState = {
         space.onDown.add(function() {
             game.state.dropDown.addOrder(DrinkOrder.randomOrderReq());
         }, game.state.dropDown);
+        var restart = game.input.keyboard.addKey(Phaser.Keyboard.R);
+        restart.onDown.add(function() {
+            this.game.state.start('play');
+        }, this);
         // game.input.onTap.add(onTap);
 
         if(DEBUG_INFO){
