@@ -6,16 +6,21 @@ var COFFEE_CAPACITY = 9;
 var COFFEE_DRAIN = 1; //How much coffee is used up per "shot"
 var DISPENSE_TIME = 3.5;
 var STARTING_COFFEE = 6;
+var REBOOT_TIME = 3;
 coffeeMachine = function(game, x, y){
     Phaser.Sprite.call(this, game, x, y, 'coffeeMachineBase');
     this.name = "coffeeMachine";
     this.anchor.set(0,1);
+    //Custom variables
+    this.totalCoffee = STARTING_COFFEE;
+    this.powerOn = false;
+    this.needsReboot = false;
+
     //Add pieces
     this.dial = this.addChild(new coffeeDial(game,119,-this.height+152));
     this.indicator = this.addChild(new Phaser.Sprite(game,697,-this.height + 20,"coffeeIndicator"));
     this.indicator.anchor.x = .5;
-    //Power button
-    this.coffeePowerButton = this.addChild(new coffeePowerButton(game,697,-this.height + 180));
+
 
     //Screen
     this.screen = this.addChild(new Phaser.Sprite(game,261,-this.height + 28,"screen"));
@@ -33,8 +38,9 @@ coffeeMachine = function(game, x, y){
     this.chute.name = "coffeeChute";
     game.physics.arcade.enable(this.chute);
     game.state.triggers.push(this.chute);
+    //Power button
+    this.coffeePowerButton = this.addChild(new coffeePowerButton(game,697,-this.height + 180,this));
 
-    this.totalCoffee = STARTING_COFFEE;
 };
 coffeeMachine.prototype = Object.create(Phaser.Sprite.prototype);
 coffeeMachine.prototype.constructor = coffeeMachine;
@@ -44,9 +50,9 @@ coffeeMachine.prototype.update = function() {
         if(DEBUG_INFO) game.debug.body(this.children[i]);
     }
     this.indicator.frame = Math.ceil((this.totalCoffee / COFFEE_CAPACITY) * 3);
-    //If on
-    this.screen.frame = timePlayed % 6000 <= 100 ? 2 : 1;
-
+    if(this.powerOn) {
+        this.screen.frame = timePlayed % 6000 <= 100 ? 2 : 1;
+    }
 };
 
 coffeeDial = function(game, x, y){
@@ -72,21 +78,45 @@ coffeeDial.prototype = Object.create(Phaser.Sprite.prototype);
 coffeeDial.prototype.constructor = coffeeDial;
 coffeeDial.prototype.update = function() {};
 
-coffeePowerButton = function(game, x, y){
+coffeePowerButton = function(game, x, y, parent){
     Phaser.Sprite.call(this, game, x, y, 'powerButton');
     this.name = "coffeePowerButton";
     this.anchor.setTo(.5,.5);
+    if(!parent.powerOn){
+        parent.screen.tint = 0x000000;
+    }
+    this.frame = parent.powerOn ? 1 : 0;
     this.inputEnabled = true;
     this.hitArea = new Phaser.Circle(0, this.worldPosition.y, 96);
     this.input.useHandCursor = true;
+    this.rebootTime = 0;
     this.events.onInputDown.add(function (button) {
         button.frame = button.frame == 0 ? 1 : 0;
+        //Play sounds
+        if(button.frame == 0){
+            button.parent.powerOn = false;
+            //Turn off machine, play sound
+            button.parent.screen.tint = 0x000000;
+        }
+        else{
+            button.rebootTime = REBOOT_TIME;
+            button.parent.screen.tint = 0xffffff;
+            button.parent.screen.frame = 0;
+        }
         //Turning on and off, play noise etc
     });
 };
 coffeePowerButton.prototype = Object.create(Phaser.Sprite.prototype);
 coffeePowerButton.prototype.constructor = coffeePowerButton;
-coffeePowerButton.prototype.update = function() {};
+coffeePowerButton.prototype.update = function() {
+    if(this.rebootTime > 0){
+        this.rebootTime = Math.max(this.rebootTime - deltaTime,0);
+        if(this.rebootTime == 0){
+            //machine turns on
+            this.parent.powerOn = true;
+        }
+    }
+};
 
 coffeeDispenserButton = function(game, x, y, box){
     Phaser.Sprite.call(this, game, x, y, 'dispenserButton');
@@ -98,7 +128,7 @@ coffeeDispenserButton = function(game, x, y, box){
     this.frame = 1;
     this.dispenseTime = 0;
     this.events.onInputDown.add(function (button) {
-        if(button.dispenseTime == 0 && button.parent.totalCoffee > 0) { //Could check for greater than 0 instead, for rounding errors
+        if(button.parent.powerOn && button.dispenseTime == 0 && button.parent.totalCoffee > 0) { //Could check for greater than 0 instead, for rounding errors
             game.sound.play("buttonPress",.5);
             button.frame = 0;
             game.sound.play("pourLong");
@@ -134,6 +164,6 @@ coffeeDispenserButton.prototype.update = function() {
         }
     }
     if(!pouring){ //Or power off
-        this.frame = this.parent.totalCoffee <= 0 ? 0 : 1;
+        this.frame = this.parent.totalCoffee > 0 && this.parent.powerOn ? 1 : 0;
     }
 };
