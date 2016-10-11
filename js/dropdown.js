@@ -25,6 +25,7 @@ dropdown = function(game, x, y){
     this.open_ = false;
     this.maxOrders_ = 5;
     this.activeOrders_ = [];
+    this.expiringOrders_ = 0;
 
     //Manually centered
     this.textAlert =this.addChild(new Phaser.Text(this.game,-68,20,"New Order.",{fill: 'white', align: 'center'}));
@@ -70,6 +71,10 @@ dropdown.prototype.addOrder = function(components) {
     var newOrder = new DrinkOrder(this.game, 0, -(TAB_SIZE + SPACING * (numOrders + 1)) + OFFSET, ORDER_TIME, components);
     newOrder.anchor.set(0.5, 0);
     newOrder.addCrunchEvent(function() {
+        if(this.expiringOrders_ === 0) {
+            this.game.musicManager.toggleEmergency();
+        }
+        this.expiringOrders_ += 1;
         if(!this.open_) {
             this.open(this.activeOrders_.indexOf(newOrder));
             var that = this;
@@ -77,7 +82,7 @@ dropdown.prototype.addOrder = function(components) {
                 that.close();
             }, PEEK_TIME);
         }
-    }, this)
+    }, this);
     newOrder.addEndEvent(function() {
         this.removeOrder(newOrder);
     }, this);
@@ -95,10 +100,16 @@ dropdown.prototype.addOrder = function(components) {
  */
 dropdown.prototype.removeOrder = function(order) {
     var index = this.activeOrders_.indexOf(order)
-    if(index >= this.maxOrders_) {
+    if(index >= this.maxOrders_ || index === null) {
         return;
     }
     this.activeOrders_.splice(index, 1);
+    if(order.expiring) {
+        this.expiringOrders_ -= 1;
+        if(this.expiringOrders_ === 0) {
+            this.game.musicManager.toggleEmergency();
+        }
+    }
     order.kill();
     // If the menu is currently open, slide it up to hide the empty slot.
     if(this.open_) {

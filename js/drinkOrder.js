@@ -22,6 +22,7 @@ DrinkOrder = function(game, x, y, timeLimit, components) {
     this.timer_.add(timeLimit - CRUNCH_TIME, this.onCrunchTime, this);
     this.timer_.add(timeLimit, this.onTimerEnd, this);
     this.timer_.start();
+    this.expiring = false;
 
     // Order components
     this.components_ = {
@@ -72,6 +73,7 @@ DrinkOrder.prototype.onCrunchTime = function() {
     this.timerText_.setStyle({
         fill: '#222222'
     });
+    this.expiring = true;
     game.add.tween(this.timerText_).to({alpha: 0.5}, TEXT_FLICKER_RATE, Phaser.Easing.Sinusoidal.InOut,true,0,3,true);
     this.crunchSignal_.dispatch(this);
 };
