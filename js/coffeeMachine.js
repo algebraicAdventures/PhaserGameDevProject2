@@ -64,6 +64,7 @@ coffeeDial = function(game, x, y){
         dial.toggled = dial.angle != 60;
         dial.angle = dial.toggled ? 60 : 0;
         //Play noise
+        game.sound.play("dialTurn",.5);
     });
 
 };
