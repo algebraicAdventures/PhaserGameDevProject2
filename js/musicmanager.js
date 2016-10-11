@@ -9,11 +9,16 @@ var MusicManager = function(game) {
 
 MusicManager.prototype.start = function() {
     this.currentStem_ = 0;
-    this.stems_[0].play(undefined, undefined, 1, true, false);
+    this.stems_[0].play('', 0, 1, true, true);
     for(var i = 1; i < NUM_STEMS; i++) {
-        this.stems_[i].play(undefined, undefined, 1, true, false);
-        console.log('stem ' + i.toString() + ' is playing = ' + this.stems_[i].isPlaying);
+        this.stems_[i].play('', 0, 1, true, true);
+        //this.stems_[i].volume = 0;
     }
+    this.stems_.forEach(function(element, index, _) {
+        window.setTimeout(function() {
+            console.log('stem ' + index.toString() + ' is playing = ' + element.isPlaying);
+        }, 1000);
+    });
 };
 
 MusicManager.prototype.increaseStem = function() {
@@ -35,6 +40,12 @@ MusicManager.prototype.decreaseStem = function() {
 MusicManager.prototype.updateStem_ = function() {
     for(var i = 0; i < NUM_STEMS; i++) {
         this.stems_[i].volume = this.currentStem_ === i ? 1 : 0;
-        console.log('stem ' + i.toString() + ' is playing = ' + this.stems_[i].isPlaying);
     }
+    /*
+    this.stems_.forEach(function(element, index, _) {
+        window.setTimeout(function() {
+            console.log('stem ' + index.toString() + ' is playing = ' + element.isPlaying);
+        }, 3000);
+    });
+    */
 };
