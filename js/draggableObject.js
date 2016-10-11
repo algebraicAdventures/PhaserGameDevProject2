@@ -77,6 +77,10 @@ draggableObject.prototype.update = function(){
             this.body.velocity.y = 0;
             //this.body.acceleration.y = 0;
         }
+        else if(this.y + this.body.velocity.y *game.time.physicsElapsed * 2 >= heightStop){
+            this.body.velocity.y *= .5;
+            //This prevents objects from clipping below the ground and popping up, it's usually only called once or twice per object
+        }
         var drag = this.y < heightStop ? 100 : .2; //Has less drag when in the air.
         this.body.velocity.x *= 1.0 - Math.min(deltaTime / drag,1);
     }

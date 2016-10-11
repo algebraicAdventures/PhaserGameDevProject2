@@ -3,6 +3,7 @@
  */
 var DEBUG_INFO = true; //set true to see various debug info
 var deltaTime = 1;
+var MACHINE_HEIGHT = 40;
 playState = {
     init: function(){
         game.world.setBounds(0,0,1344*3,750); //arbitrary 3 window size, it doesn't seem to matter
@@ -37,12 +38,12 @@ playState = {
         game.state.score = new Score(game);
         game.state.hudLayer.addChild(game.state.score);
         //create grinder
-        game.state.machineLayer.addChild(new beanGrinder(game, 1000,game.height -40));
+        game.state.machineLayer.addChild(new beanGrinder(game, 1000,game.height -MACHINE_HEIGHT));
         //create coffee machine
-        game.state.machineLayer.addChild(new coffeeMachine(game, 2950,game.height -40));
+        game.state.machineLayer.addChild(new coffeeMachine(game, 2950,game.height -MACHINE_HEIGHT));
         //create cup towers
-        game.state.machineLayer.addChild(new CupTower(game, 1850, game.height - 40, CoffeeCup.Type.GLASS));
-        game.state.machineLayer.addChild(new CupTower(game, 1600, game.height - 40, CoffeeCup.Type.PAPER));
+        game.state.machineLayer.addChild(new CupTower(game, 1850, game.height - MACHINE_HEIGHT, CoffeeCup.Type.GLASS));
+        game.state.machineLayer.addChild(new CupTower(game, 1600, game.height - MACHINE_HEIGHT, CoffeeCup.Type.PAPER));
         //beans
         game.state.objectLayer.addChild(new PaperDish(game, 700, game.height - 40));
         game.state.objectLayer.addChild(new PaperDish(game, 600, game.height - 40));
