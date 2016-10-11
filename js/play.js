@@ -7,6 +7,8 @@ var timePlayed = 0;
 var MACHINE_HEIGHT = 40;
 playState = {
     init: function(){
+        console.log(game.load.hasLoaded);
+        game.musicManager = new MusicManager(game); // move this to the title state??
         game.world.setBounds(0,0,1344*3,750); //arbitrary 3 window size, it doesn't seem to matter
         game.camera.bounds = game.world.bounds;
 
@@ -23,6 +25,7 @@ playState = {
     },
 
     create: function(){
+        game.musicManager.start(); // move to title screen??
         game.sound.play("ambience",1,true);
 
         game.camera.x = 1344;

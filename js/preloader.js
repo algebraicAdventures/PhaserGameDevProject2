@@ -1,7 +1,7 @@
 /**
  * Created by wrighp on 10/5/2016.
  */
-var totalDecodedSounds = 17; //Set to the number of mp3's/ ogg's you have, needs to be equal to that number
+var totalDecodedSounds = 24; //Set to the number of mp3's/ ogg's you have, needs to be equal to that number
 function loadStuff(game){
     // hud stuff
     game.load.script('draggableObject','js/draggableObject.js');
@@ -52,6 +52,7 @@ function loadStuff(game){
     //game.load.image('coffeeBag', 'assets/sprites/coffeebag.png');
     game.load.image('dashedBox', 'assets/sprites/dashedBox.png');
     game.load.script('dropArea','js/dropArea.js');
+    game.load.script('musicManager', 'js/musicmanager.js');
 
     //Sounds
     game.load.audio('ambience', 'SFX/Coffee_Ambience.mp3');
@@ -68,8 +69,15 @@ function loadStuff(game){
     game.load.audio('buttonRelease', 'SFX/Machine_Button_Release_V2.mp3');
     for(var i = 1; i <= 5; i++){
         game.load.audio('voiceButton'+i.toString(), 'SFX/Voice/Machine_Voice_Button_'+i.toString()+'.mp3');
-
     }
 
+    // Music
+    game.load.audio('stem0', 'Music/Title_Screen_Stem.mp3'); // Title screen music
+    game.load.audio('stem1', 'Music/Stem_Speed_1.mp3');
+    game.load.audio('stem2', 'Music/Stem_Speed_2.mp3');
+    game.load.audio('stem3', 'Music/Stem_Speed_3.mp3');
+    game.load.audio('stem4', 'Music/Stem_Speed_4.mp3');
+    game.load.audio('stem5', 'Music/Stem_Speed_5.mp3');
+    game.load.audio('stem6', 'Music/Stem_Speed_6.mp3');
     console.log("Preloaded files");
 }

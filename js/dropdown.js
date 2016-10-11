@@ -5,7 +5,7 @@ var TAB_SIZE = 42;
 var SPACING = 81;
 var OFFSET = 9;
 var TWEEN_TIME = 333;
-var ORDER_TIME = 20000; /* For testing purposes */
+var ORDER_TIME = 120000; /* For testing purposes */
 var TEXT_VISIBLE_TIME = 3; //Should be a multiple of TEXT_FLICKER_RATE
 var TEXT_FLICKER_RATE = 500;
 dropdown = function(game, x, y){
@@ -59,6 +59,7 @@ dropdown.prototype.addOrder = function(components) {
         return;
     }
     game.sound.play("bell",.75);
+    game.musicManager.increaseStem();
     if (!this.open_) {
         this.textAlertTime = TEXT_VISIBLE_TIME;
         this.textAlert.alpha = 0; //Reset text alert
@@ -106,6 +107,7 @@ dropdown.prototype.submitOrder = function(drink) {
     for(var i = 0; i < this.numOrders(); i++) {
         var order = this.activeOrders_[i];
         if(order.checkOrder(drink)) {
+            this.game.musicManager.decreaseStem();
             order.timer_.stop();
             this.removeOrder(order);
             game.sound.play('orderSuccess');
