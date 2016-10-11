@@ -65,6 +65,12 @@ function loadStuff(game){
     game.load.audio('trashNoise', 'SFX/Trash.mp3');
     game.load.audio('orderSuccess', 'SFX/Order_Success.mp3');
     game.load.audio('pourLong', 'SFX/Machine_Coffee_Pour.mp3');
+    game.load.audio('buttonPress', 'SFX/Machine_Button_Press_V2.mp3');
+    game.load.audio('buttonRelease', 'SFX/Machine_Button_Release_V2.mp3');
+    for(var i = 1; i <= 5; i++){
+        game.load.audio('voiceButton'+i.toString(), 'SFX/Voice/Machine_Voice_Button_'+i.toString()+'.mp3');
+
+    }
 
     // Music
     game.load.audio('stem0', 'Music/Title_Screen_Stem.mp3'); // Title screen music

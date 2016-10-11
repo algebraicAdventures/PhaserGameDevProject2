@@ -6,14 +6,16 @@ var preloadState = {
     preload: function(){
         game.sound.onSoundDecode.add(function(){
             decodedSounds++;
-            if(decodedSounds == totalDecodedSounds) {
-                console.log("Decoded "+decodedSounds+" sounds");
-                this.game.state.start('menu');
-            }
         });
         loadStuff(game);
     },
     create: function(){
 
+    },
+    update: function(){
+        if(decodedSounds == totalDecodedSounds && game.load.hasLoaded) {
+            console.log("Decoded "+decodedSounds+" sounds");
+            this.game.state.start('menu');
+        }
     }
 };

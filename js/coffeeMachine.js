@@ -97,17 +97,17 @@ coffeeDispenserButton = function(game, x, y, box){
     this.frame = 1;
     this.dispenseTime = 0;
     this.events.onInputDown.add(function (button) {
-        if(button.dispenseTime == 0 && button.parent.totalCoffee > 0){ //Could check for greater than 0 instead, for rounding errors
+        if(button.dispenseTime == 0 && button.parent.totalCoffee > 0) { //Could check for greater than 0 instead, for rounding errors
+            game.sound.play("buttonPress",.5);
             button.frame = 0;
             game.sound.play("pourLong");
             button.dispenseTime = DISPENSE_TIME;
             button.parent.totalCoffee = Math.max(button.parent.totalCoffee - COFFEE_DRAIN, 0);
-        }
-
-        var cup = button.box.attachedSprite;
-        if(cup != null){
-            cup.inputEnabled = false;
-            cup.input.useHandCursor = false;
+            var cup = button.box.attachedSprite;
+            if (cup != null) {
+                cup.inputEnabled = false;
+                cup.input.useHandCursor = false;
+            }
         }
     });
 
@@ -120,10 +120,16 @@ coffeeDispenserButton.prototype.update = function() {
     var cup = this.box.attachedSprite;
     if(pouring && this.dispenseTime <= 0){
         //Give control back to cup and add liquid
+        game.sound.play("buttonRelease",.25);
         if(cup != null){
             cup.inputEnabled = true;
             cup.input.useHandCursor = true;
+            var filled = cup.maxVolume_ != cup.currentVolume_;
             cup.addCoffee(this.parent.dial.toggled ? 0 : 1);
+            if(filled && cup.maxVolume_ == cup.currentVolume_){
+                //Now it's filled
+                game.sound.play("voiceButton"+game.rnd.integerInRange(1,5),.5);
+            }
         }
     }
     if(!pouring){ //Or power off
