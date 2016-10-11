@@ -50,6 +50,7 @@ function loadStuff(game){
     game.load.spritesheet('screen', 'assets/sprites/screen_spritesheet.png', 298, 200);
     game.load.spritesheet('dispenserButton', 'assets/sprites/dispenserbutton_spritesheet.png', 83, 34);
     game.load.image('coffeeChute','assets/sprites/chute.png');
+    game.load.image('steam','assets/sprites/steam.png');
     //game.load.image('coffeeBag', 'assets/sprites/coffeebag.png');
     game.load.image('dashedBox', 'assets/sprites/dashedBox.png');
     game.load.script('dropArea','js/dropArea.js');

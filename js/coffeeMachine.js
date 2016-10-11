@@ -155,16 +155,9 @@ coffeeDispenserButton = function(game, x, y, box){
             button.dispenseTime = DISPENSE_TIME;
             button.parent.totalCoffee = Math.max(button.parent.totalCoffee - COFFEE_DRAIN, 0);
             //create steam
-            var emitter = game.add.emitter(button.world.x,button.world.y,30);
-            console.log(emitter.x+" "+emitter.y);
+            coffeeMachine.createEmitter(button.world.x,button.world.y+100);
             //game.state.machineLayer.addChild(emitter);
-            var life = 4000;
-            emitter.makeParticles("testSprite");
-            emitter.gravity = -200;
-            var frequency = 250;
-            var total = life / frequency;
-            emitter.flow(1000,250,frequency,1,total);
-           // game.time.events.add(life,function(){this.pendingDestroy = true;},emitter); //Destroy particle emitter later
+
             var cup = button.box.attachedSprite;
             if (cup != null) {
                 cup.inputEnabled = false;
@@ -174,6 +167,31 @@ coffeeDispenserButton = function(game, x, y, box){
     });
 
 };
+coffeeMachine.createEmitter = function(x,y){
+    var life = DISPENSE_TIME * 1000;
+
+    var frequency = 250;
+    var perLoop = 2; //particles emitted after every frequency
+
+    var iterations = (life / frequency) ;
+
+    var numParticles = perLoop * iterations;
+    var particleLife = 3000;
+
+    var emitter = game.add.emitter(x,y,numParticles);
+    emitter.makeParticles("steam");
+    emitter.autoAlpha = true;
+    emitter.setAlpha(.75,0,3000);
+    emitter.gravity = -100;
+    emitter.setScale(.25,.5,.25,.5,3000);
+    emitter.autoScale = true;
+    emitter.setXSpeed(-20,20);
+    emitter.setYSpeed(-40,0);
+    emitter.setSize(10,10);
+    emitter.flow(particleLife,frequency,perLoop,numParticles);
+    game.state.machineLayer.addChild(emitter);
+    game.time.events.add(life+particleLife,function(){this.pendingDestroy = true;},emitter); //Destroy particle emitter later
+}
 coffeeDispenserButton.prototype = Object.create(Phaser.Sprite.prototype);
 coffeeDispenserButton.prototype.constructor = coffeeDispenserButton;
 coffeeDispenserButton.prototype.update = function() {
