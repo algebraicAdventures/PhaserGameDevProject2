@@ -7,8 +7,10 @@ var timePlayed = 0;
 var MACHINE_HEIGHT = 40;
 playState = {
     init: function(){
-        console.log(game.load.hasLoaded);
-        game.musicManager = new MusicManager(game); // move this to the title state??
+        // Managers
+        game.musicManager = new MusicManager(game); // TODO(Ariel): move this to the title state??
+        game.state.orderManager = new OrderManager(game);
+
         game.world.setBounds(0,0,1344*3,750); //arbitrary 3 window size, it doesn't seem to matter
         game.camera.bounds = game.world.bounds;
 
@@ -18,7 +20,7 @@ playState = {
         game.state.objectLayer = game.add.group();
         game.state.hudLayer = game.add.group(); //Hud layer in front of objects
         game.state.hudLayer.fixedToCamera = true;
-        game.state.dropDown;
+        game.state.dropDown; // TODO(Ariel): Take this away and make ordermanager accessible instead
         game.state.triggers = []; //array of sprites to be used as trigger zones
     },
     preload: function() {//Everything is loaded at the main menu now, for faster restarting of states
@@ -26,6 +28,7 @@ playState = {
 
     create: function(){
         game.musicManager.start(); // move to title screen??
+        game.state.orderManager.start();
         game.sound.play("ambience",1,true);
 
         game.camera.x = 1344;
@@ -61,8 +64,8 @@ playState = {
         //Input events
         var space = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         space.onDown.add(function() {
-            game.state.dropDown.addOrder(DrinkOrder.randomOrderReq());
-        }, game.state.dropDown);
+            this.addOrder(DrinkOrder.randomOrderReq());
+        }, game.state.orderManager);
         var restart = game.input.keyboard.addKey(Phaser.Keyboard.R);
         restart.onDown.add(function() {
             this.game.state.start('play');

@@ -14,6 +14,10 @@ function loadStuff(game){
     game.load.spritesheet('life', 'assets/sprites/life_spritesheet.png', 41, 37);
     game.load.script('score', 'js/score.js');
 
+    // manager stuff
+    game.load.script('musicManager', 'js/musicmanager.js');
+    game.load.script('orderManager', 'js/ordermanager.js');
+
     //bean grinder stuff
     game.load.script('beanGrinder', 'js/beanGrinder.js');
     game.load.image('grinder', 'assets/sprites/grinder.png');
@@ -52,7 +56,6 @@ function loadStuff(game){
     //game.load.image('coffeeBag', 'assets/sprites/coffeebag.png');
     game.load.image('dashedBox', 'assets/sprites/dashedBox.png');
     game.load.script('dropArea','js/dropArea.js');
-    game.load.script('musicManager', 'js/musicmanager.js');
 
     //Sounds
     game.load.audio('ambience', 'SFX/Coffee_Ambience.mp3');
