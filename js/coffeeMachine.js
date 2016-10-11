@@ -7,6 +7,8 @@ var COFFEE_DRAIN = 1; //How much coffee is used up per "shot"
 var DISPENSE_TIME = 3.5;
 var STARTING_COFFEE = 6;
 var REBOOT_TIME = 3;
+var BLINK_TIME = 6000; //Time in between each blink in ms
+var DOUBLE_BLINK = 4; //Every 4th blink is a double blink
 coffeeMachine = function(game, x, y){
     Phaser.Sprite.call(this, game, x, y, 'coffeeMachineBase');
     this.name = "coffeeMachine";
@@ -51,7 +53,14 @@ coffeeMachine.prototype.update = function() {
     }
 
     if(this.powerOn) {
-        this.screen.frame = timePlayed % 6000 <= 100 ? 2 : 1;
+        var remainder = timePlayed % (BLINK_TIME); //3 normal blinks before every double blink
+        if(timePlayed % (BLINK_TIME*DOUBLE_BLINK) < BLINK_TIME){
+            this.screen.frame = remainder <= 50 || (remainder <= 300 && remainder > 250) ? 2 : 1; //Blink twice
+        }
+        else{
+            this.screen.frame = remainder <= 100 ? 2 : 1; //Blink once
+        }
+
         this.indicator.frame = Math.ceil((this.totalCoffee / COFFEE_CAPACITY) * 3);
     }
     else{
@@ -115,9 +124,15 @@ coffeePowerButton.prototype.constructor = coffeePowerButton;
 coffeePowerButton.prototype.update = function() {
     if(this.rebootTime > 0){
         this.rebootTime = Math.max(this.rebootTime - deltaTime,0);
+        //Machine is turning on
+        var remainder =  this.rebootTime*1000 % 2000;
+        var tintAmount = remainder <= 50 ||(remainder <=250 && remainder > 200) ? 220   : 255;
+        var t = Phaser.Color.componentToHex(tintAmount);
+        this.parent.screen.tint = "0x"+t+t+t;
         if(this.rebootTime == 0){
             //machine turns on
             this.parent.powerOn = true;
+            this.parent.screen.tint = 0xffffff;
         }
     }
 };
