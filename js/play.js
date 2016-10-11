@@ -28,7 +28,7 @@ playState = {
 
     create: function(){
         game.musicManager.start(); // move to title screen??
-        game.orderManager.start();
+        game.state.orderManager.start();
         game.sound.play("ambience",1,true);
 
         game.camera.x = 1344;
@@ -64,8 +64,8 @@ playState = {
         //Input events
         var space = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         space.onDown.add(function() {
-            game.state.dropDown.addOrder(DrinkOrder.randomOrderReq());
-        }, game.state.dropDown);
+            this.addOrder(DrinkOrder.randomOrderReq());
+        }, game.state.orderManager);
         var restart = game.input.keyboard.addKey(Phaser.Keyboard.R);
         restart.onDown.add(function() {
             this.game.state.start('play');

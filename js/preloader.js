@@ -16,7 +16,7 @@ function loadStuff(game){
 
     // manager stuff
     game.load.script('musicManager', 'js/musicmanager.js');
-    game.load.script('orderManager', 'js/orderManager.js');
+    game.load.script('orderManager', 'js/ordermanager.js');
 
     //bean grinder stuff
     game.load.script('beanGrinder', 'js/beanGrinder.js');
