@@ -107,10 +107,12 @@ coffeePowerButton = function(game, x, y, parent){
     this.events.onInputDown.add(function (button) {
         button.frame = button.frame == 0 ? 1 : 0;
         //Play sounds
+        game.sound.play("buttonPress",.75);
         if(button.frame == 0){
             button.parent.powerOn = false;
             //Turn off machine, play sound
             button.parent.screen.tint = 0x000000;
+            button.rebootTime = 0;
         }
         else{
             button.rebootTime = REBOOT_TIME;
@@ -187,9 +189,9 @@ coffeeMachine.createEmitter = function(x,y){
     emitter.autoScale = true;
     emitter.setXSpeed(-20,20);
     emitter.setYSpeed(-40,0);
-    emitter.setSize(10,10);
+    emitter.setSize(20,10);
     emitter.flow(particleLife,frequency,perLoop,numParticles);
-    game.state.machineLayer.addChild(emitter);
+    //game.state.machineLayer.addChild(emitter);
     game.time.events.add(life+particleLife,function(){this.pendingDestroy = true;},emitter); //Destroy particle emitter later
 }
 coffeeDispenserButton.prototype = Object.create(Phaser.Sprite.prototype);
