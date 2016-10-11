@@ -17,7 +17,7 @@ coffeeMachine = function(game, x, y){
     this.totalCoffee = STARTING_COFFEE;
     this.powerOn = false;
     this.needsReboot = false;
-
+    this.faceOffset = 1; //Can be set to 3 to make it sad, or farther for upsideDown etc
     //Add pieces
     this.dial = this.addChild(new coffeeDial(game,119,-this.height+152));
     this.indicator = this.addChild(new Phaser.Sprite(game,697,-this.height + 20,"coffeeIndicator"));
@@ -54,13 +54,14 @@ coffeeMachine.prototype.update = function() {
 
     if(this.powerOn) {
         var remainder = timePlayed % (BLINK_TIME); //3 normal blinks before every double blink
+        var blink;
         if(timePlayed % (BLINK_TIME*DOUBLE_BLINK) < BLINK_TIME){
-            this.screen.frame = remainder <= 50 || (remainder <= 300 && remainder > 250) ? 2 : 1; //Blink twice
+            blink = remainder <= 50 || (remainder <= 300 && remainder > 250) ? 1 : 0; //Blink twice
         }
         else{
-            this.screen.frame = remainder <= 100 ? 2 : 1; //Blink once
+            blink = remainder <= 100 ? 1 : 0; //Blink once
         }
-
+        this.screen.frame = blink + this.faceOffset;
         this.indicator.frame = Math.ceil((this.totalCoffee / COFFEE_CAPACITY) * 3);
     }
     else{
