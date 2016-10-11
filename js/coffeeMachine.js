@@ -154,6 +154,17 @@ coffeeDispenserButton = function(game, x, y, box){
             game.sound.play("pourLong");
             button.dispenseTime = DISPENSE_TIME;
             button.parent.totalCoffee = Math.max(button.parent.totalCoffee - COFFEE_DRAIN, 0);
+            //create steam
+            var emitter = game.add.emitter(button.world.x,button.world.y,30);
+            console.log(emitter.x+" "+emitter.y);
+            //game.state.machineLayer.addChild(emitter);
+            var life = 4000;
+            emitter.makeParticles("testSprite");
+            emitter.gravity = -200;
+            var frequency = 250;
+            var total = life / frequency;
+            emitter.flow(1000,250,frequency,1,total);
+           // game.time.events.add(life,function(){this.pendingDestroy = true;},emitter); //Destroy particle emitter later
             var cup = button.box.attachedSprite;
             if (cup != null) {
                 cup.inputEnabled = false;
