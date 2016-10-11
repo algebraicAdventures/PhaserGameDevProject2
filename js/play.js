@@ -10,9 +10,11 @@ playState = {
         game.camera.bounds = game.world.bounds;
 
         game.state.machineLayer = game.add.group();
-        game.state.hudLayer = game.add.group();
-        game.state.hudLayer.fixedToCamera = true;
+        game.state.hudLayerBack = game.add.group(); //Hud layer behind objects
+        game.state.hudLayerBack.fixedToCamera = true;
         game.state.objectLayer = game.add.group();
+        game.state.hudLayer = game.add.group(); //Hud layer in front of objects
+        game.state.hudLayer.fixedToCamera = true;
         game.state.dropDown;
         game.state.triggers = []; //array of sprites to be used as trigger zones
     },
@@ -27,11 +29,11 @@ playState = {
 
         game.physics.startSystem(Phaser.Physics.ARCADE);
         //Create arrows
-        game.state.hudLayer.addChild(new slideButton(game,0,game.height/2,-game.width));
-        game.state.hudLayer.addChild(new slideButton(game,game.width,game.height/2,game.width));
+        game.state.hudLayerBack.addChild(new slideButton(game,0,game.height/2,-game.width));
+        game.state.hudLayerBack.addChild(new slideButton(game,game.width,game.height/2,game.width));
         //Create dropdown
         game.state.dropDown = new dropdown(game,game.width/2,0);
-        game.state.hudLayer.addChild(game.state.dropDown);
+        game.state.hudLayerBack.addChild(game.state.dropDown);
         // create garbage
         game.state.hudLayer.addChild(new Garbage(game));
         // create score and lives
@@ -57,6 +59,10 @@ playState = {
         space.onDown.add(function() {
             game.state.dropDown.addOrder(DrinkOrder.randomOrderReq());
         }, game.state.dropDown);
+        var restart = game.input.keyboard.addKey(Phaser.Keyboard.R);
+        restart.onDown.add(function() {
+            this.game.state.start('play');
+        }, this);
         // game.input.onTap.add(onTap);
 
         if(DEBUG_INFO){

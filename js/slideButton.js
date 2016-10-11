@@ -16,7 +16,7 @@ slideButton = function(game, x, y, direction){
     game.physics.arcade.enable(this);
     game.state.triggers.push(this);
     this.intervalTime = 0;
-    var scale = .25;
+    var scale = .4;
     //The bounding box looks off, but that's because the scale X scal is negative
     this.body.setSize(this.width * scale,this.height * scale , this.width*(1 -scale) *this.scale.x, this.height*(.5 -scale*.5));
     this.events.onInputDown.add(slideButton.onInputDown);
