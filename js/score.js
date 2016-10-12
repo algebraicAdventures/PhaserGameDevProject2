@@ -41,6 +41,9 @@ Score.prototype.removeLife = function() {
             game.state.start('menu');
         });
     }
+    if(this.lives_ === 3) {
+        game.state.machine.faceOffset = 3;
+    }
     this.liveSprites_[this.lives_].frame = 1;
 };
 
