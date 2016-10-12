@@ -2,7 +2,7 @@
  * Created by Patrick on 10/9/2016.
  */
 
-dropArea = function(game, x, y, name){
+var dropArea = function(game, x, y, name){
     Phaser.Sprite.call(this, game, x, y, 'dashedBox');
     this.name = name;
     this.tint = dropArea.DEFAULT_TINT;
@@ -38,3 +38,15 @@ dropArea.prototype.update = function() {
         this.visible = setVisible;
     }
 };
+
+var OrderDropoff = function(game, x, y) {
+    dropArea.call(this, game, x, y, 'orderDropoff');
+    this.anchor.set(0, 1);
+    this.text_ = this.addChild(new Phaser.Text(game, this.width + 30, 0, 'Order Dropoff', {
+        align: 'left',
+        fill: '#939598'
+    }));
+    this.text_.anchor.set(0, 1);
+};
+OrderDropoff.prototype = Object.create(dropArea.prototype);
+OrderDropoff.prototype.constructor = OrderDropoff;
