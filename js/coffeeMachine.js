@@ -22,7 +22,8 @@ coffeeMachine = function(game, x, y){
     this.dial = this.addChild(new coffeeDial(game,119,-this.height+152));
     this.indicator = this.addChild(new Phaser.Sprite(game,697,-this.height + 20,"coffeeIndicator"));
     this.indicator.anchor.x = .5;
-
+    this.staticSound = new Phaser.Sound(game,"machineStatic",0,true);
+    this.staticSound.play('',0,0,true,false);
 
     //Screen
     this.screen = this.addChild(new Phaser.Sprite(game,261,-this.height + 28,"screen"));
@@ -65,6 +66,7 @@ coffeeMachine.prototype.update = function() {
                 coffeeDial.toggle(this.dial);
             }
             this.screen.frame = 0;
+            this.staticSound.volume = 1;
         }
         else{
             var remainder = timePlayed % (BLINK_TIME); //3 normal blinks before every double blink
@@ -77,9 +79,12 @@ coffeeMachine.prototype.update = function() {
             }
             this.screen.frame = blink + this.faceOffset;
             this.screen.tint = 0xffffff;
+            this.staticSound.volume = 0;
         }
     }
-    else {}
+    else {
+        this.staticSound.volume = 0;
+    }
         this.indicator.frame = Math.ceil((this.totalCoffee / COFFEE_CAPACITY) * 3);
 };
 

@@ -1,7 +1,7 @@
 /**
  * Created by wrighp on 10/5/2016.
  */
-var totalDecodedSounds = 28; //Set to the number of mp3's/ ogg's you have, needs to be equal to that number
+var totalDecodedSounds = 29; //Set to the number of mp3's/ ogg's you have, needs to be equal to that number
 function loadStuff(game){
     // hud stuff
     game.load.script('draggableObject','js/draggableObject.js');
@@ -91,6 +91,7 @@ function loadStuff(game){
     game.load.audio('emergency', 'Music/Coffee_Countdown.mp3');
     game.load.audio('machineOff', 'SFX/Voice/Machine_Voice_Shutdown.mp3');
     game.load.audio('machineOn', 'SFX/Voice/Machine_Voice_TurnOn.mp3');
+    game.load.audio('machineStatic', 'SFX/Machine_Static_V2.mp3');
 
     console.log("Preloaded files");
 }
