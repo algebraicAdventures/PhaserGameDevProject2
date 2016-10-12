@@ -33,7 +33,11 @@ Score.prototype.removeLife = function() {
     this.game.musicManager.increaseStem();
     this.lives_ -= 1;
     if(this.lives_ === 0) {
-        this.game.state.start('gameover');
+        game.camera.fade(0xffffff, 1000, false);
+        game.musicManager.fadeOut();
+        game.time.events.add(1000, function() {
+            game.state.start('gameover');
+        });
     }
     this.liveSprites_[this.lives_].frame = 1;
 };
