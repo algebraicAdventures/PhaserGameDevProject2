@@ -27,7 +27,7 @@ var OrderManager = function(game, x, y){
     this.expiringOrders_ = 0;
 
     //Manually centered
-    this.textAlert =this.addChild(new Phaser.Text(this.game,-68,20,"New Order.",{fill: 'white', align: 'center'}));
+    this.textAlert =this.addChild(new Phaser.Text(this.game,-68,20,"New Order.",{fill: '#222222', align: 'center'}));
     this.textAlert.alpha = 1;
     this.textAlertTime = 0;
 };

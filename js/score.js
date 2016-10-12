@@ -17,14 +17,8 @@ var Score = function (game) {
     var offset = this.liveSprites_[0].height + SCORE_SPACING;
     this.scoreText_ = this.addChild(new Phaser.Text(game, 0, offset, 'Score: ' + this.score_.toString(), {
         align: 'left',
-        fill: 'white'
+        fill: '#222222'
     }));
-
-    /* TEMPORARY FOR TESTING */
-    this.inputEnabled = true;
-    this.events.onInputDown.add(function() {
-        this.addScore(game.rnd.integerInRange(1,50));
-    }, this);
 };
 Score.prototype = Object.create(Phaser.Sprite.prototype);
 Score.prototype.constructor = Score;
