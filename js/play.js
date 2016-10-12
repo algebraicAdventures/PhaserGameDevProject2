@@ -25,7 +25,9 @@ playState = {
     },
 
     create: function(){
-        game.sound.play("ambience",1,true);
+        var ambience = new Phaser.Sound(game, 'ambience', 1, true);
+        ambience.fadeIn();
+        game.musicManager.fadeIn(1);
         game.camera.x = 1344;
         game.camera.flash(0xffffff, 1000);
         game.state.cameraGoal = game.camera.x; //This is what the camera will interpolate to
@@ -70,6 +72,8 @@ playState = {
         var restart = game.input.keyboard.addKey(Phaser.Keyboard.R);
         restart.onDown.add(function() {
             game.camera.fade(0xffffff, 1000, false);
+            ambience.fadeOut();
+            game.musicManager.fadeOut();
             game.time.events.add(1000, function() {
                 game.state.start('play');
             });
@@ -109,7 +113,6 @@ playState = {
         heldObject = null;
         timePlayed = 0;
         game.state.orderSpawner.stop();
-        game.musicManager.restartStems();
     },
     onDragStart: function(){
 

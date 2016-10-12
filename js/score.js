@@ -2,6 +2,7 @@ var SCORE_SPACING = 5;
 var LIFE_SPACING = 4;
 var Score = function (game) {
     Phaser.Sprite.call(this, game, 10, 10);
+    this.game = game;
 
     // Custom properties
     this.lives_ = 7;
@@ -29,12 +30,11 @@ Score.prototype.update = function() {
 };
 
 Score.prototype.removeLife = function() {
-    if(this.lives_ <= 0) {
-        console.error('No more lives to remove');
-        return;
-    }
     this.game.musicManager.increaseStem();
     this.lives_ -= 1;
+    if(this.lives_ === 0) {
+        this.game.state.start('gameover');
+    }
     this.liveSprites_[this.lives_].frame = 1;
 };
 

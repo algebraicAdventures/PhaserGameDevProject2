@@ -26,7 +26,7 @@ MusicManager.prototype.increaseStem = function(scale) {
     scale = scale === undefined ? 1 : scale;
     this.soundValue_ += scale;
     if(this.soundValue_ >= NUM_STEMS - 1) {
-        this.soundValue__ = NUM_STEMS - 1;
+        this.soundValue_ = NUM_STEMS - 1;
     }
     var nextStem = Math.floor(this.soundValue_);
     if(this.currentStem_ !== nextStem) {
@@ -40,7 +40,7 @@ MusicManager.prototype.decreaseStem = function(scale) {
     scale = scale === undefined ? 1 : scale;
     this.soundValue_ -= scale;
     if(this.soundValue_ <= 1) {
-        this.soundValue__ = 1;
+        this.soundValue_ = 1;
     }
     var nextStem = Math.ceil(this.soundValue_);
     if(this.currentStem_ !== nextStem) {
@@ -55,14 +55,16 @@ MusicManager.prototype.toggleEmergency = function() {
     this.emergency_.fadeTo(CROSSFADE_TIME, this.emergencyOn_ ? 1 : REALLY_QUIET);
 };
 
-MusicManager.prototype.restartStems = function() {
-    console.log('restarting');
-    console.log(this.currentStem_);
-    console.log(this.stems_[this.currentStem_].isPlaying);
-    this.stems_[this.currentStem_].volume = REALLY_QUIET;
-    this.soundValue_ = 1;
-    this.currentStem_ = 1;
-    this.stems_[this.currentStem_].volume = 1;
+MusicManager.prototype.fadeOut = function() {
+    this.stems_[this.currentStem_].fadeTo(CROSSFADE_TIME/2, REALLY_QUIET);
+    this.soundValue_ = 0;
+    this.currentStem_ = 0;
     this.emergencyOn_ = false;
     this.emergency_.volume = REALLY_QUIET;
 };
+
+MusicManager.prototype.fadeIn = function(index) {
+    this.stems_[index].fadeTo(CROSSFADE_TIME/2, 1);
+    this.soundValue_ = index;
+    this.currentStem_ = index;
+}
