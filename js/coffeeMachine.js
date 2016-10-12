@@ -30,9 +30,10 @@ coffeeMachine = function(game, x, y){
     this.dispensers = [];
     this.boxes = [];
     for(var i = 0; i < 3; i++){
-        var box = this.addChild(new dropArea(game,119 + 292 * i, -this.height + 430,"machineBox"));
+        var offset = i < 2 ? 290 : 292;
+        var box = this.addChild(new dropArea(game,119 + offset * i, -this.height + 430,"machineBox"));
         this.boxes.push(box);
-        this.dispensers.push(this.addChild(new coffeeDispenserButton(game, 119 + 292 * i, -this.height + 272,box)));
+        this.dispensers.push(this.addChild(new coffeeDispenserButton(game, 119 + offset * i, -this.height + 272,box)));
     }
     //chute
     this.chute = this.addChild(new Phaser.Sprite(game,this.width,-this.height + 40,"coffeeChute"));
@@ -173,6 +174,11 @@ coffeeDispenserButton = function(game, x, y, box){
             game.sound.play("pourLong");
             button.dispenseTime = DISPENSE_TIME;
             button.parent.totalCoffee = Math.max(button.parent.totalCoffee - COFFEE_DRAIN, 0);
+            //create animation
+            var pouring = button.addChild(new Phaser.Sprite(game,-8,80,'pouring'));
+            pouring.animations.add('pour');
+            pouring.animations.play('pour',20);
+            game.time.events.add(DISPENSE_TIME*1000,function(){pouring.destroy();},pouring); //Destroy particle emitter later
             //create steam
             if(button.parent.dial.toggled)
                 coffeeMachine.createEmitter(button.world.x,button.world.y+100);
