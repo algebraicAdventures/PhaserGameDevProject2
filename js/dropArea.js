@@ -57,7 +57,7 @@ OrderDropoff.prototype.constructor = OrderDropoff;
 
 var menuDropoff = function(game, x, y) {
     dropArea.call(this, game, x, y, 'menuDropoff');
-    this.anchor.set(0.5, 1);
+    this.anchor.set(0.5, .5);
     this.text_ = this.addChild(new Phaser.Text(game, 0, - this.height - 35, 'Start Game', {
         align: 'center',
         fill: '#ffffff'

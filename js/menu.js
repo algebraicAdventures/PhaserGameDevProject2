@@ -15,7 +15,7 @@ var menuState = {
             game.state.screen.anchor.set(.5,.5);
             game.state.screen.frame = 1;
             game.state.triggers = []; //to satisfy the menu
-            game.state.startTrigger = new menuDropoff(game, 300, game.height/2 + heightShift - 100);
+            game.state.startTrigger = new menuDropoff(game, 1000, game.height/2 + heightShift);
             game.add.existing(game.state.startTrigger);
 
 
