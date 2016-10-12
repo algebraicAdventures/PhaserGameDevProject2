@@ -24,10 +24,26 @@ var menuState = {
             game.state.face = gameOver ? 3 : 1;
             game.state.screen.frame = game.state.face;
 
+            var titleText = null;
+            if(!gameOver) {
+                titleText = game.add.text(game.width / 2, 100 + heightShift, 'Coffee Break', {
+                    fill: '#ffffff',
+                    align: 'center',
+                    fontSize: 50
+                });
+            } else {
+                titleText = game.add.text(game.width / 2, 100 + heightShift, 'You broke its heart.', {
+                    fill: '#ffffff',
+                    align: 'center',
+                    fontSize: 50
+                });
+            }
+            titleText.anchor.set(0.5, 0.5);
+
+
             game.state.triggers = []; //to satisfy the menu
             game.state.startTrigger = new menuDropoff(game, 1000, game.height/2 + heightShift);
             game.add.existing(game.state.startTrigger);
-
 
             game.state.objectLayer = game.add.group();
         },

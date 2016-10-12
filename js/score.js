@@ -16,7 +16,7 @@ var Score = function (game) {
 
     this.score_ = 0;
     var offset = this.liveSprites_[0].height + SCORE_SPACING;
-    this.scoreText_ = this.addChild(new Phaser.Text(game, 0, offset, 'Score: ' + this.score_.toString(), {
+    this.scoreText_ = this.addChild(new Phaser.Text(game, 0, offset, '$' + this.score_.toString(), {
         align: 'left',
         fill: '#222222'
     }));
@@ -26,7 +26,7 @@ Score.prototype.constructor = Score;
 
 Score.prototype.update = function() {
     Phaser.Sprite.prototype.update.call(this);
-    this.scoreText_.text = 'Score: ' + this.score_.toString();
+    this.scoreText_.text = '$' + this.score_.toString();
 };
 
 Score.prototype.removeLife = function() {
