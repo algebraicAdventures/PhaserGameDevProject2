@@ -35,6 +35,9 @@ var OrderSpawner = function(game) {
             that.currentMaxSpawnRate_ = this.spawnRate.max;
             that.currentTimeLimit_ = this.timeLimit;
         }, spawnSpec);
+        this.timer_.add(this.marker_, function() {
+            this.game.state.machine.needsReboot = true;
+        }, this);
         this.marker_ += spawnSpec.duration;
     }
 };

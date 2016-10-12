@@ -50,7 +50,7 @@ playState = {
         //create grinder
         game.state.machineLayer.addChild(new beanGrinder(game, 1000,game.height -MACHINE_HEIGHT));
         //create coffee machine
-        game.state.machineLayer.addChild(new coffeeMachine(game, 2950,game.height -MACHINE_HEIGHT));
+        this.game.state.machine = game.state.machineLayer.addChild(new coffeeMachine(game, 2950,game.height -MACHINE_HEIGHT));
         //create cup towers
         game.state.machineLayer.addChild(new CupTower(game, 1850, game.height - MACHINE_HEIGHT, CoffeeCup.Type.GLASS));
         game.state.machineLayer.addChild(new CupTower(game, 1600, game.height - MACHINE_HEIGHT, CoffeeCup.Type.PAPER));
