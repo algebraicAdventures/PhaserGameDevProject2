@@ -5,12 +5,14 @@ var DEBUG_INFO = true; //set true to see various debug info
 var deltaTime = 1;
 var timePlayed = 0;
 var MACHINE_HEIGHT = 40;
+var BACKGROUND_PARALLAX = 1/5; //With current sprite can't go more than 1/3
 playState = {
     init: function(){
         game.musicManager = new MusicManager(game); // move this to the title state??
         game.world.setBounds(0,0,1344*3,750); //arbitrary 3 window size, it doesn't seem to matter
         game.camera.bounds = game.world.bounds;
 
+        game.state.backgroundLayer = game.add.group();
         game.state.machineLayer = game.add.group();
         game.state.hudLayerBack = game.add.group(); //Hud layer behind objects
         game.state.hudLayerBack.fixedToCamera = true;
@@ -29,10 +31,15 @@ playState = {
 
         game.camera.x = 1344;
         game.state.cameraGoal = game.camera.x; //This is what the camera will interpolate to
-
         game.physics.startSystem(Phaser.Physics.ARCADE);
+        //Countertop and background
+        game.state.backgroundLayer.add(new Phaser.Sprite(game,0,0,"background"));
+        game.state.backgroundLayer.fixedToCamera = true;
+        game.state.backgroundLayer.cameraOffset.x = -game.camera.x *BACKGROUND_PARALLAX
+        game.state.machineLayer.add(new Phaser.Sprite(game,0,0,"countertop"));
+
+
         //Create arrows
-        game.state.machineLayer.add(new Phaser.Sprite(game,game.width,0,"countertop"));
         game.state.hudLayerBack.addChild(new slideButton(game,0,game.height/2,-game.width));
         game.state.hudLayerBack.addChild(new slideButton(game,game.width,game.height/2,game.width));
         // create garbage
@@ -82,6 +89,7 @@ playState = {
     update: function(){
         timePlayed += game.time.elapsedMS;
         deltaTime = game.time.elapsed / 1000;
+
         if(DEBUG_INFO){
             game.debug.cameraInfo(game.camera, 32, 32);
         }
@@ -90,6 +98,10 @@ playState = {
             //objectHoverHandler is in draggableObject
            game.physics.arcade.collide(heldObject, game.state.triggers, null, objectHoverHandler, this);
         }
+
+    },
+    preRender: function(){
+
     },
     shutdown: function(){
         //Reset your global variables here!!

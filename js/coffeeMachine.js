@@ -54,16 +54,30 @@ coffeeMachine.prototype.update = function() {
     }
 
     if(this.powerOn) {
-        var remainder = timePlayed % (BLINK_TIME); //3 normal blinks before every double blink
-        var blink;
-        if(timePlayed % (BLINK_TIME*DOUBLE_BLINK) < BLINK_TIME){
-            blink = remainder <= 50 || (remainder <= 300 && remainder > 250) ? 1 : 0; //Blink twice
+        if(this.needsReboot){
+            var remainder =  timePlayed % 2200;
+            var remainder2 = timePlayed % 2300;
+            var tintAmount = remainder <= 50 ||(remainder2 <=50) ? 220   : 255;
+            var t = Phaser.Color.componentToHex(tintAmount);
+            this.screen.tint = "0x"+t+t+t;
+            if(timePlayed % 1200 == 0 || timePlayed % 1500 == 0){
+                coffeeDial.toggle(this.dial);
+                console.log("ticked");
+            }
         }
         else{
-            blink = remainder <= 100 ? 1 : 0; //Blink once
+            var remainder = timePlayed % (BLINK_TIME); //3 normal blinks before every double blink
+            var blink;
+            if(timePlayed % (BLINK_TIME*DOUBLE_BLINK) < BLINK_TIME){
+                blink = remainder <= 50 || (remainder <= 300 && remainder > 250) ? 1 : 0; //Blink twice
+            }
+            else{
+                blink = remainder <= 100 ? 1 : 0; //Blink once
+            }
+            this.screen.frame = blink + this.faceOffset;
+            this.indicator.frame = Math.ceil((this.totalCoffee / COFFEE_CAPACITY) * 3);
+            this.screen.tint = 0xffffff;
         }
-        this.screen.frame = blink + this.faceOffset;
-        this.indicator.frame = Math.ceil((this.totalCoffee / COFFEE_CAPACITY) * 3);
     }
     else{
         this.indicator.frame = 0;
@@ -77,18 +91,19 @@ coffeeDial = function(game, x, y){
     this.inputEnabled = true;
     this.input.useHandCursor = true;
     this.toggled = false;
-    this.events.onInputDown.add(function (dial) {
-        var dispensers = dial.parent.dispensers;
-        for(var i = 0; i < dispensers.length; i++){
-            if(dispensers[i].dispenseTime > 0) return;
-        }
-        dial.toggled = dial.angle != 60;
-        dial.angle = dial.toggled ? 60 : 0;
-        //Play noise
-        game.sound.play("dialTurn",.5);
-    });
+    this.events.onInputDown.add(coffeeDial.toggle);
 
 };
+coffeeDial.toggle = function(dial){
+    var dispensers = dial.parent.dispensers;
+    for(var i = 0; i < dispensers.length; i++){
+        if(dispensers[i].dispenseTime > 0) return;
+    }
+    dial.toggled = dial.angle != 60;
+    dial.angle = dial.toggled ? 60 : 0;
+    //Play noise
+    game.sound.play("dialTurn",.5);
+}
 coffeeDial.prototype = Object.create(Phaser.Sprite.prototype);
 coffeeDial.prototype.constructor = coffeeDial;
 coffeeDial.prototype.update = function() {};
@@ -113,14 +128,12 @@ coffeePowerButton = function(game, x, y, parent){
             if(button.rebootTime <= 0){
                 game.sound.play("machineOff");
             }
-
             button.parent.powerOn = false;
             //Turn off machine, play sound
             button.parent.screen.tint = 0x000000;
             button.rebootTime = 0;
         }
         else{
-
             button.rebootTime = REBOOT_TIME;
             button.parent.screen.tint = 0xffffff;
             button.parent.screen.frame = 0;
@@ -134,15 +147,12 @@ coffeePowerButton.prototype.update = function() {
     if(this.rebootTime > 0){
         this.rebootTime = Math.max(this.rebootTime - deltaTime,0);
         //Machine is turning on
-        var remainder =  this.rebootTime*1000 % 2000;
-        var tintAmount = remainder <= 50 ||(remainder <=250 && remainder > 200) ? 220   : 255;
-        var t = Phaser.Color.componentToHex(tintAmount);
-        this.parent.screen.tint = "0x"+t+t+t;
+
         if(this.rebootTime == 0){
             //machine turns on
+            this.parent.needsReboot = false;
             game.sound.play("machineOn");
             this.parent.powerOn = true;
-            this.parent.screen.tint = 0xffffff;
         }
     }
 };
@@ -157,7 +167,7 @@ coffeeDispenserButton = function(game, x, y, box){
     this.frame = 1;
     this.dispenseTime = 0;
     this.events.onInputDown.add(function (button) {
-        if(button.parent.powerOn && button.dispenseTime == 0 && button.parent.totalCoffee > 0) { //Could check for greater than 0 instead, for rounding errors
+        if(button.frame != 0) { //Could check for greater than 0 instead, for rounding errors
             game.sound.play("buttonPress",.5);
             button.frame = 0;
             game.sound.play("pourLong");
@@ -201,7 +211,7 @@ coffeeMachine.createEmitter = function(x,y){
     emitter.flow(particleLife,frequency,perLoop,numParticles);
     game.state.machineLayer.addChild(emitter);
     game.time.events.add(life+particleLife,function(){this.pendingDestroy = true;},emitter); //Destroy particle emitter later
-}
+};
 coffeeDispenserButton.prototype = Object.create(Phaser.Sprite.prototype);
 coffeeDispenserButton.prototype.constructor = coffeeDispenserButton;
 coffeeDispenserButton.prototype.update = function() {
@@ -223,6 +233,6 @@ coffeeDispenserButton.prototype.update = function() {
         }
     }
     if(!pouring){ //Or power off
-        this.frame = this.parent.totalCoffee > 0 && this.parent.powerOn ? 1 : 0;
+        this.frame = this.parent.totalCoffee > 0 && this.parent.powerOn && !this.parent.needsReboot? 1 : 0;
     }
 };

@@ -45,7 +45,9 @@ slideButton.onInputDown = function(button){
 slideButton.triggerButton = function(button, sprite){
     if(button.canUse && (sprite == null || checkOverlap(button,sprite))){
         game.state.cameraGoal += button.direction;
-        game.add.tween(button.game.camera).to({x: game.state.cameraGoal}, CAMERA_TWEEN_TIME, Phaser.Easing.Cubic.InOut, true);
+        game.add.tween(game.camera).to({x: game.state.cameraGoal}, CAMERA_TWEEN_TIME, Phaser.Easing.Cubic.InOut, true);
+        game.add.tween(game.state.backgroundLayer.cameraOffset).to({x: -game.state.cameraGoal*BACKGROUND_PARALLAX}, CAMERA_TWEEN_TIME, Phaser.Easing.Cubic.InOut, true);
+        //game.state.backgroundLayer.cameraOffset.x
         if(sprite != null && checkOverlap(button,sprite)){
             button.intervalTime = DELAY_TIME; //A delay in between button tweens
         }

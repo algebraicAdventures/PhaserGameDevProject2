@@ -14,7 +14,7 @@ Garbage.prototype.update = function() {
     this.scale.set(size,size);
     var squareSize = size*size;
     //In order to keep the dimensions the right size;
-    var HITBOX_SCALE = .5;
+    var HITBOX_SCALE = .75;
     this.body.setSize(this.width/squareSize * HITBOX_SCALE, this.height/squareSize * HITBOX_SCALE,-this.width/squareSize * (HITBOX_SCALE-size));
     this.hovered = false;
 };
