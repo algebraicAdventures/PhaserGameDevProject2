@@ -29,7 +29,7 @@ DrinkOrder = function(game, x, y, timeLimit, components) {
         cup: components.cup,
         temp: components.temp,
     };
-    this.price = 10;
+    this.price = components.price;
 
     // Add icons to order components
     var image;
