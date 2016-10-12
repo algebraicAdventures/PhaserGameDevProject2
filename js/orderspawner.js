@@ -34,7 +34,6 @@ var OrderSpawner = function(game) {
             that.currentMinSpawnRate_ = this.spawnRate.min;
             that.currentMaxSpawnRate_ = this.spawnRate.max;
             that.currentTimeLimit_ = this.timeLimit;
-            console.log('increase difficulty');
         }, spawnSpec);
         this.marker_ += spawnSpec.duration;
     }
@@ -42,7 +41,6 @@ var OrderSpawner = function(game) {
 
 OrderSpawner.prototype.start = function() {
     this.timer_.start();
-    console.log('orders incoming!');
 };
 
 OrderSpawner.prototype.spawnOrder = function() {
@@ -51,15 +49,15 @@ OrderSpawner.prototype.spawnOrder = function() {
         temp: game.rnd.integerInRange(0, 1),
         price: this.currentPrice_
     }, this.currentTimeLimit_);
-    console.log('spawned new order');
     this.spawnTimer_ = this.game.time.create(true);
     var nextTime = this.game.rnd.integerInRange(this.currentMinSpawnRate_, this.currentMaxSpawnRate_);
     this.spawnTimer_.add(nextTime, this.spawnOrder, this);
     this.spawnTimer_.start();
-    console.log('next order in ' + nextTime);
 };
 
 OrderSpawner.prototype.stop = function() {
-    this.spawnTimer_.stop();
+    if(this.spawnTimer_ !== null) {
+        this.spawnTimer_.stop();
+    }
     this.timer_.stop();
 };

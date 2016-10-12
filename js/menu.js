@@ -3,6 +3,7 @@
  */
 var menuState = {
         create: function(){
+            game.musicManager = new MusicManager(game);
             this.game.state.start('play');
         }
 };

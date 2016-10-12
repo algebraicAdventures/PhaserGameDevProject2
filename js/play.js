@@ -7,7 +7,6 @@ var timePlayed = 0;
 var MACHINE_HEIGHT = 40;
 playState = {
     init: function(){
-        game.musicManager = new MusicManager(game); // move this to the title state??
         game.world.setBounds(0,0,1344*3,750); //arbitrary 3 window size, it doesn't seem to matter
         game.camera.bounds = game.world.bounds;
 
@@ -96,6 +95,7 @@ playState = {
         heldObject = null;
         timePlayed = 0;
         game.state.orderSpawner.stop();
+        game.musicManager.restartStems();
     },
     onDragStart: function(){
 

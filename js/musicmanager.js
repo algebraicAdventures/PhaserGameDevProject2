@@ -9,6 +9,7 @@ var MusicManager = function(game) {
     }
     this.emergency_ = new Phaser.Sound(game, 'emergency', 0, true);
     this.emergencyOn_ = false;
+    this.soundValue_ = 0;
     this.currentStem_ = 0;
 };
 
@@ -23,33 +24,42 @@ MusicManager.prototype.start = function() {
 
 MusicManager.prototype.increaseStem = function(scale) {
     scale = scale === undefined ? 1 : scale;
-    var currentStem = Math.floor(this.currentStem_);
-    this.currentStem_ += scale;
-    if(this.currentStem_ >= NUM_STEMS - 1) {
-        this.currentStem_ = NUM_STEMS - 1;
+    this.soundValue_ += scale;
+    if(this.soundValue_ >= NUM_STEMS - 1) {
+        this.soundValue__ = NUM_STEMS - 1;
     }
-    var nextStem = Math.floor(this.currentStem_);
-    if(currentStem !== nextStem) {
-        this.stems_[currentStem].fadeTo(CROSSFADE_TIME, REALLY_QUIET);
+    var nextStem = Math.floor(this.soundValue_);
+    if(this.currentStem_ !== nextStem) {
+        this.stems_[this.currentStem_].fadeTo(CROSSFADE_TIME, REALLY_QUIET);
         this.stems_[nextStem].fadeTo(CROSSFADE_TIME, 1);
+        this.currentStem_ = nextStem;
     }
 };
 
 MusicManager.prototype.decreaseStem = function(scale) {
     scale = scale === undefined ? 1 : scale;
-    var currentStem = Math.ceil(this.currentStem_);
-    this.currentStem_ -= scale;
-    if(this.currentStem_ <= 1) {
-        this.currentStem_ = 1;
+    this.soundValue_ -= scale;
+    if(this.soundValue_ <= 1) {
+        this.soundValue__ = 1;
     }
-    var nextStem = Math.ceil(this.currentStem_);
-    if(currentStem !== nextStem) {
-        this.stems_[currentStem].fadeTo(CROSSFADE_TIME, REALLY_QUIET);
+    var nextStem = Math.ceil(this.soundValue_);
+    if(this.currentStem_ !== nextStem) {
+        this.stems_[this.currentStem_].fadeTo(CROSSFADE_TIME, REALLY_QUIET);
         this.stems_[nextStem].fadeTo(CROSSFADE_TIME, 1);
+        this.currentStem_ = nextStem;
     }
 };
 
 MusicManager.prototype.toggleEmergency = function() {
     this.emergencyOn_ = !this.emergencyOn_;
     this.emergency_.fadeTo(CROSSFADE_TIME, this.emergencyOn_ ? 1 : REALLY_QUIET);
+};
+
+MusicManager.prototype.restartStems = function() {
+    console.log('restarting');
+    this.stems_[this.currentStem_].fadeTo(CROSSFADE_TIME, REALLY_QUIET);
+    this.soundValue_ = 1;
+    this.currentStem_ = 1;
+    this.stems_[this.currentStem_].fadeTo(CROSSFADE_TIME, 1);
+    // TODO: Take care of emergency music.
 };
