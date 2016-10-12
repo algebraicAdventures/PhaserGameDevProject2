@@ -1,7 +1,7 @@
 /**
  * Created by wrighp on 10/4/2016.
  */
-var DEBUG_INFO = true; //set true to see various debug info
+var DEBUG_INFO = false; //set true to see various debug info
 var deltaTime = 1;
 var timePlayed = 0;
 var MACHINE_HEIGHT = 40;

@@ -33,6 +33,9 @@ dropArea.prototype.update = function() {
     } else if(this.name == 'orderDropoff') {
         setVisible = (heldObject != null && heldObject.name =='coffeeCup');
     }
+    else if(this.name == 'menuDropoff'){
+        setVisible = heldObject != null;
+    }
     setVisible = this.attachedSprite == null ? setVisible : false;
     if(this.visible != setVisible){
         this.visible = setVisible;
@@ -48,5 +51,18 @@ var OrderDropoff = function(game, x, y) {
     }));
     this.text_.anchor.set(0.5, 0);
 };
+
 OrderDropoff.prototype = Object.create(dropArea.prototype);
 OrderDropoff.prototype.constructor = OrderDropoff;
+
+var menuDropoff = function(game, x, y) {
+    dropArea.call(this, game, x, y, 'menuDropoff');
+    this.anchor.set(0.5, 1);
+    this.text_ = this.addChild(new Phaser.Text(game, 0, - this.height - 35, 'Start Game', {
+        align: 'center',
+        fill: '#ffffff'
+    }));
+    this.text_.anchor.set(0.5, 0);
+};
+menuDropoff.prototype = Object.create(dropArea.prototype);
+menuDropoff.prototype.constructor = menuDropoff;

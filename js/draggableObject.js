@@ -95,6 +95,7 @@ draggableObject.prototype.update = function(){
 
 draggableObject.onDragStart = function(sprite, pointer, dragX, dragY, snapPoint){
     sprite.dragged = true;
+    sprite.body.angularVelocity = 0;
     heldObject = sprite;
     sprite.dragPointer = pointer;
     if(sprite.snappedArea != null){
@@ -128,6 +129,10 @@ draggableObject.prototype.dragStopped = function(sprite,pointer){
                 draggableObject.snapOn(obj,obj2);
                 game.state.orderManager.submitOrder(obj);
                 obj2.attachedSprite = null;
+            }
+            else if(obj2.name == "menuDropoff"){
+                obj2.attachedSprite = null;
+                startGame();
             }
             return false;
     }, this);
@@ -180,7 +185,7 @@ function objectHoverHandler(obj, obj2){
                 game.sound.play("beanGrab");
             }
         }
-        else if(obj2.constructor == dropArea || obj2.constructor == OrderDropoff){
+        else if(obj2.constructor == dropArea || obj2.constructor == OrderDropoff || obj2.constructor == menuDropoff){
             obj2.tint = dropArea.HOVER_TINT;
         }
         else if(obj2.name == "garbage"){
