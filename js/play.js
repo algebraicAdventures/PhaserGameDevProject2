@@ -26,7 +26,7 @@ playState = {
 
     create: function(){
         game.state.ambience = new Phaser.Sound(game, 'ambience', 1, true);
-        game.state.ambience.fadeIn();
+        game.state.ambience.fadeIn(1000, true);
         game.musicManager.fadeIn(1);
         game.camera.x = 1344;
         game.camera.flash(0xffffff, 1000);

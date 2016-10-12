@@ -35,6 +35,7 @@ Score.prototype.removeLife = function() {
     if(this.lives_ === 0) {
         game.camera.fade(0xffffff, 1000, false);
         game.musicManager.fadeOut();
+        game.state.ambience.fadeOut();
         game.time.events.add(1000, function() {
             game.state.start('gameover');
         });
