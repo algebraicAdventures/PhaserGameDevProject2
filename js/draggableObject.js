@@ -180,7 +180,7 @@ function objectHoverHandler(obj, obj2){
                 game.sound.play("beanGrab");
             }
         }
-        else if(obj2.constructor == dropArea){
+        else if(obj2.constructor == dropArea || obj2.constructor == OrderDropoff){
             obj2.tint = dropArea.HOVER_TINT;
         }
         else if(obj2.name == "garbage"){

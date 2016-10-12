@@ -41,12 +41,12 @@ dropArea.prototype.update = function() {
 
 var OrderDropoff = function(game, x, y) {
     dropArea.call(this, game, x, y, 'orderDropoff');
-    this.anchor.set(0, 1);
-    this.text_ = this.addChild(new Phaser.Text(game, this.width + 30, 0, 'Order Dropoff', {
-        align: 'left',
-        fill: '#939598'
+    this.anchor.set(0.5, 1);
+    this.text_ = this.addChild(new Phaser.Text(game, 0, - this.height - 35, 'Order Dropoff', {
+        align: 'center',
+        fill: '#222222'
     }));
-    this.text_.anchor.set(0, 1);
+    this.text_.anchor.set(0.5, 0);
 };
 OrderDropoff.prototype = Object.create(dropArea.prototype);
 OrderDropoff.prototype.constructor = OrderDropoff;

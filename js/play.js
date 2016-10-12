@@ -59,7 +59,7 @@ playState = {
         //Spawn beans last so they go over things
         game.state.objectLayer.addChild(new BeanBag(game, 300, game.height - 40));
         // create order drop off
-        game.state.machineLayer.addChild(new OrderDropoff(game, game.width + 764, 284));
+        game.state.machineLayer.addChild(new OrderDropoff(game, game.width + 960, 284));
 
         //Create order manager
         game.state.orderManager = new OrderManager(game,game.width/2,0);
