@@ -49,7 +49,7 @@ function loadStuff(game){
     game.load.image('coffeeDial', 'assets/sprites/dial_centered.png');
     game.load.spritesheet('coffeeIndicator', 'assets/sprites/coffeeindicator_spritesheet.png', 107, 94);
     game.load.spritesheet('powerButton', 'assets/sprites/powerbutton_spritesheet.png', 96, 96);
-    game.load.spritesheet('screen', 'assets/sprites/screen_spritesheet.png', 298, 200);
+    game.load.spritesheet('screen', 'assets/sprites/screen_spritesheet_extended.png', 298, 200);
     game.load.spritesheet('dispenserButton', 'assets/sprites/dispenserbutton_spritesheet.png', 83, 34);
     game.load.image('coffeeChute','assets/sprites/chute.png');
     game.load.image('steam','assets/sprites/steam.png');

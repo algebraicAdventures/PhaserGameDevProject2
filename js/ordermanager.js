@@ -7,7 +7,7 @@ var OFFSET = 9;
 var TWEEN_TIME = 333;
 var TEXT_VISIBLE_TIME = 3; //Should be a multiple of TEXT_FLICKER_RATE
 var TEXT_FLICKER_RATE = 500;
-var PEEK_TIME = 4000; // How long does the menu stay open when warning about the time
+var PEEK_TIME = 9500; // How long does the menu stay open when warning about the time
 
 var OrderManager = function(game, x, y){
     Phaser.Sprite.call(this, game, x, y, 'dropdownImage');
