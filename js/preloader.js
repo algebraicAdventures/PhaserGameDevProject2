@@ -35,10 +35,12 @@ function loadStuff(game){
     game.load.image('garbage', 'assets/sprites/x.png');
     game.load.script('Garbage', 'js/garbage.js');
     // Order stuff
+    game.load.script('orderSpawner', 'js/orderspawner.js');
     game.load.image('order', 'assets/sprites/order.png');
     game.load.image('hot', 'assets/sprites/hot.png');
     game.load.image('cold', 'assets/sprites/cold.png');
     game.load.script('DrinkOrder', 'js/drinkOrder.js');
+    game.load.script('spawnSpecs', 'js/spawnspecs.js');
 
     game.load.script('testObject', 'js/testObject.js');
     //coffee machine stuff

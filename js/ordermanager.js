@@ -5,14 +5,13 @@ var TAB_SIZE = 42;
 var SPACING = 81;
 var OFFSET = 9;
 var TWEEN_TIME = 333;
-var ORDER_TIME = 20000; /* For testing purposes */
 var TEXT_VISIBLE_TIME = 3; //Should be a multiple of TEXT_FLICKER_RATE
 var TEXT_FLICKER_RATE = 500;
 var PEEK_TIME = 4000; // How long does the menu stay open when warning about the time
 
 var OrderManager = function(game, x, y){
-
     Phaser.Sprite.call(this, game, x, y, 'dropdownImage');
+    this.game = game;
     this.name = "dropdown";
     this.y = TAB_SIZE;
     this.anchor.set(0.5, 1);
@@ -47,16 +46,9 @@ OrderManager.prototype.update = function() {
  */
 OrderManager.prototype.numOrders = function() {
     return this.activeOrders_.length;
-}
+};
 
-/**
- * @param components An object containing the drink requirements
- * {
- *      volume: int - the number of units of coffee.
- *      temp: temperature from the CoffeeCup.Temp enum
- * }
- */
-OrderManager.prototype.addOrder = function(components) {
+OrderManager.prototype.addOrder = function(components, timeLimit) {
     var numOrders = this.numOrders();
     if(numOrders >= this.maxOrders_) {
         return;
@@ -68,7 +60,7 @@ OrderManager.prototype.addOrder = function(components) {
         this.textAlert.alpha = 0; //Reset text alert
         game.add.tween(this.textAlert).to({alpha: 1}, TEXT_FLICKER_RATE, Phaser.Easing.Sinusoidal.InOut,true,0,3,true);
     }
-    var newOrder = new DrinkOrder(this.game, 0, -(TAB_SIZE + SPACING * (numOrders + 1)) + OFFSET, ORDER_TIME, components);
+    var newOrder = new DrinkOrder(this.game, 0, -(TAB_SIZE + SPACING * (numOrders + 1)) + OFFSET, timeLimit, components);
     newOrder.anchor.set(0.5, 0);
     newOrder.addCrunchEvent(function() {
         if(this.expiringOrders_ === 0) {

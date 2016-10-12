@@ -29,7 +29,7 @@ DrinkOrder = function(game, x, y, timeLimit, components) {
         cup: components.cup,
         temp: components.temp,
     };
-    this.price = 10;
+    this.price = components.price;
 
     // Add icons to order components
     var image;
@@ -112,14 +112,4 @@ DrinkOrder.prototype.checkOrder = function(drink) {
         return false;
     }
     return true;
-};
-
-/**
- * returns the components for a randomly generated order
- */
-DrinkOrder.randomOrderReq = function() {
-    return {
-        cup: game.rnd.integerInRange(0, 1),
-        temp: game.rnd.integerInRange(0, 1)
-    };
 };
