@@ -63,7 +63,6 @@ coffeeMachine.prototype.update = function() {
             this.screen.tint = "0x"+t+t+t;
             if(timePlayed % 1200 == 0 || timePlayed % 1500 == 0){
                 coffeeDial.toggle(this.dial);
-                console.log("ticked");
             }
             this.screen.frame = 0;
         }
@@ -148,7 +147,7 @@ coffeePowerButton.prototype.update = function() {
         this.rebootTime = Math.max(this.rebootTime - deltaTime,0);
         //Machine is turning on
         //Machine has chance to lose progress (I think this is actually a geometric mean but it probabilistically will complete
-        if(game.rnd.realInRange(0,REBOOT_TIME * 2)< deltaTime){
+        if(game.rnd.realInRange(0,REBOOT_TIME * 4)< deltaTime){
             this.rebootTime = Math.min(this.rebootTime + REBOOT_TIME/2, REBOOT_TIME);
             this.parent.screen.tint = 0x888888;
         }
