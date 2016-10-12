@@ -6,7 +6,7 @@ var COFFEE_CAPACITY = 9;
 var COFFEE_DRAIN = 1; //How much coffee is used up per "shot"
 var DISPENSE_TIME = 3.5;
 var STARTING_COFFEE = 6;
-var REBOOT_TIME = 3;
+var REBOOT_TIME = 5;
 var BLINK_TIME = 6000; //Time in between each blink in ms
 var DOUBLE_BLINK = 4; //Every 4th blink is a double blink
 coffeeMachine = function(game, x, y){
@@ -137,7 +137,7 @@ coffeePowerButton = function(game, x, y, parent){
         else{
             button.rebootTime = REBOOT_TIME;
             button.parent.screen.tint = 0xffffff;
-            button.parent.screen.frame = 0;
+            button.parent.screen.frame = 5;
         }
         //Turning on and off, play noise etc
     });
@@ -148,6 +148,15 @@ coffeePowerButton.prototype.update = function() {
     if(this.rebootTime > 0){
         this.rebootTime = Math.max(this.rebootTime - deltaTime,0);
         //Machine is turning on
+        //Machine has chance to lose progress (I think this is actually a geometric mean but it probabilistically will complete
+        if(game.rnd.realInRange(0,REBOOT_TIME * 2)< deltaTime){
+            this.rebootTime = Math.min(this.rebootTime + REBOOT_TIME/2, REBOOT_TIME);
+            this.parent.screen.tint = 0x888888;
+        }
+        else{
+            this.parent.screen.tint = 0xffffff;
+        }
+        this.parent.screen.frame = 5 + Math.floor((1-this.rebootTime / REBOOT_TIME) * 10);
 
         if(this.rebootTime == 0){
             //machine turns on
