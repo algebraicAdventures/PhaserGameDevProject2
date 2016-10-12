@@ -3,10 +3,10 @@ Fixes:
 - Tape roll - high resolution (the one on Github currently is really small)
 
 Missing assets:
-- Background
+- Background -- DONE
     * Low contrast
     * Coffee shop interior with customers
-- Countertop
+- Countertop -- IN PROGRESS
     * As wide as you want, as long as it tiles horizontally
     * Two heights for stuff to sit on:
         - higher one for the area to drop off the order to the customers
