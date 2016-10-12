@@ -95,6 +95,7 @@ playState = {
         //Reset your global variables here!!
         heldObject = null;
         timePlayed = 0;
+        game.state.orderSpawner.stop();
     },
     onDragStart: function(){
 
