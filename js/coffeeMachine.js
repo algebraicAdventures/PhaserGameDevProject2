@@ -43,6 +43,7 @@ coffeeMachine = function(game, x, y){
     //Power button
     this.coffeePowerButton = this.addChild(new coffeePowerButton(game,697,-this.height + 180,this));
 
+
 };
 coffeeMachine.prototype = Object.create(Phaser.Sprite.prototype);
 coffeeMachine.prototype.constructor = coffeeMachine;
@@ -107,12 +108,19 @@ coffeePowerButton = function(game, x, y, parent){
     this.events.onInputDown.add(function (button) {
         button.frame = button.frame == 0 ? 1 : 0;
         //Play sounds
+        game.sound.play("buttonPress",.75);
         if(button.frame == 0){
+            if(button.rebootTime <= 0){
+                game.sound.play("machineOff");
+            }
+
             button.parent.powerOn = false;
             //Turn off machine, play sound
             button.parent.screen.tint = 0x000000;
+            button.rebootTime = 0;
         }
         else{
+
             button.rebootTime = REBOOT_TIME;
             button.parent.screen.tint = 0xffffff;
             button.parent.screen.frame = 0;
@@ -132,6 +140,7 @@ coffeePowerButton.prototype.update = function() {
         this.parent.screen.tint = "0x"+t+t+t;
         if(this.rebootTime == 0){
             //machine turns on
+            game.sound.play("machineOn");
             this.parent.powerOn = true;
             this.parent.screen.tint = 0xffffff;
         }
@@ -155,7 +164,8 @@ coffeeDispenserButton = function(game, x, y, box){
             button.dispenseTime = DISPENSE_TIME;
             button.parent.totalCoffee = Math.max(button.parent.totalCoffee - COFFEE_DRAIN, 0);
             //create steam
-            coffeeMachine.createEmitter(button.world.x,button.world.y+100);
+            if(button.parent.dial.toggled)
+                coffeeMachine.createEmitter(button.world.x,button.world.y+100);
             //game.state.machineLayer.addChild(emitter);
 
             var cup = button.box.attachedSprite;
@@ -187,7 +197,7 @@ coffeeMachine.createEmitter = function(x,y){
     emitter.autoScale = true;
     emitter.setXSpeed(-20,20);
     emitter.setYSpeed(-40,0);
-    emitter.setSize(10,10);
+    emitter.setSize(20,10);
     emitter.flow(particleLife,frequency,perLoop,numParticles);
     game.state.machineLayer.addChild(emitter);
     game.time.events.add(life+particleLife,function(){this.pendingDestroy = true;},emitter); //Destroy particle emitter later
