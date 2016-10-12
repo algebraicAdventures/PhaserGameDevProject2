@@ -33,6 +33,7 @@ playState = {
 
         game.physics.startSystem(Phaser.Physics.ARCADE);
         //Create arrows
+        game.state.machineLayer.add(new Phaser.Sprite(game,game.width,0,"countertop"));
         game.state.hudLayerBack.addChild(new slideButton(game,0,game.height/2,-game.width));
         game.state.hudLayerBack.addChild(new slideButton(game,game.width,game.height/2,game.width));
         //Create dropdown

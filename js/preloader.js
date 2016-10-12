@@ -55,6 +55,9 @@ function loadStuff(game){
     game.load.image('dashedBox', 'assets/sprites/dashedBox.png');
     game.load.script('dropArea','js/dropArea.js');
     game.load.script('musicManager', 'js/musicmanager.js');
+    game.load.image('countertop', 'assets/sprites/countertop.png');
+    game.load.image('background', 'assets/sprites/coffeeshop_bg.png');
+
 
     //Sounds
     game.load.audio('ambience', 'SFX/Coffee_Ambience.mp3');
