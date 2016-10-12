@@ -37,7 +37,8 @@ Score.prototype.removeLife = function() {
         game.musicManager.fadeOut();
         game.state.ambience.fadeOut();
         game.time.events.add(1000, function() {
-            game.state.start('gameover');
+            gameOver = true;
+            game.state.start('menu');
         });
     }
     this.liveSprites_[this.lives_].frame = 1;

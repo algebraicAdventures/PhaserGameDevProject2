@@ -77,13 +77,11 @@ coffeeMachine.prototype.update = function() {
                 blink = remainder <= 100 ? 1 : 0; //Blink once
             }
             this.screen.frame = blink + this.faceOffset;
-            this.indicator.frame = Math.ceil((this.totalCoffee / COFFEE_CAPACITY) * 3);
             this.screen.tint = 0xffffff;
         }
     }
-    else{
-        this.indicator.frame = 0;
-    }
+    else {}
+        this.indicator.frame = Math.ceil((this.totalCoffee / COFFEE_CAPACITY) * 3);
 };
 
 coffeeDial = function(game, x, y){
