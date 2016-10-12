@@ -65,6 +65,7 @@ coffeeMachine.prototype.update = function() {
                 coffeeDial.toggle(this.dial);
                 console.log("ticked");
             }
+            this.screen.frame = 0;
         }
         else{
             var remainder = timePlayed % (BLINK_TIME); //3 normal blinks before every double blink
