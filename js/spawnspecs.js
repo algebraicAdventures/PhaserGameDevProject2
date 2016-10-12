@@ -25,7 +25,8 @@ var SPAWN_SPECS = [
             max: 30000
         },
         timeLimit: 50000, // The time limit for the orders in this difficulty
-        price: 2 // Score increase
+        price: 2, // Score increase
+        break_machine: true // probability that the machine will break sometime during this difficulty
     },
     {
         duration: 40000,
@@ -34,7 +35,8 @@ var SPAWN_SPECS = [
             max: 25000
         },
         timeLimit: 40000,
-        price: 4
+        price: 4,
+        break_machine: false
     },
     {
         duration: 30000,
@@ -43,6 +45,7 @@ var SPAWN_SPECS = [
             max: 20000
         },
         timeLimit: 30000,
-        price: 6
+        price: 6,
+        break_machine: true
     }
 ];

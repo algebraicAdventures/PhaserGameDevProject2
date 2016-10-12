@@ -36,8 +36,8 @@ var OrderSpawner = function(game) {
             that.currentTimeLimit_ = this.timeLimit;
         }, spawnSpec);
         this.timer_.add(this.marker_, function() {
-            this.game.state.machine.needsReboot = true;
-        }, this);
+            that.game.state.machine.needsReboot = this.break_machine;
+        }, spawnSpec);
         this.marker_ += spawnSpec.duration;
     }
 };
