@@ -113,13 +113,3 @@ DrinkOrder.prototype.checkOrder = function(drink) {
     }
     return true;
 };
-
-/**
- * returns the components for a randomly generated order
- */
-DrinkOrder.randomOrderReq = function() {
-    return {
-        cup: game.rnd.integerInRange(0, 1),
-        temp: game.rnd.integerInRange(0, 1)
-    };
-};
