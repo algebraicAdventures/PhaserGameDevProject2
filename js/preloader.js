@@ -59,6 +59,7 @@ function loadStuff(game){
     game.load.script('musicManager', 'js/musicmanager.js');
     game.load.image('countertop', 'assets/sprites/countertop.png');
     game.load.image('background', 'assets/sprites/coffeeshop_bg.png');
+    game.load.spritesheet('pouring', 'assets/sprites/pour_spritesheet.png', 19, 147);
 
 
     //Sounds
