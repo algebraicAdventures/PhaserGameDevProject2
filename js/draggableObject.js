@@ -101,7 +101,7 @@ draggableObject.onDragStart = function(sprite, pointer, dragX, dragY, snapPoint)
         sprite.snappedArea.attachedSprite = null;
         sprite.snappedArea = null;
     }
-    game.sound.play("cupRemove",.25);
+    game.sound.play("cupRemove",.5);
 };
 
 draggableObject.onDragUpdate = function(sprite, pointer, dragX, dragY, snapPoint){
@@ -140,7 +140,7 @@ draggableObject.snapOn = function(obj,obj2){
         obj.y = obj2.y + obj2.parent.y - obj.height / 2 + obj2.height / 2 + 30;
         obj.snappedArea = obj2;
         obj2.attachedSprite = obj;
-        game.sound.play("cupPlace", .5);
+        game.sound.play("cupPlace", .75);
         endStop = true;
     }
 };
