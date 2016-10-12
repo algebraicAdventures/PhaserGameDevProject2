@@ -15,6 +15,8 @@ var SCRIPTED_ORDERS = [
     }
 ];
 
+var BETWEEN_TIME = 20000; // Amount of time between scripted orders and randomly spawned orders
+
 var SPAWN_SPECS = [
     {
         duration: 60000, // how long does this level of intensity last?

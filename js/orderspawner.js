@@ -1,13 +1,14 @@
 var OrderSpawner = function(game) {
     this.game = game;
     this.timer_ = game.time.create(false);
+    this.spawnTimer_ = null;
     this.orderManager_ = game.state.orderManager;
 
     // Current game settings
-    this.currentPrice_ = 0;
-    this.currentMinSpawnRate_ = 0;
-    this.currentMaxSpawnRate_ = 0;
-    this.currentTimeLimit_ = 0;
+    this.currentPrice_ = SPAWN_SPECS[0].price;
+    this.currentMinSpawnRate_ = SPAWN_SPECS[0].spawnRate.min;
+    this.currentMaxSpawnRate_ = SPAWN_SPECS[0].spawnRate.max;
+    this.currentTimeLimit_ = SPAWN_SPECS[0].timeLimit;
     this.marker_ = 0;
 
     // Set scripted orders
@@ -21,11 +22,11 @@ var OrderSpawner = function(game) {
                 price: this.price
             }, this.timeLimit);
         }, scriptedOrder);
+        this.marker_ += scriptedOrder.spawnTime;
     }
-
-    //
-    this.timer_.add(this.marker_, this.spawnOrder, this);
+    this.marker_ += BETWEEN_TIME;
     // Set difficulty changes
+    this.timer_.add(this.marker_, this.spawnOrder, this);
     for(i = 0; i < SPAWN_SPECS.length; i++) {
         var spawnSpec = SPAWN_SPECS[i];
         this.timer_.add(this.marker_, function() {
@@ -33,7 +34,7 @@ var OrderSpawner = function(game) {
             that.currentMinSpawnRate_ = this.spawnRate.min;
             that.currentMaxSpawnRate_ = this.spawnRate.max;
             that.currentTimeLimit_ = this.timeLimit;
-            console.log(that.timer_.ms);
+            console.log('increase difficulty');
         }, spawnSpec);
         this.marker_ += spawnSpec.duration;
     }
@@ -49,8 +50,16 @@ OrderSpawner.prototype.spawnOrder = function() {
         cup:  game.rnd.integerInRange(0, 1),
         temp: game.rnd.integerInRange(0, 1),
         price: this.currentPrice_
-    });
-    var spawnTimer = this.game.time.create(true);
+    }, this.currentTimeLimit_);
+    console.log('spawned new order');
+    this.spawnTimer_ = this.game.time.create(true);
     var nextTime = this.game.rnd.integerInRange(this.currentMinSpawnRate_, this.currentMaxSpawnRate_);
-    spawnTimer.add(nextTime, this.spawnOrder, this);
+    this.spawnTimer_.add(nextTime, this.spawnOrder, this);
+    this.spawnTimer_.start();
+    console.log('next order in ' + nextTime);
+};
+
+OrderSpawner.prototype.stop = function() {
+    this.spawnTimer_.stop();
+    this.timer_.stop();
 };
