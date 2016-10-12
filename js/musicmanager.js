@@ -57,9 +57,12 @@ MusicManager.prototype.toggleEmergency = function() {
 
 MusicManager.prototype.restartStems = function() {
     console.log('restarting');
-    this.stems_[this.currentStem_].fadeTo(CROSSFADE_TIME, REALLY_QUIET);
+    console.log(this.currentStem_);
+    console.log(this.stems_[this.currentStem_].isPlaying);
+    this.stems_[this.currentStem_].volume = REALLY_QUIET;
     this.soundValue_ = 1;
     this.currentStem_ = 1;
-    this.stems_[this.currentStem_].fadeTo(CROSSFADE_TIME, 1);
-    // TODO: Take care of emergency music.
+    this.stems_[this.currentStem_].volume = 1;
+    this.emergencyOn_ = false;
+    this.emergency_.volume = REALLY_QUIET;
 };

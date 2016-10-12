@@ -25,10 +25,9 @@ playState = {
     },
 
     create: function(){
-        game.musicManager.start(); // move to title screen??
         game.sound.play("ambience",1,true);
-
         game.camera.x = 1344;
+        game.camera.flash(0xffffff, 1000);
         game.state.cameraGoal = game.camera.x; //This is what the camera will interpolate to
         game.physics.startSystem(Phaser.Physics.ARCADE);
         //Countertop and background
@@ -114,7 +113,6 @@ playState = {
     }
 
 };
-
 
 function onTap(){
     var theFeels = new draggableObject(game,game.input.activePointer.worldX,game.input.activePointer.worldY);
