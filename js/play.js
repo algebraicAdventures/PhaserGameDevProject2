@@ -69,7 +69,10 @@ playState = {
         //Input events
         var restart = game.input.keyboard.addKey(Phaser.Keyboard.R);
         restart.onDown.add(function() {
-            this.game.state.start('play');
+            game.camera.fade(0xffffff, 1000, false);
+            game.time.events.add(1000, function() {
+                game.state.start('play');
+            });
         }, this);
         // game.input.onTap.add(onTap);
 
