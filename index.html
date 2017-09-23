@@ -4,31 +4,31 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script type="text/javascript" src="js/phaser.js"></script>
+    <script type="text/javascript" src="js/util.js"></script>
+    <script type="text/javascript" src="js/preloader.js"></script>
     <script type="text/javascript" src="js/preload.js"></script>
+    <script type="text/javascript" src="js/menu.js"></script>
     <script type="text/javascript" src="js/play.js"></script>
     <script type="text/javascript" src="js/startup.js"></script>
     <style type="text/css">
-        body { margin: 1; }
+        body {
+            background-color: #444444;
+        }
+        canvas {
+            display: block;
+            margin: 0 auto;
+        }
+        h1 {
+            font-family: 'Arial Black';
+            color: #eeeeee;
+            display: block;
+            margin: 20px auto;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
-    <h1>Wow Dang</h1>
+    <h1 style="">Coffee Break</h1>
     <div id = 'gameDiv'></div>
-    <!--<script type="text/javascript">
-        var game = new Phaser.Game(1334, 750, Phaser.AUTO, '',
-                {preload: preload, create: create, update: update});
-
-        function preload() {
-        }
-
-        function create() {
-
-        }
-
-        function update() {
-
-        }
-    </script>-->
-
 </body>
 </html>

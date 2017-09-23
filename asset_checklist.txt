@@ -1,0 +1,26 @@
+Fixes:
+- white outline / alignment of the combined red bubble/green bubble order sprite
+- Tape roll - high resolution (the one on Github currently is really small)
+
+Missing assets:
+- Background -- DONE
+    * Low contrast
+    * Coffee shop interior with customers
+- Countertop -- IN PROGRESS
+    * As wide as you want, as long as it tiles horizontally
+    * Two heights for stuff to sit on:
+        - higher one for the area to drop off the order to the customers
+        - lower one where the machine/objects sit on
+        - keep perspective flat
+- Bag of coffee beans
+- [ANIMATION] Coffee coming out of the machine -- DONE
+- Funnel on the coffee machine that accepts beans -- DONE
+    Specs: Should be on the right side of the machine
+
+"Polish" assets that would help the narrative:
+- Something to put on the coffeemaker to make it seem shiny and new on the title screen
+    * e.g. a little sparkle animation
+    * Fallback: I'm just going to put the happy face on it
+- Something to put on the coffeemaker to make it seem worn down on the game over screen
+    * e.g: rust, cracks
+    * Fallback: I'm just going to put the sad face on it

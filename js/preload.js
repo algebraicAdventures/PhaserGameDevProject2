@@ -1,10 +1,21 @@
 /**
- * Created by wrighp on 10/4/2016.
+ * Created by Patrick on 10/10/2016.
  */
+var decodedSounds = 0;
 var preloadState = {
-        create: function(){
-            //Load all of your stuff here
+    preload: function(){
+        game.sound.onSoundDecode.add(function(){
+            decodedSounds++;
+        });
+        loadStuff(game);
+    },
+    create: function(){
 
-            game.state.start('play');
+    },
+    update: function(){
+        if(decodedSounds >= totalDecodedSounds && game.load.hasLoaded) {
+            console.log("Decoded "+decodedSounds+" sounds");
+            this.game.state.start('menu');
         }
+    }
 };
